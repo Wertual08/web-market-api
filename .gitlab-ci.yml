@@ -16,7 +16,7 @@ notify_start:
 deploy:
   stage: deploy
   tags:
-    - deploy
+    - dev-shell-runner
   script:
     - docker-compose up -d --build
 
