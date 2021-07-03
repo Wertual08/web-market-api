@@ -1,0 +1,49 @@
+version: '3.5'
+
+services:
+    api:
+        container_name: kb-api
+        restart: unless-stopped
+        build:
+            context: ./project
+            dockerfile: Dockerfile
+        links:
+            - postgres
+            - elasticsearch
+        networks:
+            - services-network
+
+    postgres:
+        container_name: kb-postgres
+        restart: unless-stopped
+        build:
+            context: ./postgres
+            dockerfile: Dockerfile
+        volumes:
+            - ./data/dbdata:/var/lib/postgresql/data
+        environment:
+            - LC_ALL=C.UTF-8
+            - POSTGRES_USER=${DB_USERNAME}
+            - POSTGRES_PASSWORD=${DB_PASSWORD}
+        ports:
+            - 5432:5432
+
+    elasticsearch:
+        container_name: kb-elasticsearch
+        restart: unless-stopped
+        build:
+            context: ./elasticsearch
+            dockerfile: Dockerfile
+        environment:
+            - discovery.type=single-node
+        ulimits:
+            memlock:
+                soft: -1
+                hard: -1
+        volumes:
+            - ./data/esdata:/usr/share/elasticsearch/data
+
+            
+networks:
+    services-network:
+        name: kb-services-network
