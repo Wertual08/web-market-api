@@ -30,12 +30,12 @@ notify_success:
   tags:
     - dev-shell-runner
   script:
-    - telegram-send "✅ Api service successfully deployed."
+    - telegram-send "✅ Service successfully deployed."
 
 notify_error:
   stage: finish
   tags:
     - dev-shell-runner
   script:
-    - telegram-send "❌ Api service fucked up."
+    - telegram-send "❌ Service fucked up."
   when: on_failure
