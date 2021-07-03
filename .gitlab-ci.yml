@@ -12,7 +12,8 @@ notify_start:
     - dev-shell-runner
   script:
     - |
-      telegram-send "⚙️ Api service deployment started...
+      telegram-send "⚙️ Service deployment started...
+      Project: $CI_PROJECT_NAME
       Branch: $CI_COMMIT_BRANCH
       User: $CI_COMMIT_AUTHOR
       Message: $CI_COMMIT_MESSAGE"
