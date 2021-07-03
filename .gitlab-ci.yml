@@ -1,5 +1,14 @@
 stages:
+  - start
   - deploy
+  - finish
+
+notify_start:
+  stage: start
+  tags:
+    - dev-shell-runner
+  script:
+    - telegram-send "Api service deployment started..."
 
 deploy:
   stage: deploy
@@ -7,3 +16,18 @@ deploy:
     - deploy
   script:
     - docker-compose up -d --build
+
+notify_success:
+  stage: finish
+  tags:
+    - dev-shell-runner
+  script:
+    - telegram-send "✅ Api service successfully deployed."
+
+notify_error:
+  stage: finish
+  tags:
+    - dev-shell-runner
+  script:
+    - telegram-send "❌ Api service fucked up."
+  when: on_failure
