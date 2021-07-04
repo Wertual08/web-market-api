@@ -1,2 +1,5 @@
 .env
+project/bin
+project/obj
 data
+.vscode

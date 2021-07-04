@@ -7,11 +7,12 @@ services:
         build:
             context: ./project
             dockerfile: Dockerfile
-        links:
+        depends_on: 
             - postgres
             - elasticsearch
         networks:
             - services-network
+            - internal-network
 
     postgres:
         container_name: kb-postgres
@@ -27,6 +28,8 @@ services:
             - POSTGRES_PASSWORD=${DB_PASSWORD}
         ports:
             - 5432:5432
+        networks:
+            - internal-network
 
     elasticsearch:
         container_name: kb-elasticsearch
@@ -42,8 +45,12 @@ services:
                 hard: -1
         volumes:
             - ./data/esdata:/usr/share/elasticsearch/data
+        networks:
+            - internal-network
 
             
 networks:
+    internal-network:
+        driver: bridge
     services-network:
         name: kb-services-network
