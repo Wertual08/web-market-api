@@ -13,6 +13,8 @@ services:
         networks:
             - services-network
             - internal-network
+        environment: 
+            - ASPNETCORE_ENVIRONMENT=${ASPNETCORE_ENVIRONMENT}
 
     postgres:
         container_name: kb-postgres
