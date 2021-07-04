@@ -8,8 +8,8 @@ namespace api.Models {
         public long Id { get; init; }
 
         [Required]
-        [MaxLength(22)]
-        [Column(TypeName = "char(22)")]
+        [MaxLength(32)]
+        [Column(TypeName = "char(32)")]
         public string Name { get; set; }
     }
 }

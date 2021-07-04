@@ -25,7 +25,6 @@ namespace api {
 
         public void ConfigureServices(IServiceCollection services) {
             services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
-            Console.WriteLine(Configuration.GetConnectionString("DefaultConnection"));
 
             services.AddControllers();
             services.AddSwaggerGen(c => {
