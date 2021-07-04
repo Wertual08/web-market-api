@@ -36,7 +36,10 @@ namespace api {
             if (env.IsDevelopment()) {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/api/swagger/v1/swagger.json", "api v1"));
+                app.UseSwaggerUI(c => {
+                    c.RoutePrefix = "api";
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "api v1");
+                });
             }
 
             //app.UseHttpsRedirection();
