@@ -37,7 +37,6 @@ namespace api {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => {
-                    //c.RoutePrefix = "api";
                     c.SwaggerEndpoint("/api/swagger/v1/swagger.json", "api v1");
                 });
             }
@@ -51,7 +50,6 @@ namespace api {
             app.UseEndpoints(endpoints => {
                 endpoints.MapControllers();
             });
-
 
             using (var scope = app.ApplicationServices.CreateScope()) {
                 var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
