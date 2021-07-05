@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 
 namespace api.Controllers.Admin.Products {
-    public class ProductCreateRequest {
+    public class AdminProductCreateRequest {
         [Required]
         [MaxLength(256)]
         public string Name { get; init; }

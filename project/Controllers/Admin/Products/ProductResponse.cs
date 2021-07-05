@@ -1,7 +1,7 @@
 using System;
 
 namespace api.Controllers.Admin.Products {
-    public class ProductResponse {
+    public class AdminProductResponse {
         public long Id { get; init; }
         public string Name { get; init; }
         public string Description { get; init; }

@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 
 namespace api.Controllers.Admin.Products {
-    public class ProductUpdateRequest {
+    public class AdminProductUpdateRequest {
         [Required]
         [MaxLength(256)]
         public string Name { get; init; }

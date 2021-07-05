@@ -8,16 +8,16 @@ using Microsoft.AspNetCore.Mvc;
 namespace api.Controllers.Admin.Products {
     [ApiController]
     [Route("admin/products")]
-    public class ProductsController : ControllerBase {
+    public class AdminProductsController : ControllerBase {
         private readonly ApplicationDbContext Context;
 
-        public ProductsController(ApplicationDbContext context)
+        public AdminProductsController(ApplicationDbContext context)
         {
             Context = context;
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<ProductResponse>> Get() {
+        public ActionResult<IEnumerable<AdminProductResponse>> Get() {
             return Ok(from product in Context.Products select new {
                 Id = product.Id,
                 Name = product.Name,
@@ -28,7 +28,7 @@ namespace api.Controllers.Admin.Products {
         }
 
         [HttpGet("{id}")]
-        public ActionResult<ProductResponse> Get(long id) {
+        public ActionResult<AdminProductResponse> Get(long id) {
             var result = (
                 from product in Context.Products
                 where product.Id == id
@@ -49,7 +49,7 @@ namespace api.Controllers.Admin.Products {
         }
 
         [HttpPost]
-        public ActionResult<Product> Post(ProductCreateRequest request) {
+        public ActionResult<Product> Post(AdminProductCreateRequest request) {
             var result = new Product{
                 Name = request.Name,
                 Description = request.Description,
@@ -57,7 +57,7 @@ namespace api.Controllers.Admin.Products {
             Context.Products.Add(result);
             Context.SaveChanges();
 
-            return Ok(new ProductResponse {
+            return Ok(new AdminProductResponse {
                 Id = result.Id,
                 Name = result.Name,
                 Description = result.Description,
@@ -67,7 +67,7 @@ namespace api.Controllers.Admin.Products {
         }
 
         [HttpPut("{id}")]
-        public ActionResult<ProductResponse> Put(int id, ProductUpdateRequest request) {
+        public ActionResult<AdminProductResponse> Put(int id, AdminProductUpdateRequest request) {
             var result = (
                 from product in Context.Products
                 where product.Id == id
@@ -83,7 +83,7 @@ namespace api.Controllers.Admin.Products {
             result.UpdatedAt = DateTime.Now;
             Context.SaveChanges();
 
-            return Ok(new ProductResponse {
+            return Ok(new AdminProductResponse {
                 Id = result.Id,
                 Name = result.Name,
                 Description = result.Description,
@@ -93,7 +93,7 @@ namespace api.Controllers.Admin.Products {
         }
 
         [HttpDelete("{id}")]
-        public ActionResult<ProductResponse> Delete(long id) {
+        public ActionResult<AdminProductResponse> Delete(long id) {
             var result = (
                 from product in Context.Products
                 where product.Id == id
@@ -107,7 +107,7 @@ namespace api.Controllers.Admin.Products {
             Context.Products.Remove(result);
             Context.SaveChanges();
 
-            return Ok(new ProductResponse {
+            return Ok(new AdminProductResponse {
                 Id = result.Id,
                 Name = result.Name,
                 Description = result.Description,
