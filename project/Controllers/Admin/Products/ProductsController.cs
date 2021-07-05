@@ -49,7 +49,7 @@ namespace api.Controllers.Admin.Products {
         }
 
         [HttpPost]
-        public ActionResult<Product> Post(AdminProductCreateRequest request) {
+        public ActionResult<AdminProductResponse> Post(AdminProductCreateRequest request) {
             var result = new Product{
                 Name = request.Name,
                 Description = request.Description,
