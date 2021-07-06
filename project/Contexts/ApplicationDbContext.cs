@@ -1,7 +1,7 @@
 using app.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace api.Database {
+namespace api.Contexts {
     public class ApplicationDbContext : DbContext {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options): base(options) {
 
