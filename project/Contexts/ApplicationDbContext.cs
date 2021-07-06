@@ -5,13 +5,16 @@ using Microsoft.EntityFrameworkCore;
 namespace Api.Contexts {
     public class ApplicationDbContext : DbContext {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options): base(options) {
-
         }
+        
+        public DbSet<User> Users { get; set; }
 
         public DbSet<Product> Products { get; set; }
         public event EventHandler<ModelEventArgs<Product>> ProductCreated;
         public event EventHandler<ModelEventArgs<Product>> ProductUpdated;
         public event EventHandler<ModelEventArgs<Product>> ProductDeleted;
+        
+        public DbSet<TokenBan> TokenBans { get; set; }
 
         private void NotifyProducts() {
             foreach (var entry in ChangeTracker.Entries<Product>()) {
@@ -37,7 +40,6 @@ namespace Api.Contexts {
                 }
             }
         }
-
         public override int SaveChanges() {
             // TODO: It would be much safer to fire events after changes were saved
             NotifyProducts();

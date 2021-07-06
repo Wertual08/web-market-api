@@ -15,7 +15,7 @@ namespace Api.Repositories {
         }
 
         public Task<Product> FindAsync(long id) {
-            return Task.FromResult((
+            return Task.Run(() => (
                 from product in DbContext.Products
                 where product.Id == id
                 select new Product { 
@@ -27,7 +27,7 @@ namespace Api.Repositories {
         }
         
         public Task<IEnumerable<Product>> ListAsync(int skip, int take) {
-            return Task.FromResult<IEnumerable<Product>>((
+            return Task.Run<IEnumerable<Product>>(() => (
                 from product in DbContext.Products
                 orderby product.Id
                 select new Product { 

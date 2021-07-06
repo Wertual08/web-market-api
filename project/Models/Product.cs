@@ -5,12 +5,10 @@ namespace Api.Models {
     public class Product {
         public long Id { get; init; }
 
-        [Required]
-        [MaxLength(256)]
+        [Required, MaxLength(256)]
         public string Name { get; set; }
 
-        [Required]
-        [MaxLength(4096)]
+        [Required, MaxLength(4096)]
         public string Description { get; set; }
         
         [Required]
