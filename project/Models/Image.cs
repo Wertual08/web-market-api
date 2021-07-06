@@ -2,7 +2,7 @@
 
 using System.ComponentModel.DataAnnotations;
 
-namespace api.Models {
+namespace Api.Models {
     public class Image {
         public long Id { get; init; }
 

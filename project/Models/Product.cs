@@ -1,7 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace app.Models {
+namespace Api.Models {
     public class Product {
         public long Id { get; init; }
 

@@ -1,10 +1,10 @@
 using System;
-using api.Contexts;
+using Api.Contexts;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
-namespace api.Migrations {
+namespace Api.Migrations {
     [DbContext(typeof(ApplicationDbContext))]
     [Migration("20210705180315_InitialMigration")]
     class InitialMigration : Migration {

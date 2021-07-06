@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace api.Controllers.Admin.Products {
+namespace Api.Requests {
     public class AdminProductUpdateRequest {
         [Required]
         [MaxLength(256)]

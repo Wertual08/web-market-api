@@ -1,30 +1,32 @@
 using System;
 using System.Collections.Generic;
-using api.Contexts;
-using app.Models;
+using Api.Contexts;
+using Api.Models;
 using Elasticsearch.Net;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Nest;
 
-namespace api.Controllers {
+namespace Api.Controllers {
     [ApiController]
     [Route("")]
     public class RootController : ControllerBase {
-        private readonly ApplicationDbContext Context;
+        private readonly ApplicationDbContext DbContext;
         private readonly IElasticClient ElasticClient;
 
-        public RootController(ApplicationDbContext context, IElasticClient elasticClient)
+        public RootController(ApplicationDbContext dbContext, IElasticClient elasticClient)
         {
-            Context = context;
+            DbContext = dbContext;
             ElasticClient = elasticClient;
         }
 
         [HttpGet("shit")]
         public ActionResult<IEnumerable<Product>> Get() {
-            return Ok(ElasticClient.Search<Product>(
+            var result = ElasticClient.Search<Product>(
                 s => s.Index("products").From(0).Size(2000).MatchAll()
-            ).Documents);
+            );
+
+            return Ok();
         }
     }
 }

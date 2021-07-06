@@ -1,4 +1,4 @@
-using api.Contexts;
+using Api.Contexts;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace api {
+namespace Api {
     public class Program {
         public static void Main(string[] args) {
             CreateHostBuilder(args).Build().Run();

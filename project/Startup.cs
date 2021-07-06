@@ -1,5 +1,6 @@
-using api.Contexts;
-using app.Models;
+using Api.Contexts;
+using Api.Repositories;
+using Api.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -16,7 +17,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace api {
+namespace Api {
     public class Startup {
         public Startup(IConfiguration configuration) {
             Configuration = configuration;
@@ -25,12 +26,17 @@ namespace api {
         public IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services) {
-            services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<ApplicationDbContext>(options => {
+                options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"));
+            });
             services.AddSingleton<IElasticClient>(new ElasticClient(
                 new ConnectionSettings(new Uri(
                     $"http://{Configuration.GetValue<string>("ElasticSearchConnection")}"
                 ))
             ));
+
+            services.AddScoped<ProductsRepository>();
+
             services.AddControllers();
             services.AddSwaggerGen(c => {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "api", Version = "v1" });
