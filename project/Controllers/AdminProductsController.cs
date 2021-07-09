@@ -1,17 +1,18 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
-using Api.Contexts;
 using Api.Models;
 using Microsoft.AspNetCore.Mvc;
 using Api.Repositories;
 using Api.Responses;
 using System.Threading.Tasks;
 using Api.Requests;
+using Api.Authorization;
 
 namespace Api.Controllers {
     [ApiController]
     [Route("admin/products")]
+    [Authorize(AccessLevel.Admin)]
     public class AdminProductsController : ControllerBase {
         private readonly AdminProductsRepository AdminProductsRepository;
 

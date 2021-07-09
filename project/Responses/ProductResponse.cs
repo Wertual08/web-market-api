@@ -1,7 +1,7 @@
 using Api.Models;
 
 namespace Api.Responses {
-    public class ProductResponse {
+    public record ProductResponse {
         public long Id { get; init; }
         public string Name { get; init; }
         public string Description { get; init; }

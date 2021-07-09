@@ -1,31 +1,29 @@
 using Api.Contexts;
 using Api.Models;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace Api.Repositories {
-    public class AdminProductsRepository {
-        private readonly ApplicationDbContext DbContext;
-
-        public AdminProductsRepository(ApplicationDbContext dbContext)
-        {
-            DbContext = dbContext;
+    public class AdminProductsRepository : AbstractRepository<Product> {
+        public AdminProductsRepository(ApplicationDbContext dbContext) : base(dbContext) {
         }
 
         public Task<Product> FindAsync(long id) {
-            return Task.Run(() => (
+            return (
                 from product in DbContext.Products
                 where product.Id == id
                 select product
-            ).FirstOrDefault());
+            ).FirstOrDefaultAsync();
         }
 
-        public Task<IEnumerable<Product>> ListAsync(int skip, int take) {
-            return Task.Run<IEnumerable<Product>>(() => (
+        public Task<List<Product>> ListAsync(int skip, int take) {
+            return (
                 from product in DbContext.Products 
+                orderby product.Id
                 select product
-            ).Skip(skip).Take(take));
+            ).Skip(skip).Take(take).ToListAsync();
         }
 
         public void Create(Product product) {
@@ -34,10 +32,6 @@ namespace Api.Repositories {
 
         public void Delete(Product product) {
             DbContext.Products.Remove(product);
-        }
-
-        public Task<int> SaveAsync() {
-            return DbContext.SaveChangesAsync();
         }
     }
 }

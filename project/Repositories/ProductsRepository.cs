@@ -6,16 +6,12 @@ using Api.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Api.Repositories {
-    public class ProductsRepository {
-        private ApplicationDbContext DbContext;
-
-        public ProductsRepository(ApplicationDbContext dbContext)
-        {
-            DbContext = dbContext;
+    public class ProductsRepository : AbstractRepository<Product> {
+        public ProductsRepository(ApplicationDbContext dbContext) : base(dbContext) {
         }
 
         public Task<Product> FindAsync(long id) {
-            return Task.Run(() => (
+            return (
                 from product in DbContext.Products
                 where product.Id == id
                 select new Product { 
@@ -23,11 +19,11 @@ namespace Api.Repositories {
                     Name = product.Name,
                     Description = product.Description,
                 }
-            ).FirstOrDefault());
+            ).FirstOrDefaultAsync();
         }
         
-        public Task<IEnumerable<Product>> ListAsync(int skip, int take) {
-            return Task.Run<IEnumerable<Product>>(() => (
+        public Task<List<Product>> ListAsync(int skip, int take) {
+            return (
                 from product in DbContext.Products
                 orderby product.Id
                 select new Product { 
@@ -35,7 +31,7 @@ namespace Api.Repositories {
                     Name = product.Name,
                     Description = product.Description,
                 }
-            ).Skip(skip).Take(take));
+            ).Skip(skip).Take(take).ToListAsync();
         }
     }
 }

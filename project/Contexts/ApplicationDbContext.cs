@@ -6,6 +6,8 @@ namespace Api.Contexts {
     public class ApplicationDbContext : DbContext {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options): base(options) {
         }
+
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
         
         public DbSet<User> Users { get; set; }
 
@@ -13,8 +15,6 @@ namespace Api.Contexts {
         public event EventHandler<ModelEventArgs<Product>> ProductCreated;
         public event EventHandler<ModelEventArgs<Product>> ProductUpdated;
         public event EventHandler<ModelEventArgs<Product>> ProductDeleted;
-        
-        public DbSet<TokenBan> TokenBans { get; set; }
 
         private void NotifyProducts() {
             foreach (var entry in ChangeTracker.Entries<Product>()) {

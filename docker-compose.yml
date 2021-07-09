@@ -14,6 +14,7 @@ services:
             - services-network
             - internal-network
         environment: 
+            - JWT__SECRET=${JWT_SECRET}
             - ASPNETCORE_ENVIRONMENT=${ASPNETCORE_ENVIRONMENT}
 
     postgres:

@@ -2,7 +2,7 @@ using System;
 using Api.Models;
 
 namespace Api.Responses {
-    public class AdminProductResponse {
+    public record AdminProductResponse {
         public long Id { get; init; }
         public string Name { get; init; }
         public string Description { get; init; }

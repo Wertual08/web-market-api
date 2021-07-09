@@ -25,7 +25,6 @@ namespace Api.Controllers {
             var result = ElasticClient.Search<Product>(
                 s => s.Index("products").From(0).Size(2000).MatchAll()
             );
-
             return Ok();
         }
     }

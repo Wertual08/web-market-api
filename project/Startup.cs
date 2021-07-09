@@ -1,14 +1,20 @@
+using Api.Authorization;
 using Api.Contexts;
 using Api.Repositories;
+using Api.Services;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Nest;
 using System;
+using System.Text;
 
 namespace Api {
     public class Startup {
@@ -22,18 +28,42 @@ namespace Api {
             services.AddDbContext<ApplicationDbContext>(options => {
                 options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"));
             });
+
+            services.AddAuthorization(options => {
+                options.FallbackPolicy = new AuthorizationPolicyBuilder()
+                    .RequireAuthenticatedUser()
+                    .Build();
+            });
+
+            services.AddAuthentication(options => {
+                options.DefaultAuthenticateScheme = "JwtAuthenticationScheme";
+                options.DefaultScheme = "JwtAuthenticationScheme";
+                options.DefaultChallengeScheme = "JwtAuthenticationScheme";
+            })
+            .AddScheme<AuthenticationSchemeOptions, JwtAuthenticationHandler>("JwtAuthenticationScheme", options => {});
+
             services.AddSingleton<IElasticClient>(new ElasticClient(
                 new ConnectionSettings(new Uri(
                     $"http://{Configuration.GetValue<string>("ElasticSearchConnection")}"
                 ))
             ));
 
+            services.AddSingleton<TokenService>(
+                new TokenService(Configuration.GetSection("Jwt").Get<TokenServiceConfig>()
+            ));
+
+            services.AddSingleton<HashService>(
+                new HashService(Configuration.GetSection("Hash").Get<HashServiceConfig>()
+            ));
+
+            services.AddScoped<RefreshTokensRepository>();
+            services.AddScoped<UsersRepository>();
             services.AddScoped<ProductsRepository>();
             services.AddScoped<AdminProductsRepository>();
-
+            
             services.AddControllers();
             services.AddSwaggerGen(c => {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "api", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Api", Version = "v1" });
             });
         }
 
@@ -42,15 +72,13 @@ namespace Api {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => {
-                    c.SwaggerEndpoint("/api/swagger/v1/swagger.json", "api v1");
+                    c.SwaggerEndpoint("/api/swagger/v1/swagger.json", "Api v1");
                 });
             }
-
-            //app.UseHttpsRedirection();
+            
+            app.UseAuthentication();
 
             app.UseRouting();
-
-            app.UseAuthorization();
 
             app.UseEndpoints(endpoints => {
                 endpoints.MapControllers();
