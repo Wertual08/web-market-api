@@ -5,7 +5,6 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using Api.Authorization;
-using Api.Models;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Api.Services {

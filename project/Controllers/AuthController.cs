@@ -1,19 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
 using Api.Authorization;
-using Api.Contexts;
 using Api.Models;
 using Api.Repositories;
 using Api.Requests;
 using Api.Responses;
 using Api.Services;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
 
 namespace Api.Controllers {
     [ApiController]
