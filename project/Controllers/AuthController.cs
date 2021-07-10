@@ -78,7 +78,7 @@ namespace Api.Controllers {
 
         [HttpPost("login")]
         public async Task<ActionResult<UserResponse>> Login(LoginRequest request) {
-            var user = await UsersRepository.FindWithTokenAsync(request.Login, request.Login, request.Login);
+            var user = await UsersRepository.FindWithTokenAsync(request.LoginLogin, request.LoginLogin, request.LoginLogin);
 
             if (user == null) {
                 return NotFound();

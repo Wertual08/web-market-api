@@ -11,120 +11,101 @@ namespace Api.Migrations {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Users",
+                name: "users",
                 columns: table => new {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Role = table.Column<int>(
+                    id = table.Column<long>(
+                        type: "bigserial primary key", 
+                        nullable: false
+                    ),
+                    role = table.Column<int>(
                         type: "integer", 
                         nullable: false
                     ),
-                    Login = table.Column<string>(
-                        type: "character varying(16)", 
-                        maxLength: 16, 
+                    login = table.Column<string>(
+                        type: "varchar(16)", 
                         nullable: false
                     ),
-                    Password = table.Column<string>(
+                    password = table.Column<string>(
                         type: "char(128)", 
-                        maxLength: 128, 
                         nullable: false
                     ),
-                    Email = table.Column<string>(
-                        type: "character varying(320)", 
-                        maxLength: 320, 
+                    email = table.Column<string>(
+                        type: "varchar(320)", 
                         nullable: false
                     ),
-                    Phone = table.Column<string>(
-                        type: "character varying(16)", 
-                        maxLength: 16, 
+                    phone = table.Column<string>(
+                        type: "varchar(16)", 
                         nullable: true
                     ),
-                    Name = table.Column<string>(
-                        type: "character varying(128)", 
-                        maxLength: 128, 
+                    name = table.Column<string>(
+                        type: "varchar(128)", 
                         nullable: true
                     ),
-                    Surname = table.Column<string>(
-                        type: "character varying(128)", 
+                    surname = table.Column<string>(
+                        type: "varchar(128)", 
                         maxLength: 128, 
                         nullable: true
                     ),
-                    CreatedAt = table.Column<DateTime>(
-                        type: "timestamp without time zone", 
+                    created_at = table.Column<DateTime>(
+                        type: "timestamp", 
                         nullable: false
                     ),
-                    UpdatedAt = table.Column<DateTime>(
-                        type: "timestamp without time zone", 
+                    updated_at = table.Column<DateTime>(
+                        type: "timestamp", 
                         nullable: false
                     ),
-                    VerifiedAt = table.Column<DateTime>(
-                        type: "timestamp without time zone", 
+                    verified_at = table.Column<DateTime>(
+                        type: "timestamp", 
                         nullable: true
                     ),
-                },
-                constraints: table => {
-                    table.PrimaryKey("PK_Users", x => x.Id);
+                }
+            );
+            migrationBuilder.CreateTable(
+                name: "refresh_tokens",
+                columns: table => new {
+                    user_id = table.Column<long>(
+                        type: "bigint references users(id)", 
+                        nullable: false
+                    ),
+                    name = table.Column<string>(
+                        type: "varchar(1024) primary key", 
+                        nullable: false
+                    ),
                 }
             );
 
             migrationBuilder.CreateTable(
-                name: "RefreshTokens",
+                name: "products",
                 columns: table => new {
-                    UserId = table.Column<long>(type: "bigint", nullable: false),
-                    Name = table.Column<string>(
-                        type: "char(1024)", 
-                        maxLength: 1024, 
+                    id = table.Column<long>(
+                        type: "bigserial primary key", 
                         nullable: false
                     ),
-                },
-                constraints: table => {
-                    table.PrimaryKey("PK_RefreshTokens", x => x.Name);
-                    table.ForeignKey(
-                        "FK_RefreshToken_User_UserId_Id", 
-                        x => x.UserId, 
-                        "Users", 
-                        "Id", 
-                        onUpdate: ReferentialAction.Cascade, 
-                        onDelete: ReferentialAction.Cascade
-                    );
-                }
-            );
-
-            migrationBuilder.CreateTable(
-                name: "Products",
-                columns: table => new {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<string>(
-                        type: "character varying(256)", 
-                        maxLength: 256, 
+                    name = table.Column<string>(
+                        type: "varchar(256)", 
                         nullable: false
                     ),
-                    Description = table.Column<string>(
-                        type: "character varying(4096)", 
-                        maxLength: 256, 
+                    description = table.Column<string>(
+                        type: "varchar(4096)", 
                         nullable: false
                     ),
-                    CreatedAt = table.Column<DateTime>(
-                        type: "timestamp without time zone", 
+                    created_at = table.Column<DateTime>(
+                        type: "timestamp", 
                         nullable: false
                     ),
-                    UpdatedAt = table.Column<DateTime>(
-                        type: "timestamp without time zone", 
+                    updated_at = table.Column<DateTime>(
+                        type: "timestamp", 
                         nullable: false
                     ),
-                },
-                constraints: table => {
-                    table.PrimaryKey("PK_Products", x => x.Id);
                 }
             );
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(name: "Users");
-            migrationBuilder.DropTable(name: "Tokens");
-            migrationBuilder.DropTable(name: "Products");
+            migrationBuilder.DropTable(name: "users");
+            migrationBuilder.DropTable(name: "refresh_tokens");
+            migrationBuilder.DropTable(name: "products");
         }
 
     }
