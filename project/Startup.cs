@@ -29,7 +29,7 @@ namespace Api {
 
             services.AddDbContext<ApplicationDbContext>(options => {
                 options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"));
-                //options.UseSnakeCaseNamingConvention();
+                options.UseSnakeCaseNamingConvention();
             });
 
             services.AddAuthorization(options => {
