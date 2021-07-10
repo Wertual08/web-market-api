@@ -3,3 +3,4 @@ project/bin
 project/obj
 data
 .vscode
+workspace.code-workspace
