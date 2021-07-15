@@ -29,7 +29,7 @@ services:
             - LC_ALL=C.UTF-8
             - POSTGRES_USER=${DB_USERNAME}
             - POSTGRES_PASSWORD=${DB_PASSWORD}
-            - POSTGRES_DB=${DB_NAME}
+            - POSTGRES_DB=${DB_DATABASE}
         ports:
             - 5432:5432
         networks:
