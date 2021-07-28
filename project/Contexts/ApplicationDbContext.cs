@@ -7,6 +7,13 @@ namespace Api.Contexts {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options): base(options) {
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<ProductRecord>().HasKey(nameof(ProductRecord.ProductId), nameof(ProductRecord.RecordId));
+        }
+
+        public DbSet<Record> Records { get; set; }
+
         public DbSet<RefreshToken> RefreshTokens { get; set; }
         
         public DbSet<User> Users { get; set; }
@@ -40,6 +47,9 @@ namespace Api.Contexts {
                 }
             }
         }
+
+        public DbSet<ProductRecord> ProductRecords { get; set; }
+
         public override int SaveChanges() {
             // TODO: It would be much safer to fire events after changes were saved
             NotifyProducts();

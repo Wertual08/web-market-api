@@ -4,8 +4,8 @@ using System.Security.Cryptography;
 using System.Text;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 
-namespace Api.Services {
-    public class HashService {
+namespace Api.Managers {
+    public class HashManager {
         private RNGCryptoServiceProvider RNGCSP = new();
         private int SaltLength;
         private int IterationCount;
@@ -26,7 +26,7 @@ namespace Api.Services {
                 ((int)bytes[offset + 3]);
         }
 
-        public HashService(HashServiceConfig config) {
+        public HashManager(HashServiceConfig config) {
             if (config is null) {
                 config = new();
             }

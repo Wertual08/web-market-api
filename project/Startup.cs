@@ -1,7 +1,7 @@
 using Api.Authorization;
 using Api.Contexts;
 using Api.Repositories;
-using Api.Services;
+using Api.Managers;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -13,6 +13,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Nest;
 using System;
+using Api.Services;
 
 namespace Api {
     public class Startup {
@@ -51,18 +52,22 @@ namespace Api {
                 ))
             ));
 
-            services.AddSingleton<TokenService>(
-                new TokenService(Configuration.GetSection("Jwt").Get<TokenServiceConfig>()
+            services.AddSingleton<TokenManager>(
+                new TokenManager(Configuration.GetSection("Jwt").Get<TokenManagerConfig>()
             ));
 
-            services.AddSingleton<HashService>(
-                new HashService(Configuration.GetSection("Hash").Get<HashServiceConfig>()
+            services.AddSingleton<HashManager>(
+                new HashManager(Configuration.GetSection("Hash").Get<HashServiceConfig>()
             ));
 
+            services.AddScoped<RecordsRepository>();
             services.AddScoped<RefreshTokensRepository>();
             services.AddScoped<UsersRepository>();
             services.AddScoped<ProductsRepository>();
             services.AddScoped<AdminProductsRepository>();
+
+            services.AddScoped<RecordsService>();
+            services.AddScoped<AdminProductsService>();
             
             services.AddControllers();
             services.AddSwaggerGen(c => {
@@ -89,6 +94,7 @@ namespace Api {
 
             using (var scope = app.ApplicationServices.CreateScope()) {
                 var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+                // --- Wipe database ---
                 db.Database.ExecuteSqlRaw(
                     @"DO $$ DECLARE
                     r RECORD;
@@ -98,6 +104,7 @@ namespace Api {
                     END LOOP;
                     END $$;"
                 );
+                // --- ------------- ---
                 db.Database.Migrate();
             }
         }

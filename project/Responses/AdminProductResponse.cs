@@ -4,6 +4,7 @@ using Api.Models;
 namespace Api.Responses {
     public record AdminProductResponse {
         public long Id { get; init; }
+        public decimal Price { get; init; }
         public string Name { get; init; }
         public string Description { get; init; }
         public DateTime CreatedAt { get; init; }
@@ -11,6 +12,7 @@ namespace Api.Responses {
 
         public AdminProductResponse(Product model) {
             Id = model.Id;
+            Price = model.Price;
             Name = model.Name;
             Description = model.Description;
             CreatedAt = model.CreatedAt;

@@ -3,7 +3,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
-using Api.Services;
+using Api.Managers;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
@@ -12,14 +12,14 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace Api.Authorization {
     public class JwtAuthenticationHandler : AuthenticationHandler<AuthenticationSchemeOptions> {
-        private readonly TokenService TokenService;
+        private readonly TokenManager TokenService;
 
         public JwtAuthenticationHandler(
             IOptionsMonitor<AuthenticationSchemeOptions> options, 
             ILoggerFactory logger, 
             UrlEncoder encoder, 
             ISystemClock clock,
-            TokenService tokenService
+            TokenManager tokenService
         ): base(options, logger, encoder, clock) {
             TokenService = tokenService;
         }

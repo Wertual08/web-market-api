@@ -1,10 +1,13 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Api.Models {
     public class Product {
         [Key]
         public long Id { get; init; }
+
+        public decimal Price { get; set; }
 
         [Required, MaxLength(256)]
         public string Name { get; set; }
@@ -17,5 +20,7 @@ namespace Api.Models {
 
         [Required]
         public DateTime UpdatedAt { get; set; } = DateTime.Now;
+
+        public List<Record> Records { get; set; } = null;
     }
 }

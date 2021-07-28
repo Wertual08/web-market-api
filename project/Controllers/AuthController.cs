@@ -4,21 +4,21 @@ using Api.Models;
 using Api.Repositories;
 using Api.Requests;
 using Api.Responses;
-using Api.Services;
+using Api.Managers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers {
     [ApiController]
     [Route("auth")]
     public class AuthController : ControllerBase {
-        private readonly TokenService TokenService;
-        private readonly HashService HashService;
+        private readonly TokenManager TokenService;
+        private readonly HashManager HashService;
         private readonly UsersRepository UsersRepository;
         private readonly RefreshTokensRepository RefreshTokensRepository;
 
         public AuthController(
-            TokenService tokenService, 
-            HashService hashService, 
+            TokenManager tokenService, 
+            HashManager hashService, 
             UsersRepository usersRepository,
             RefreshTokensRepository refreshTokensRepository
         ) {
@@ -83,7 +83,7 @@ namespace Api.Controllers {
             if (user == null) {
                 return NotFound();
             }
-            if (!HashService.Check(user.Password, request.Password)) {
+            if (!HashManager.Check(user.Password, request.Password)) {
                 return Unauthorized();
             }
 

@@ -7,8 +7,8 @@ using System.Text;
 using Api.Authorization;
 using Microsoft.IdentityModel.Tokens;
 
-namespace Api.Services {
-    public class TokenService {
+namespace Api.Managers {
+    public class TokenManager {
         private RNGCryptoServiceProvider RNGCSP = new();
         private SymmetricSecurityKey Key;
         private JwtSecurityTokenHandler Handler = new();
@@ -18,7 +18,7 @@ namespace Api.Services {
             return new DateTimeOffset(DateTime.Now.AddSeconds(offset)).ToUnixTimeSeconds().ToString();
         }
 
-        public TokenService(TokenServiceConfig config) {
+        public TokenManager(TokenManagerConfig config) {
             if (config is null) {
                 config = new();
             }

@@ -6,8 +6,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Api.Migrations {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210705180315_InitialMigration")]
-    class InitialMigration : Migration {
+    [Migration("20210705180315_CreateUsersTabe")]
+    class CreateUsersTable : Migration {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
@@ -60,52 +60,11 @@ namespace Api.Migrations {
                     ),
                 }
             );
-            migrationBuilder.CreateTable(
-                name: "refresh_tokens",
-                columns: table => new {
-                    user_id = table.Column<long>(
-                        type: "bigint references users(id)", 
-                        nullable: false
-                    ),
-                    name = table.Column<string>(
-                        type: "varchar(1024) primary key", 
-                        nullable: false
-                    ),
-                }
-            );
-
-            migrationBuilder.CreateTable(
-                name: "products",
-                columns: table => new {
-                    id = table.Column<long>(
-                        type: "bigserial primary key", 
-                        nullable: false
-                    ),
-                    name = table.Column<string>(
-                        type: "varchar(256)", 
-                        nullable: false
-                    ),
-                    description = table.Column<string>(
-                        type: "varchar(4096)", 
-                        nullable: false
-                    ),
-                    created_at = table.Column<DateTime>(
-                        type: "timestamp", 
-                        nullable: false
-                    ),
-                    updated_at = table.Column<DateTime>(
-                        type: "timestamp", 
-                        nullable: false
-                    ),
-                }
-            );
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(name: "users");
-            migrationBuilder.DropTable(name: "refresh_tokens");
-            migrationBuilder.DropTable(name: "products");
         }
 
     }
