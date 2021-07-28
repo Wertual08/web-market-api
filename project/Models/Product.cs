@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Api.Models {
     public class Product {
@@ -21,6 +22,7 @@ namespace Api.Models {
         [Required]
         public DateTime UpdatedAt { get; set; } = DateTime.Now;
 
-        public List<Record> Records { get; set; } = null;
+        [NotMapped]
+        public IList<Record> Records { get; set; } = null;
     }
 }
