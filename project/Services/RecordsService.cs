@@ -35,8 +35,6 @@ namespace Api.Services {
         }
 
         public async Task<Record> PostAsync(Stream stream, string type, string name) {
-            Console.WriteLine(type);
-
             var result = new Record { ContentType = type, Name = name };
             
             Directory.CreateDirectory(storageDirectory);

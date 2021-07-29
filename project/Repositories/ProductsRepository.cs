@@ -14,24 +14,16 @@ namespace Api.Repositories {
             return (
                 from product in DbContext.Products
                 where product.Id == id
-                select new Product { 
-                    Id = product.Id,
-                    Name = product.Name,
-                    Description = product.Description,
-                }
-            ).FirstOrDefaultAsync();
+                select product
+            ).Include(x => x.Records).FirstOrDefaultAsync();
         }
         
         public Task<List<Product>> ListAsync(int skip, int take) {
             return (
                 from product in DbContext.Products
-                orderby product.Id
-                select new Product { 
-                    Id = product.Id,
-                    Name = product.Name,
-                    Description = product.Description,
-                }
-            ).Skip(skip).Take(take).ToListAsync();
+                orderby product.Id 
+                select product
+            ).Include(x => x.Records).Skip(skip).Take(take).ToListAsync();
         }
     }
 }

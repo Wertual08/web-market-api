@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Api.Models {
     public class ProductRecord {
@@ -8,5 +9,9 @@ namespace Api.Models {
         
         [Required]
         public DateTime CreatedAt { get; init; } = DateTime.Now;
+
+
+        public Product Product { get; set; }
+        public Record Record { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Api.Models {
@@ -17,5 +18,7 @@ namespace Api.Models {
 
         [Required, MaxLength(255)]
         public string Name { get; set; }
+
+        public ICollection<Product> Products { get; set; }
     }
 }

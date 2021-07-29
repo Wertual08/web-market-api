@@ -1,4 +1,5 @@
 using System;
+using System.Reflection;
 using Api.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,7 +10,9 @@ namespace Api.Contexts {
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<ProductRecord>().HasKey(nameof(ProductRecord.ProductId), nameof(ProductRecord.RecordId));
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
 
         public DbSet<Record> Records { get; set; }
