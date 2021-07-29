@@ -15,7 +15,7 @@ namespace Api.Repositories {
                 from product in DbContext.Products
                 where product.Id == id
                 select product
-            ).FirstOrDefaultAsync();
+            ).Include(x => x.Records).FirstOrDefaultAsync();
         }
 
         public Task<List<Product>> ListAsync(int skip, int take) {
@@ -23,7 +23,7 @@ namespace Api.Repositories {
                 from product in DbContext.Products 
                 orderby product.Id
                 select product
-            ).Skip(skip).Take(take).ToListAsync();
+            ).Include(x => x.Records).Skip(skip).Take(take).ToListAsync();
         }
 
         public void Create(Product product) {
@@ -32,6 +32,23 @@ namespace Api.Repositories {
 
         public void Delete(Product product) {
             DbContext.Products.Remove(product);
+        }
+
+        
+        public void SetRecords(long productId, List<long> recordIds) {
+            DbContext.ProductRecords.RemoveRange(
+                from productRecord in DbContext.ProductRecords
+                where productRecord.ProductId == productId
+                select productRecord
+            );
+            if (recordIds is not null) {
+                foreach (var recordId in recordIds) {
+                    DbContext.ProductRecords.Add(new ProductRecord {
+                        ProductId = productId,
+                        RecordId = recordId,
+                    });
+                }
+            }
         }
     }
 }

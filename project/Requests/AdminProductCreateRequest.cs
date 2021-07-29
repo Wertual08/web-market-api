@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Api.Requests {
@@ -9,5 +10,7 @@ namespace Api.Requests {
         [Required]
         [MaxLength(4096)]
         public string Description { get; init; }
+
+        public List<long> Records { get; init; }
     }
 }

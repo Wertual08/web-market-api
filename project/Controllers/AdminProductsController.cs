@@ -42,14 +42,25 @@ namespace Api.Controllers {
 
         [HttpPost]
         public async Task<ActionResult<AdminProductResponse>> PostAsync(AdminProductCreateRequest request) {
-            var result = await AdminProductsService.PostAsync(request.Price, request.Name, request.Description);
+            var result = await AdminProductsService.PostAsync(
+                request.Price, 
+                request.Name, 
+                request.Description,
+                request.Records
+            );
 
             return Ok(new AdminProductResponse(result));
         }
 
         [HttpPut("{id}")]
         public async Task<ActionResult<AdminProductResponse>> PutAsync(long id, AdminProductUpdateRequest request) {
-            var result = await AdminProductsService.PutAsync(id, request.Price, request.Name, request.Description);
+            var result = await AdminProductsService.PutAsync(
+                id, 
+                request.Price, 
+                request.Name, 
+                request.Description,
+                request.Records
+            );
 
             if (result is null) {
                 return NotFound();

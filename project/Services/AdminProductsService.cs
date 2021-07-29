@@ -22,7 +22,7 @@ namespace Api.Services {
             return await AdminProductsRepository.FindAsync(id);
         }
 
-        public async Task<Product> PostAsync(decimal price, string name, string description) {
+        public async Task<Product> PostAsync(decimal price, string name, string description, List<long> records) {
             var result = new Product{
                 Price = price,
                 Name = name,
@@ -30,11 +30,14 @@ namespace Api.Services {
             };
             AdminProductsRepository.Create(result);
             await AdminProductsRepository.SaveAsync();
+            
+            AdminProductsRepository.SetRecords(result.Id, records);
+            await AdminProductsRepository.SaveAsync();
 
             return result;
         }
 
-        public async Task<Product> PutAsync(long id, decimal price, string name, string description) {
+        public async Task<Product> PutAsync(long id, decimal price, string name, string description, List<long> records) {
             var result = await AdminProductsRepository.FindAsync(id);
 
             if (result is null) {
@@ -45,7 +48,8 @@ namespace Api.Services {
             result.Name = name;
             result.Description = description;
             result.UpdatedAt = DateTime.Now;
-            
+
+            AdminProductsRepository.SetRecords(result.Id, records);
             await AdminProductsRepository.SaveAsync();
 
             return result;
