@@ -8,7 +8,7 @@ services:
             context: ./project
             dockerfile: Dockerfile
         volumes:
-            - ./data/storage:/app/storage
+            - ${DATA_PATH}/storage:/app/storage
         depends_on: 
             - postgres
             - elasticsearch
@@ -26,7 +26,7 @@ services:
             context: ./postgres
             dockerfile: Dockerfile
         volumes:
-            - ./data/dbdata:/var/lib/postgresql/data
+            - ${DATA_PATH}/dbdata:/var/lib/postgresql/data
         environment:
             - LC_ALL=C.UTF-8
             - POSTGRES_USER=${DB_USERNAME}
@@ -50,7 +50,7 @@ services:
                 soft: -1
                 hard: -1
         volumes:
-            - ./data/esdata:/usr/share/elasticsearch/data
+            - ${DATA_PATH}/esdata:/usr/share/elasticsearch/data
         ports:
             - 9200:9200
         networks:
