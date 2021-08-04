@@ -1,6 +1,3 @@
-variables:
-  GIT_CLEAN_FLAGS: none
-
 stages:
   - start
   - deploy
