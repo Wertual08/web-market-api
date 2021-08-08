@@ -33,10 +33,14 @@ namespace Api.Controllers {
 
         [HttpGet("{identifier}")]
         public async Task<IActionResult> GetAsync(string identifier) {
-            var result = await RecordsService.GetAsync(identifier);
+            if (!Guid.TryParse(identifier, out Guid guid)) {
+                return UnprocessableEntity();
+            }
+
+            var result = await RecordsService.GetAsync(guid);
 
             if (result is not null) {
-                return File(result.Item1, result.Item2);
+                return File(result.Item1, result.Item2.ContentType, result.Item2.Name);
             } else {
                 return NotFound();
             }
@@ -55,9 +59,9 @@ namespace Api.Controllers {
             }
         }
 
-        [HttpDelete("{identifier}")]
-        public async Task<ActionResult<RecordResponse>> DeleteAsync(string identifier) {
-            var result = await RecordsService.DeleteAsync(identifier);
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<RecordResponse>> DeleteAsync(long id) {
+            var result = await RecordsService.DeleteAsync(id);
 
             if (result is null) {
                 return NotFound();

@@ -23,7 +23,7 @@ namespace Api.Services {
             return await RecordsRepository.ListAsync(page * pageSize, pageSize);
         }
 
-        public async Task<Tuple<Stream, string>> GetAsync(string identifier) {
+        public async Task<Tuple<Stream, Record>> GetAsync(Guid identifier) {
             var image = await RecordsRepository.FindAsync(identifier);
 
             if (image is null) {
@@ -31,7 +31,7 @@ namespace Api.Services {
             }
             var stream = File.OpenRead(GetPath(image.Identifier));
 
-            return new Tuple<Stream, string>(stream, image.ContentType);
+            return new Tuple<Stream, Record>(stream, image);
         }
 
         public async Task<Record> PostAsync(Stream stream, string type, string name) {
@@ -48,8 +48,8 @@ namespace Api.Services {
             return result;
         }
 
-        public async Task<Record> DeleteAsync(string identifier) {
-            var result = await RecordsRepository.FindAsync(identifier);
+        public async Task<Record> DeleteAsync(long id) {
+            var result = await RecordsRepository.FindAsync(id);
 
             if (result is null) {
                 return null;

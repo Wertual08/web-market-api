@@ -19,8 +19,7 @@ namespace Api.Repositories {
             ).FirstOrDefaultAsync();
         }
 
-        public Task<Record> FindAsync(string identy) {
-            var identifier = Guid.Parse(identy);
+        public Task<Record> FindAsync(Guid identifier) {
             return (
                 from record in DbContext.Records
                 where record.Identifier == identifier
