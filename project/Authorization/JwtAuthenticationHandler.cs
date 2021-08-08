@@ -36,6 +36,7 @@ namespace Api.Authorization {
                     Context.Items["AccessLevel"] = decoded.AccessLevel;
                     Context.Items["Login"] = decoded.Login;
                 } catch (Exception ex) {
+                    Context.Items["AccessLevel"] = AccessLevel.Guest;
                     return Task.FromResult(AuthenticateResult.Fail(ex));
                 }
                 
