@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Api.Models;
 
 namespace Api.Responses {
@@ -9,6 +10,9 @@ namespace Api.Responses {
         public string Description { get; init; }
         public DateTime CreatedAt { get; init; }
         public DateTime UpdatedAt { get; init; }
+        public List<string> Records { get; init; }
+        public List<AdminCategoryResponse> Categories { get; init; }
+        public List<AdminSectionResponse> Sections { get; init; }
 
         public AdminProductResponse(Product model) {
             Id = model.Id;
@@ -17,6 +21,25 @@ namespace Api.Responses {
             Description = model.Description;
             CreatedAt = model.CreatedAt;
             UpdatedAt = model.UpdatedAt;
+            Records = new ();
+            Categories = new ();
+            Sections = new ();
+
+            if (model.Records is not null) {
+                foreach (var record in model.Records) {
+                    Records.Add(record.Identifier.ToString("N"));
+                }
+            }
+            if (model.Categories is not null) {
+                foreach (var category in model.Categories) {
+                    Categories.Add(new AdminCategoryResponse(category));
+                }
+            }
+            if (model.Sections is not null) {
+                foreach (var section in model.Sections) {
+                    Sections.Add(new AdminSectionResponse(section));
+                }
+            }
         }
     }
 }

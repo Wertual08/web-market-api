@@ -23,8 +23,8 @@ namespace Api.Controllers {
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<AdminProductResponse>>> GetAsync([FromQuery] int page = 0) {
-            var result = await Service.GetAsync(page);
+        public async Task<ActionResult<IEnumerable<AdminProductResponse>>> GetAsync([FromQuery] ProductsListRequest request) {
+            var result = await Service.GetAsync(request.Page, request.Categories, request.Sections);
 
             return Ok(from item in result select new AdminProductResponse(item));
         }
@@ -46,7 +46,9 @@ namespace Api.Controllers {
                 request.Price, 
                 request.Name, 
                 request.Description,
-                request.Records
+                request.Records,
+                request.Categories,
+                request.Sections
             );
 
             return Ok(new AdminProductResponse(result));
@@ -59,7 +61,9 @@ namespace Api.Controllers {
                 request.Price, 
                 request.Name, 
                 request.Description,
-                request.Records
+                request.Records,
+                request.Categories,
+                request.Sections
             );
 
             if (result is null) {

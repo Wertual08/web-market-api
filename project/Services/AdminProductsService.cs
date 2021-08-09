@@ -13,16 +13,23 @@ namespace Api.Services {
             AdminProductsRepository = adminProductsRepository;
         }
         
-        public async Task<IEnumerable<Product>> GetAsync(int page) {
+        public async Task<IEnumerable<Product>> GetAsync(int page, List<long> categories, List<long> sections) {
             int pageSize = 32;
-            return await AdminProductsRepository.ListAsync(page * pageSize, pageSize);
+            return await AdminProductsRepository.ListAsync(page * pageSize, pageSize, categories, sections);
         }
 
         public async Task<Product> GetAsync(long id) {
             return await AdminProductsRepository.FindAsync(id);
         }
 
-        public async Task<Product> PostAsync(decimal price, string name, string description, List<long> records) {
+        public async Task<Product> PostAsync(
+            decimal price, 
+            string name, 
+            string description, 
+            List<long> records, 
+            List<long> categories, 
+            List<long> sections
+        ) {
             var result = new Product{
                 Price = price,
                 Name = name,
@@ -32,12 +39,22 @@ namespace Api.Services {
             await AdminProductsRepository.SaveAsync();
             
             AdminProductsRepository.SetRecords(result.Id, records);
+            AdminProductsRepository.SetCategories(result.Id, categories);
+            AdminProductsRepository.SetSections(result.Id, sections);
             await AdminProductsRepository.SaveAsync();
 
             return result;
         }
 
-        public async Task<Product> PutAsync(long id, decimal price, string name, string description, List<long> records) {
+        public async Task<Product> PutAsync(
+            long id, 
+            decimal price, 
+            string name, 
+            string description, 
+            List<long> records, 
+            List<long> categories, 
+            List<long> sections
+        ) {
             var result = await AdminProductsRepository.FindAsync(id);
 
             if (result is null) {
@@ -49,7 +66,10 @@ namespace Api.Services {
             result.Description = description;
             result.UpdatedAt = DateTime.Now;
 
+            // FIXME: Update relations
             AdminProductsRepository.SetRecords(result.Id, records);
+            AdminProductsRepository.SetCategories(result.Id, categories);
+            AdminProductsRepository.SetSections(result.Id, sections);
             await AdminProductsRepository.SaveAsync();
 
             return result;

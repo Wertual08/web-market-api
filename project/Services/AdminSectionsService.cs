@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Api.Models;
 using Api.Repositories;
@@ -16,18 +17,7 @@ namespace Api.Services {
         public async Task<IEnumerable<Section>> GetAsync() {
             var sections = await AdminSectionsRepository.ListAsync();
 
-            List<Section> build(List<Section> list, long? sectionId) {
-                List<Section> result = new ();
-                foreach (var item in list) {
-                    if (item.SectionId == sectionId) {
-                        item.Sections = build(list, item.Id);
-                        result.Add(item);
-                    }
-                }
-                return result;
-            }
-
-            return build(sections, null);
+            return from section in sections where section.SectionId == null select section;
         }
 
         public async Task<Section> GetAsync(long id) {

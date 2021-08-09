@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Api.Repositories;
 using Api.Responses;
 using System.Threading.Tasks;
+using Api.Requests;
 
 namespace Api.Controllers {
     [ApiController]
@@ -20,9 +21,14 @@ namespace Api.Controllers {
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ProductResponse>>> GetAsync([FromQuery] int page = 0) {
+        public async Task<ActionResult<IEnumerable<ProductResponse>>> GetAsync([FromQuery] ProductsListRequest request) {
             int pageSize = 32;
-            var products = await ProductsRepository.ListAsync(page * pageSize, pageSize);
+            var products = await ProductsRepository.ListAsync(
+                request.Page * pageSize, 
+                pageSize, 
+                request.Categories, 
+                request.Sections
+            );
 
             return Ok(from item in products select new ProductResponse(item));
         }
