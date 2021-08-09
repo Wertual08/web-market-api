@@ -69,7 +69,6 @@ namespace Api.Managers {
                     byte[] lengths = Convert.FromBase64String(parts[1]);
                     int iterationCount = FromBytes(lengths, sizeof(int) * 0);
                     int hashLength = FromBytes(lengths, sizeof(int) * 1);
-                    Console.WriteLine($"{iterationCount}: {hashLength}");
                     byte[] salt = Convert.FromBase64String(parts[2]);
 
                     byte[] validHash = Convert.FromBase64String(parts[3]);
@@ -81,8 +80,6 @@ namespace Api.Managers {
                         iterationCount: iterationCount,
                         numBytesRequested: hashLength
                     ); 
-
-                    Console.WriteLine($"{validHash}: {pwdHash}");
 
                     return validHash.SequenceEqual(pwdHash);
                 } 

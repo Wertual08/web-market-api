@@ -5,14 +5,27 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace Models.Configurations {
     public class ProductConfiguration : IEntityTypeConfiguration<Product>
     {
-        public void Configure(EntityTypeBuilder<Product> builder)
+        public void Configure(EntityTypeBuilder<Product> bldr)
         {
-            builder
-                .HasMany(r => r.Records)
-                .WithMany(p => p.Products)
+            bldr.HasMany(x => x.Records)
+                .WithMany(x => x.Products)
                 .UsingEntity<ProductRecord>(
-                    p => p.HasOne(p => p.Record).WithMany(),
-                    r => r.HasOne(r => r.Product).WithMany()
+                    x => x.HasOne(x => x.Record).WithMany(),
+                    x => x.HasOne(x => x.Product).WithMany()
+                );
+            
+            bldr.HasMany(x => x.Categories)
+                .WithMany(x => x.Products)
+                .UsingEntity<ProductCategory>(
+                    x => x.HasOne(x => x.Category).WithMany(),
+                    x => x.HasOne(x => x.Product).WithMany()
+                );
+            
+            bldr.HasMany(x => x.Sections)
+                .WithMany(x => x.Products)
+                .UsingEntity<ProductSection>(
+                    x => x.HasOne(x => x.Section).WithMany(),
+                    x => x.HasOne(x => x.Product).WithMany()
                 );
         }
     }

@@ -51,7 +51,13 @@ namespace Api.Contexts {
             }
         }
 
+        public DbSet<Category> Categories { get; set; }
+        
+        public DbSet<Section> Sections { get; set; }
+
         public DbSet<ProductRecord> ProductRecords { get; set; }
+        public DbSet<ProductCategory> ProductCategories { get; set; }
+        public DbSet<ProductSection> ProductSections { get; set; }
 
         public override int SaveChanges() {
             // TODO: It would be much safer to fire events after changes were saved

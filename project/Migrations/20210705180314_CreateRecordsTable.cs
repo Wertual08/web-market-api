@@ -14,7 +14,7 @@ namespace Api.Migrations {
                 name: "records",
                 columns: table => new {
                     id = table.Column<long>(
-                        type: "bigserial primary key", 
+                        type: "bigint primary key generated always as identity", 
                         nullable: false
                     ),
                     identifier = table.Column<Guid>(
@@ -22,7 +22,7 @@ namespace Api.Migrations {
                         nullable: false
                     ),
                     created_at = table.Column<DateTime>(
-                        type: "timestamp", 
+                        type: "timestamptz", 
                         nullable: false
                     ),
                     content_type = table.Column<string>(

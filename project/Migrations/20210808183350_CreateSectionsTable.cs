@@ -6,28 +6,20 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Api.Migrations {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210705180317_CreateProductsTable")]
-    class CreateProductsTable : Migration {
+    [Migration("20210808183350_CreateSectionsTable")]
+    class CreateSectionsTable : Migration {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "products",
+                name: "sections",
                 columns: table => new {
                     id = table.Column<long>(
                         type: "bigint primary key generated always as identity", 
                         nullable: false
                     ),
-                    price = table.Column<decimal>(
-                        type: "numeric",
-                        nullable: false
-                    ),
-                    name = table.Column<string>(
-                        type: "varchar(255)", 
-                        nullable: false
-                    ),
-                    description = table.Column<string>(
-                        type: "varchar(4095)", 
-                        nullable: false
+                    section_id = table.Column<long>(
+                        type: "bigint references sections(id)", 
+                        nullable: true
                     ),
                     created_at = table.Column<DateTime>(
                         type: "timestamptz", 
@@ -37,13 +29,26 @@ namespace Api.Migrations {
                         type: "timestamptz", 
                         nullable: false
                     ),
+                    name = table.Column<string>(
+                        type: "varchar(255)", 
+                        nullable: false
+                    ),
+                },
+                constraints: table => {
+                    table.UniqueConstraint(
+                        name: "unique_sections_name_parent_id",
+                        columns: item => new { 
+                            item.section_id, 
+                            item.name,
+                        }
+                    );
                 }
             );
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(name: "products");
+            migrationBuilder.DropTable(name: "sections");
         }
 
     }

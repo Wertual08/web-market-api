@@ -14,7 +14,7 @@ namespace Api.Migrations {
                 name: "users",
                 columns: table => new {
                     id = table.Column<long>(
-                        type: "bigserial primary key", 
+                        type: "bigint primary key generated always as identity", 
                         nullable: false
                     ),
                     role = table.Column<int>(
@@ -47,15 +47,15 @@ namespace Api.Migrations {
                         nullable: true
                     ),
                     created_at = table.Column<DateTime>(
-                        type: "timestamp", 
+                        type: "timestamptz", 
                         nullable: false
                     ),
                     updated_at = table.Column<DateTime>(
-                        type: "timestamp", 
+                        type: "timestamptz", 
                         nullable: false
                     ),
                     verified_at = table.Column<DateTime>(
-                        type: "timestamp", 
+                        type: "timestamptz", 
                         nullable: true
                     ),
                 }

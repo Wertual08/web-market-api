@@ -17,16 +17,16 @@ namespace Api.Controllers {
     [ApiController]
     [Route("records")]
     public class RecordsController : ControllerBase {
-        private readonly RecordsService RecordsService;
+        private readonly RecordsService Service;
 
-        public RecordsController(RecordsService recordsService)
+        public RecordsController(RecordsService service)
         {
-            RecordsService = recordsService;
+            Service = service;
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<RecordResponse>>> GetAsync([FromQuery] int page = 0) {
-            var result = await RecordsService.GetAsync(page);
+            var result = await Service.GetAsync(page);
 
             return Ok(from item in result select new RecordResponse(item));
         }
@@ -37,7 +37,7 @@ namespace Api.Controllers {
                 return UnprocessableEntity();
             }
 
-            var result = await RecordsService.GetAsync(guid);
+            var result = await Service.GetAsync(guid);
 
             if (result is not null) {
                 return File(result.Item1, result.Item2.ContentType, result.Item2.Name);
@@ -49,7 +49,7 @@ namespace Api.Controllers {
         [HttpPost]
         public async Task<ActionResult<RecordResponse>> PostAsync([FromForm] RecordUploadRequest request) {
             using (var stream = request.File.OpenReadStream()) {
-                var result = await RecordsService.PostAsync(
+                var result = await Service.PostAsync(
                     stream,
                     request.File.ContentType,
                     request.File.FileName
@@ -61,7 +61,7 @@ namespace Api.Controllers {
 
         [HttpDelete("{id}")]
         public async Task<ActionResult<RecordResponse>> DeleteAsync(long id) {
-            var result = await RecordsService.DeleteAsync(id);
+            var result = await Service.DeleteAsync(id);
 
             if (result is null) {
                 return NotFound();

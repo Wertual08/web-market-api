@@ -61,4 +61,5 @@ networks:
     internal-network:
         driver: bridge
     services-network:
+        external: true
         name: kb-services-network

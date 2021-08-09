@@ -65,9 +65,13 @@ namespace Api {
             services.AddScoped<UsersRepository>();
             services.AddScoped<ProductsRepository>();
             services.AddScoped<AdminProductsRepository>();
+            services.AddScoped<AdminCategoriesRepository>();
+            services.AddScoped<AdminSectionsRepository>();
 
             services.AddScoped<RecordsService>();
             services.AddScoped<AdminProductsService>();
+            services.AddScoped<AdminCategoriesService>();
+            services.AddScoped<AdminSectionsService>();
             
             services.AddControllers();
             services.AddSwaggerGen(c => {

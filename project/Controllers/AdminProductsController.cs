@@ -15,23 +15,23 @@ namespace Api.Controllers {
     [Route("admin/products")]
     [Authorize(AccessLevel.Admin)]
     public class AdminProductsController : ControllerBase {
-        private readonly AdminProductsService AdminProductsService;
+        private readonly AdminProductsService Service;
 
-        public AdminProductsController(AdminProductsService adminProductsService)
+        public AdminProductsController(AdminProductsService service)
         {
-            AdminProductsService = adminProductsService;
+            Service = service;
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<AdminProductResponse>>> GetAsync([FromQuery] int page = 0) {
-            var result = await AdminProductsService.GetAsync(page);
+            var result = await Service.GetAsync(page);
 
             return Ok(from item in result select new AdminProductResponse(item));
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<AdminProductResponse>> GetAsync(long id) {
-            var result = await AdminProductsService.GetAsync(id);
+            var result = await Service.GetAsync(id);
 
             if (result is not null) {
                 return Ok(new AdminProductResponse(result));
@@ -42,7 +42,7 @@ namespace Api.Controllers {
 
         [HttpPost]
         public async Task<ActionResult<AdminProductResponse>> PostAsync(AdminProductCreateRequest request) {
-            var result = await AdminProductsService.PostAsync(
+            var result = await Service.PostAsync(
                 request.Price, 
                 request.Name, 
                 request.Description,
@@ -54,7 +54,7 @@ namespace Api.Controllers {
 
         [HttpPut("{id}")]
         public async Task<ActionResult<AdminProductResponse>> PutAsync(long id, AdminProductUpdateRequest request) {
-            var result = await AdminProductsService.PutAsync(
+            var result = await Service.PutAsync(
                 id, 
                 request.Price, 
                 request.Name, 
@@ -71,7 +71,7 @@ namespace Api.Controllers {
 
         [HttpDelete("{id}")]
         public async Task<ActionResult<AdminProductResponse>> DeleteAsync(long id) {
-            var result = await AdminProductsService.DeleteAsync(id);
+            var result = await Service.DeleteAsync(id);
 
             if (result is null) {
                 return NotFound();

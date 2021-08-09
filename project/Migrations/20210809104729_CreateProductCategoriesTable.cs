@@ -6,19 +6,19 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Api.Migrations {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210705180318_CreateProductRecordsTable")]
-    class CreateProductRecordsTable : Migration {
+    [Migration("20210809104729_CreateProductCategoriesTable")]
+    class CreateProductCategoriesTable : Migration {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "product_records",
+                name: "product_categories",
                 columns: table => new {
                     product_id = table.Column<long>(
                         type: "bigint references products(id)", 
                         nullable: false
                     ),
-                    record_id = table.Column<long>(
-                        type: "bigint references records(id)",
+                    category_id = table.Column<long>(
+                        type: "bigint references categories(id)",
                         nullable: false
                     ),
                     created_at = table.Column<DateTime>(
@@ -28,10 +28,10 @@ namespace Api.Migrations {
                 },
                 constraints: table => {
                     table.PrimaryKey(
-                        name: "pk_product_records",
+                        name: "pk_product_categories",
                         columns: item => new { 
                             item.product_id, 
-                            item.record_id,
+                            item.category_id,
                         }
                     );
                 }
@@ -40,7 +40,7 @@ namespace Api.Migrations {
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(name: "product_records");
+            migrationBuilder.DropTable(name: "product_categories");
         }
 
     }
