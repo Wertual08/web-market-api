@@ -20,7 +20,7 @@ deploy:
   tags:
     - dev-shell-runner
   script:
-    - docker-compose up -d --build
+    - docker-compose up -d --build --force-recreate --remove-orphans
 
 notify_success:
   stage: finish
