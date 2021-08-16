@@ -61,6 +61,7 @@ namespace Api {
             ));
 
             services.AddScoped<RecordsRepository>();
+            services.AddScoped<ProfileRepository>();
             services.AddScoped<RefreshTokensRepository>();
             services.AddScoped<UsersRepository>();
             services.AddScoped<ProductsRepository>();
@@ -69,6 +70,7 @@ namespace Api {
             services.AddScoped<AdminSectionsRepository>();
 
             services.AddScoped<RecordsService>();
+            services.AddScoped<ProfileService>();
             services.AddScoped<AdminProductsService>();
             services.AddScoped<AdminCategoriesService>();
             services.AddScoped<AdminSectionsService>();

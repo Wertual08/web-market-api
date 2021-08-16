@@ -27,7 +27,7 @@ namespace Api.Authorization {
         protected override Task<AuthenticateResult> HandleAuthenticateAsync()
         {
             var token = Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
-
+            
             if (token != null) {
                 try {
                     var decoded = TokenService.Decode(token);
@@ -36,12 +36,11 @@ namespace Api.Authorization {
                     Context.Items["AccessLevel"] = decoded.AccessLevel;
                     Context.Items["Login"] = decoded.Login;
                 } catch (Exception ex) {
-                    Context.Items["AccessLevel"] = AccessLevel.Guest;
                     return Task.FromResult(AuthenticateResult.Fail(ex));
                 }
                 
             } else {
-                Context.Items["AccessLevel"] = AccessLevel.Guest;
+                return Task.FromResult(AuthenticateResult.Fail("Authorization token required"));
             }
             
             var claims = new Claim[] {

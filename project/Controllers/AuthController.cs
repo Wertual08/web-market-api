@@ -29,7 +29,7 @@ namespace Api.Controllers {
         }
 
         [HttpPost("register")]
-        public async Task<ActionResult<UserResponse>> Register(RegisterRequest request) {
+        public async Task<ActionResult<ProfileResponse>> Register(RegisterRequest request) {
             var user = await UsersRepository.FindAsync(request.Login, request.Email, request.Phone);
             
             if (user != null) {
@@ -77,7 +77,7 @@ namespace Api.Controllers {
         } 
 
         [HttpPost("login")]
-        public async Task<ActionResult<UserResponse>> Login(LoginRequest request) {
+        public async Task<ActionResult<ProfileResponse>> Login(LoginRequest request) {
             var user = await UsersRepository.FindWithTokenAsync(request.Login, request.Login, request.Login);
 
             if (user == null) {
@@ -100,7 +100,7 @@ namespace Api.Controllers {
         } 
 
         [HttpPost("refresh")]
-        public async Task<ActionResult<UserResponse>> Refresh(RefreshRequest request) {
+        public async Task<ActionResult<ProfileResponse>> Refresh(RefreshRequest request) {
             var user = await UsersRepository.FindByTokenAsync(request.Token);
 
             if (user == null) {

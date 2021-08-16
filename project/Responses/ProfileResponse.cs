@@ -2,7 +2,7 @@ using Api.Authorization;
 using Api.Models;
 
 namespace Api.Responses {
-    public record UserResponse {
+    public record ProfileResponse {
         public long Id { get; init; }
         public AccessLevel Role { get; set; }
         public string Login { get; set; }
@@ -11,7 +11,7 @@ namespace Api.Responses {
         public string Name { get; set; }
         public string Surname { get; set; }
 
-        public UserResponse(User model) {
+        public ProfileResponse(User model) {
             Id = model.Id;
             Role = model.Role;
             Login = model.Login;

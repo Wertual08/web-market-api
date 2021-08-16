@@ -16,9 +16,13 @@ namespace Api.Authorization {
 
         public void OnAuthorization(AuthorizationFilterContext context)
         {
-            var level = (AccessLevel)context.HttpContext.Items["AccessLevel"];
-            if (!AccessLevels.Contains(level)) {
+            if (context.HttpContext.Items["AccessLevel"] is null) {
                 context.Result = new ForbidResult();
+            } else {
+                var level = (AccessLevel)context.HttpContext.Items["AccessLevel"];
+                if (AccessLevels.Length > 0 && !AccessLevels.Contains(level)) {
+                    context.Result = new ForbidResult();
+                }
             }
         }
     }
