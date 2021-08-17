@@ -1,17 +1,11 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
-using Api.Models;
 using Microsoft.AspNetCore.Mvc;
-using Api.Repositories;
 using Api.Responses;
 using System.Threading.Tasks;
 using Api.Requests;
-using Api.Authorization;
 using Api.Services;
-using Microsoft.AspNetCore.Http;
-using System.ComponentModel.DataAnnotations;
-using System.IO;
 
 namespace Api.Controllers {
     [ApiController]
@@ -37,10 +31,10 @@ namespace Api.Controllers {
                 return UnprocessableEntity();
             }
 
-            var result = await Service.GetAsync(guid);
+            var (stream, record) = await Service.GetAsync(guid);
 
-            if (result is not null) {
-                return File(result.Item1, result.Item2.ContentType, result.Item2.Name);
+            if (stream is not null) {
+                return File(stream, record.ContentType, record.Name);
             } else {
                 return NotFound();
             }

@@ -38,8 +38,8 @@ namespace Api.Controllers {
         [HttpPut]
         public async Task<ActionResult<ProfileResponse>> PutAsync(ProfileUpdateRequest request) {
             long userId = (long)HttpContext.Items["UserId"];
-
-            var result = await Service.PutAsync(
+            
+            var (result, conflict) = await Service.SetAsync(
                 userId, 
                 request.Login, 
                 request.Email, 
@@ -47,6 +47,10 @@ namespace Api.Controllers {
                 request.Name,
                 request.Surname
             );
+
+            if (conflict is not null) {
+                return Conflict(new ConflictResponse(conflict));
+            }
 
             if (result is null) {
                 return NotFound();

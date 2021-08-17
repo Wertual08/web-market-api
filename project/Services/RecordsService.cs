@@ -23,15 +23,15 @@ namespace Api.Services {
             return await RecordsRepository.ListAsync(page * pageSize, pageSize);
         }
 
-        public async Task<Tuple<Stream, Record>> GetAsync(Guid identifier) {
+        public async Task<(Stream, Record)> GetAsync(Guid identifier) {
             var image = await RecordsRepository.FindAsync(identifier);
 
             if (image is null) {
-                return null;
+                return (null, null);
             }
             var stream = File.OpenRead(GetPath(image.Identifier));
 
-            return new Tuple<Stream, Record>(stream, image);
+            return (stream, image);
         }
 
         public async Task<Record> PostAsync(Stream stream, string type, string name) {

@@ -17,7 +17,7 @@ namespace Api.Services {
             return await ProfileRepository.FindAsync(id);
         }
 
-        public async Task<User> PutAsync(
+        public async Task<(User, string)> SetAsync(
             long id,
             string login,
             string email,
@@ -25,11 +25,28 @@ namespace Api.Services {
             string name,
             string surname
         ) {
-            // TODO: check for conflicts
+            var conflict = await ProfileRepository.FindAsync(
+                id,
+                login,
+                email,
+                phone
+            );
+            if (conflict is not null) {
+                if (conflict.Login == login) {
+                    return (null, nameof(conflict.Login));
+                }
+                if (conflict.Email == email) {
+                    return (null, nameof(conflict.Email));
+                }
+                if (conflict.Phone == phone) {
+                    return (null, nameof(conflict.Phone));
+                }
+            }
+
             var result = await ProfileRepository.FindAsync(id);
 
             if (result is null) {
-                return null;
+                return (null, null);
             } 
 
             result.Login = login;
@@ -40,7 +57,7 @@ namespace Api.Services {
 
             await ProfileRepository.SaveAsync();
 
-            return result;
+            return (result, null);
         }
     }
 }

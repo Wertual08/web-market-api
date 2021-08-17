@@ -22,7 +22,7 @@ namespace Api.Migrations {
                         nullable: false
                     ),
                     login = table.Column<string>(
-                        type: "varchar(16)", 
+                        type: "varchar(16) unique", 
                         nullable: false
                     ),
                     password = table.Column<string>(
@@ -30,11 +30,11 @@ namespace Api.Migrations {
                         nullable: false
                     ),
                     email = table.Column<string>(
-                        type: "varchar(320)", 
+                        type: "varchar(320) unique", 
                         nullable: false
                     ),
                     phone = table.Column<string>(
-                        type: "varchar(16)", 
+                        type: "varchar(16) unique", 
                         nullable: true
                     ),
                     name = table.Column<string>(
