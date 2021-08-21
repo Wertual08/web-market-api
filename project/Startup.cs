@@ -65,12 +65,15 @@ namespace Api {
             services.AddScoped<RefreshTokensRepository>();
             services.AddScoped<UsersRepository>();
             services.AddScoped<ProductsRepository>();
+            services.AddScoped<OrdersRepository>();
+            services.AddScoped<OrderProductsRepository>();
             services.AddScoped<AdminProductsRepository>();
             services.AddScoped<AdminCategoriesRepository>();
             services.AddScoped<AdminSectionsRepository>();
 
             services.AddScoped<RecordsService>();
             services.AddScoped<ProfileService>();
+            services.AddScoped<OrdersService>();
             services.AddScoped<AdminProductsService>();
             services.AddScoped<AdminCategoriesService>();
             services.AddScoped<AdminSectionsService>();
@@ -112,6 +115,7 @@ namespace Api {
                 //);
                 // --- ------------- ---
                 db.Database.Migrate();
+                db.SeedConstants();
             }
         }
     }

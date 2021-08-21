@@ -4,7 +4,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
-using Api.Authorization;
+using Api.Models;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Api.Managers {
@@ -40,7 +40,7 @@ namespace Api.Managers {
                 new Claim(JwtRegisteredClaimNames.Nbf, CurrentTimestamp()),
                 new Claim(JwtRegisteredClaimNames.Exp, CurrentTimestamp(AccessLifetime)),
                 new Claim("login", accessToken.Login),
-                new Claim("role", accessToken.AccessLevel.ToString()),
+                new Claim("role", accessToken.UserRole.ToString()),
             };
 
             var token = new JwtSecurityToken(
@@ -72,7 +72,7 @@ namespace Api.Managers {
             return new AccessToken {
                 UserId = long.Parse(claims.FindFirstValue(JwtRegisteredClaimNames.Sub)),
                 Login = claims.FindFirstValue("login"),
-                AccessLevel = Enum.Parse<AccessLevel>(claims.FindFirstValue("role")),
+                UserRole = Enum.Parse<UserRoleId>(claims.FindFirstValue("role")),
             };
         }
     }

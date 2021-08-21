@@ -26,7 +26,7 @@ namespace Api.Migrations {
                         nullable: false
                     ),
                     name = table.Column<string>(
-                        type: "varchar(255) unique", 
+                        type: "text unique", 
                         nullable: false
                     ),
                 }

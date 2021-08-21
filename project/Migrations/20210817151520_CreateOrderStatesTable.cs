@@ -6,19 +6,19 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Api.Migrations {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210705180316_CreateRefreshTokensTable")]
-    class CreateRefreshTokensTable : Migration {
+    [Migration("20210817151520_CreateOrderStatesTable")]
+    class CreateOrderStatesTable : Migration {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "refresh_tokens",
+                name: "order_states",
                 columns: table => new {
-                    user_id = table.Column<long>(
-                        type: "bigint references users(id)", 
+                    id = table.Column<int>(
+                        type: "integer primary key",
                         nullable: false
                     ),
                     name = table.Column<string>(
-                        type: "text primary key", 
+                        type: "text unique",
                         nullable: false
                     ),
                 }
@@ -27,7 +27,7 @@ namespace Api.Migrations {
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(name: "refresh_tokens");
+            migrationBuilder.DropTable(name: "order_states");
         }
 
     }

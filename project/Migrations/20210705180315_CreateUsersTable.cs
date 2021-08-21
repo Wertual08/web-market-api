@@ -14,48 +14,47 @@ namespace Api.Migrations {
                 name: "users",
                 columns: table => new {
                     id = table.Column<long>(
-                        type: "bigint primary key generated always as identity", 
+                        type: "bigint primary key generated always as identity",
                         nullable: false
                     ),
                     role = table.Column<int>(
-                        type: "integer", 
+                        type: "integer references user_roles(id)",
                         nullable: false
                     ),
                     login = table.Column<string>(
-                        type: "varchar(16) unique", 
+                        type: "text unique",
                         nullable: false
                     ),
                     password = table.Column<string>(
-                        type: "char(128)", 
+                        type: "text",
                         nullable: false
                     ),
                     email = table.Column<string>(
-                        type: "varchar(320) unique", 
+                        type: "text unique",
                         nullable: false
                     ),
                     phone = table.Column<string>(
-                        type: "varchar(16) unique", 
+                        type: "text unique",
                         nullable: true
                     ),
                     name = table.Column<string>(
-                        type: "varchar(128)", 
+                        type: "text",
                         nullable: true
                     ),
                     surname = table.Column<string>(
-                        type: "varchar(128)", 
-                        maxLength: 128, 
+                        type: "text",
                         nullable: true
                     ),
                     created_at = table.Column<DateTime>(
-                        type: "timestamptz", 
+                        type: "timestamptz",
                         nullable: false
                     ),
                     updated_at = table.Column<DateTime>(
-                        type: "timestamptz", 
+                        type: "timestamptz",
                         nullable: false
                     ),
                     verified_at = table.Column<DateTime>(
-                        type: "timestamptz", 
+                        type: "timestamptz",
                         nullable: true
                     ),
                 }

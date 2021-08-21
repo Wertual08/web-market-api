@@ -26,11 +26,11 @@ namespace Api.Migrations {
                         nullable: false
                     ),
                     content_type = table.Column<string>(
-                        type: "varchar(255)", 
+                        type: "text", 
                         nullable: false
                     ),
                     name = table.Column<string>(
-                        type: "varchar(255)", 
+                        type: "text", 
                         nullable: false
                     ),
                 }

@@ -1,5 +1,7 @@
 using System;
+using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using Api.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,6 +18,9 @@ namespace Api.Contexts {
         }
 
         public DbSet<Record> Records { get; set; }
+
+        public DbSet<UserRole> UserRoles { get; set; }
+        public DbSet<OrderState> OrderStates { get; set; }
 
         public DbSet<RefreshToken> RefreshTokens { get; set; }
         
@@ -59,10 +64,42 @@ namespace Api.Contexts {
         public DbSet<ProductCategory> ProductCategories { get; set; }
         public DbSet<ProductSection> ProductSections { get; set; }
 
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderProduct> OrderProducts { get; set; }
+
         public override int SaveChanges() {
             // TODO: It would be much safer to fire events after changes were saved
             NotifyProducts();
             return base.SaveChanges();
+        }
+
+
+        public void SeedConstants() {
+            var userRoles = UserRoles.ToList();
+            foreach (var item in Enum.GetValues<UserRoleId>()) {
+                var userRole = userRoles.FirstOrDefault(userRole => userRole.Id == (int)item);
+                if (userRole is null) {
+                    userRole = new UserRole {
+                        Id = (int)item,
+                    };
+                    UserRoles.Add(userRole);
+                }
+                userRole.Name = item.ToString();
+            }
+
+            var orderStates = OrderStates.ToList();
+            foreach (var item in Enum.GetValues<OrderStateId>()) {
+                var orderState = orderStates.FirstOrDefault(orderState => orderState.Id == (int)item);
+                if (orderState is null) {
+                    orderState = new OrderState {
+                        Id = (int)item,
+                    };
+                    OrderStates.Add(orderState);
+                }
+                orderState.Name = item.ToString();
+            }
+            
+            this.SaveChanges();
         }
     }
 }

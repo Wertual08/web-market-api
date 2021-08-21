@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using Api.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
@@ -7,11 +8,11 @@ namespace Api.Authorization {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
     public class AuthorizeAttribute : Attribute, IAuthorizationFilter 
     {
-        private AccessLevel[] AccessLevels;
+        private UserRoleId[] UserRoles;
 
-        public AuthorizeAttribute(params AccessLevel[] accessLevels)
+        public AuthorizeAttribute(params UserRoleId[] accessLevel)
         {
-            AccessLevels = accessLevels;
+            UserRoles = accessLevel;
         }
 
         public void OnAuthorization(AuthorizationFilterContext context)
@@ -19,8 +20,8 @@ namespace Api.Authorization {
             if (context.HttpContext.Items["AccessLevel"] is null) {
                 context.Result = new ForbidResult();
             } else {
-                var level = (AccessLevel)context.HttpContext.Items["AccessLevel"];
-                if (AccessLevels.Length > 0 && !AccessLevels.Contains(level)) {
+                var level = (UserRoleId)context.HttpContext.Items["AccessLevel"];
+                if (UserRoles.Length > 0 && !UserRoles.Contains(level)) {
                     context.Result = new ForbidResult();
                 }
             }

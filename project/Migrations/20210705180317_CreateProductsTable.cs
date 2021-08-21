@@ -22,11 +22,11 @@ namespace Api.Migrations {
                         nullable: false
                     ),
                     name = table.Column<string>(
-                        type: "varchar(255)", 
+                        type: "text", 
                         nullable: false
                     ),
                     description = table.Column<string>(
-                        type: "varchar(4095)", 
+                        type: "text", 
                         nullable: false
                     ),
                     created_at = table.Column<DateTime>(

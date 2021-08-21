@@ -45,7 +45,7 @@ namespace Api.Controllers {
             }
 
             user = new User {
-                Role = AccessLevel.Basic,
+                Role = UserRoleId.Basic,
                 Login = request.Login,
                 Password = HashService.Make(request.Password),
                 Email = request.Email,
@@ -67,7 +67,7 @@ namespace Api.Controllers {
             var accessToken = TokenService.Encode(new AccessToken {
                 UserId = user.Id,
                 Login = user.Login,
-                AccessLevel = user.Role,
+                UserRole = user.Role,
             });
 
             return Ok(new AuthorizationResponse {
@@ -90,7 +90,7 @@ namespace Api.Controllers {
             var accessToken = TokenService.Encode(new AccessToken {
                 UserId = user.Id,
                 Login = user.Login,
-                AccessLevel = user.Role,
+                UserRole = user.Role,
             });
 
             return Ok(new AuthorizationResponse {
@@ -110,7 +110,7 @@ namespace Api.Controllers {
             var token = TokenService.Encode(new AccessToken {
                 UserId = user.Id,
                 Login = user.Login,
-                AccessLevel = user.Role,
+                UserRole = user.Role,
             });
 
             return Ok(new AuthorizationResponse {

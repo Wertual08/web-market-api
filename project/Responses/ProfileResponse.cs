@@ -4,7 +4,7 @@ using Api.Models;
 namespace Api.Responses {
     public record ProfileResponse {
         public long Id { get; init; }
-        public AccessLevel Role { get; set; }
+        public UserRoleId Role { get; set; }
         public string Login { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }

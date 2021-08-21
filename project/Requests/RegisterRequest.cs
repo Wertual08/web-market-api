@@ -6,9 +6,9 @@ namespace Api.Requests {
         public string Login { get; set; }
         [Required, MinLength(5)]
         public string Password { get; set; }
-        [Required, MinLength(5), MaxLength(320), RegularExpression("^..*@..*\\...*$")]
+        [Required, EmailAddress]
         public string Email { get; set; }
-        [MinLength(4), MaxLength(16), RegularExpression("^\\+\\d*$")]
+        [Phone]
         public string Phone { get; set; }
         [MaxLength(128)]
         public string Name { get; set; }

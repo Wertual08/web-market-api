@@ -33,7 +33,7 @@ namespace Api.Authorization {
                     var decoded = TokenService.Decode(token);
                     
                     Context.Items["UserId"] = decoded.UserId;
-                    Context.Items["AccessLevel"] = decoded.AccessLevel;
+                    Context.Items["AccessLevel"] = decoded.UserRole;
                     Context.Items["Login"] = decoded.Login;
                 } catch (Exception ex) {
                     return Task.FromResult(AuthenticateResult.Fail(ex));

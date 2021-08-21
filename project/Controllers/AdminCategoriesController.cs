@@ -13,7 +13,7 @@ using Api.Services;
 namespace Api.Controllers {
     [ApiController]
     [Route("admin/categories")]
-    [Authorize(AccessLevel.Admin)]
+    [Authorize(UserRoleId.Admin)]
     public class AdminCategoriesController : ControllerBase {
         private readonly AdminCategoriesService Service;
 

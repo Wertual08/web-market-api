@@ -6,7 +6,7 @@ namespace Api.Models {
     public class User {
         [Key]
         public long Id { get; init; }
-        public AccessLevel Role { get; set; }
+        public UserRoleId Role { get; set; }
         [Required, MinLength(5), MaxLength(16), RegularExpression("^[a-z\\d_]+$")]
         public string Login { get; set; }
         [Required, MaxLength(128)]
