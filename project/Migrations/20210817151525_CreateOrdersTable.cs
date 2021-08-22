@@ -18,7 +18,7 @@ namespace Api.Migrations {
                     ),
                     state = table.Column<int>(
                         type: "integer references order_states(id)",
-                        nullable: true
+                        nullable: false
                     ),
                     user_id = table.Column<long>(
                         type: "bigint references users(id)",

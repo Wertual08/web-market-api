@@ -15,7 +15,7 @@ namespace Api.Repositories {
             DbContext.OrderProducts.Add(orderProduct);
         }
 
-        public void Create(ICollection<OrderProduct> orderProduct) {
+        public void Create(IEnumerable<OrderProduct> orderProduct) {
             DbContext.OrderProducts.AddRange(orderProduct);
         }
 

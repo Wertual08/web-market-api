@@ -69,6 +69,7 @@ namespace Api {
             services.AddScoped<CategoriesRepository>();
             services.AddScoped<SectionsRepository>();
             services.AddScoped<OrderProductsRepository>();
+            services.AddScoped<CartProductsRepository>();
             services.AddScoped<AdminProductsRepository>();
             services.AddScoped<AdminCategoriesRepository>();
             services.AddScoped<AdminSectionsRepository>();
@@ -78,6 +79,7 @@ namespace Api {
             services.AddScoped<OrdersService>();
             services.AddScoped<CategoriesService>();
             services.AddScoped<SectionsService>();
+            services.AddScoped<CartService>();
             services.AddScoped<AdminProductsService>();
             services.AddScoped<AdminCategoriesService>();
             services.AddScoped<AdminSectionsService>();

@@ -19,7 +19,7 @@ namespace Api.Models {
         public DateTime UpdatedAt { get; set; } = DateTime.Now;
 
 
-        public ICollection<Section> Sections { get; set; }
-        public ICollection<Product> Products { get; set; }
+        public IEnumerable<Section> Sections { get; set; }
+        public IEnumerable<Product> Products { get; set; }
     }
 }

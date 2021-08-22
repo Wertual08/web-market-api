@@ -49,7 +49,7 @@ namespace Api.Services {
             string description,
             Dictionary<long, int> products
         ) {
-            var result = new Order {
+            var order = new Order {
                 UserId = userId,
                 Email = email,
                 Phone = phone,
@@ -61,22 +61,23 @@ namespace Api.Services {
                 Description = description,
             };
 
-            OrdersRepository.Create(result);
+            OrdersRepository.Create(order);
             await OrdersRepository.SaveAsync();
 
-            result.OrderProducts = new List<OrderProduct>(products.Count);
+            var orderProducts = new List<OrderProduct>(products.Count);
             foreach (var product in products) {
-                result.OrderProducts.Add(new OrderProduct {
+                orderProducts.Add(new OrderProduct {
+                    OrderId = order.Id,
                     ProductId = product.Key,
                     Amount = product.Value,
                 });
             }
 
-            OrderProductsRepository.Create(result.OrderProducts);
+            OrderProductsRepository.Create(orderProducts);
 
             await OrderProductsRepository.SaveAsync();
 
-            return await OrdersRepository.FindAsync(result.Id);
+            return await OrdersRepository.FindAsync(order.Id);
         }
 
         public async Task<ServiceResult<Order>> CancelAsync(long userId, long id) {

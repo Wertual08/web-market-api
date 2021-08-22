@@ -8,7 +8,7 @@ namespace Api.Models {
         [Key]
         public long Id { get; init; }
 
-        public OrderStateId? State { get; set; }
+        public OrderStateId State { get; set; }
 
         public long? UserId { get; init; }
         
@@ -40,6 +40,6 @@ namespace Api.Models {
         public string Description { get; set; }
 
 
-        public ICollection<OrderProduct> OrderProducts { get; set; }
+        public IEnumerable<OrderProduct> OrderProducts { get; set; }
     }
 }

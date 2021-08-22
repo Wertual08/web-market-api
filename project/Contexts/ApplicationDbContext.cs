@@ -66,6 +66,7 @@ namespace Api.Contexts {
 
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderProduct> OrderProducts { get; set; }
+        public DbSet<CartProduct> CartProducts { get; set; }
 
         public override int SaveChanges() {
             // TODO: It would be much safer to fire events after changes were saved

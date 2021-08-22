@@ -22,8 +22,8 @@ namespace Api.Models {
         public DateTime UpdatedAt { get; set; } = DateTime.Now;
 
 
-        public ICollection<Record> Records { get; set; }
-        public ICollection<Category> Categories { get; set; }
-        public ICollection<Section> Sections { get; set; }
+        public IEnumerable<Record> Records { get; set; }
+        public IEnumerable<Category> Categories { get; set; }
+        public IEnumerable<Section> Sections { get; set; }
     }
 }

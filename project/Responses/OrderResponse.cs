@@ -18,7 +18,6 @@ namespace Api.Responses {
         public DateTime UpdatedAt { get; init; }
         public DateTime RequestedAt { get; init; } 
         public DateTime FinishedAt { get; init; }    
-        public List<OrderProductResponse> OrderProducts { get; init; }
 
         public OrderResponse(Order model) {
             Id = model.Id;
@@ -35,10 +34,6 @@ namespace Api.Responses {
             UpdatedAt = model.UpdatedAt;
             RequestedAt = model.RequestedAt;
             FinishedAt = model.FinishedAt;
-            OrderProducts = new ();
-            foreach (var orderProduct in model.OrderProducts) {
-                OrderProducts.Add(new OrderProductResponse(orderProduct));
-            }
         }
     }
 }

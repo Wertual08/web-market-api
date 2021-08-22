@@ -15,7 +15,7 @@ namespace Api.Repositories {
                 from order in DbContext.Orders
                 where order.Id == id
                 select order
-            ).Include(x => x.OrderProducts).ThenInclude(x => x.Product).FirstOrDefaultAsync();
+            ).FirstOrDefaultAsync();
         }
 
         public Task<List<Order>> ListAsync(long userId, int skip, int take) {
@@ -24,7 +24,7 @@ namespace Api.Repositories {
                 where order.UserId == userId
                 orderby order.Id
                 select order
-            ).Skip(skip).Take(take).Include(x => x.OrderProducts).ThenInclude(x => x.Product).ToListAsync();
+            ).Skip(skip).Take(take).ToListAsync();
         }
 
         public void Create(Order order) {
