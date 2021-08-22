@@ -78,13 +78,23 @@ namespace Api.Controllers {
 
         [HttpPost("login")]
         public async Task<ActionResult<ProfileResponse>> Login(LoginRequest request) {
-            var user = await UsersRepository.FindWithTokenAsync(request.Login, request.Login, request.Login);
+            var user = await UsersRepository.FindAsync(request.Login, request.Login, request.Login);
 
             if (user == null) {
                 return NotFound();
             }
             if (!HashManager.Check(user.Password, request.Password)) {
                 return Unauthorized();
+            }
+
+            user.RefreshToken = await RefreshTokensRepository.FindAsync(user.Id);
+            if (user.RefreshToken is null) {
+                user.RefreshToken = new RefreshToken {
+                    UserId = user.Id,
+                    Name = TokenService.Make(),
+                };
+                RefreshTokensRepository.Create(user.RefreshToken);
+                await RefreshTokensRepository.SaveAsync();
             }
 
             var accessToken = TokenService.Encode(new AccessToken {

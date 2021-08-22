@@ -20,25 +20,6 @@ namespace Api.Repositories {
             ).FirstOrDefaultAsync();
         }
 
-        public Task<User> FindWithTokenAsync(string login, string email, string phone) {
-            return (
-                from user in DbContext.Users
-                join token in DbContext.RefreshTokens
-                on user.Id equals token.UserId
-                where 
-                    user.Login == login || 
-                    user.Email == email ||
-                    (user.Phone != null && user.Phone == phone)
-                select new User {
-                    Id = user.Id,
-                    Role = user.Role,
-                    Login = user.Login,
-                    Password = user.Password,
-                    RefreshToken = token,
-                }
-            ).FirstOrDefaultAsync();
-        }
-
         public Task<User> FindByTokenAsync(string refreshToken) {
             return (
                 from user in DbContext.Users

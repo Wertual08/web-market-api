@@ -18,6 +18,14 @@ namespace Api.Repositories {
             ).FirstOrDefaultAsync();
         }
 
+        public Task<RefreshToken> FindAsync(long userId) {
+            return (
+                from token in DbContext.RefreshTokens
+                where token.UserId == userId
+                select token
+            ).FirstOrDefaultAsync();
+        }
+
         public Task<List<RefreshToken>> ListAsync(long userId) {
             return (
                 from token in DbContext.RefreshTokens
