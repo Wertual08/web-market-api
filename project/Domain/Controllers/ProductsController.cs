@@ -10,8 +10,7 @@ using System.Threading.Tasks;
 using Api.Domain.Requests;
 
 namespace Api.Controllers {
-    [ApiController]
-    [Route("products")]
+    [ApiController, Route("products")]
     public class ProductsController : ControllerBase {
         private readonly ProductsRepository ProductsRepository;
 

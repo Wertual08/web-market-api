@@ -3,14 +3,17 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Api.Database.Models;
 using Api.Domain.Repositories;
+using Api.FullTextSearch.Models;
 
 namespace Api.Domain.Services {
     public class AdminProductsService {
         private readonly AdminProductsRepository AdminProductsRepository;
+        private readonly SearchRepository SearchRepository;
 
-        public AdminProductsService(AdminProductsRepository adminProductsRepository)
+        public AdminProductsService(AdminProductsRepository adminProductsRepository, SearchRepository searchRepository)
         {
             AdminProductsRepository = adminProductsRepository;
+            SearchRepository = searchRepository;
         }
         
         public async Task<IEnumerable<Product>> GetAsync(int page, List<long> categories, List<long> sections) {
@@ -43,6 +46,16 @@ namespace Api.Domain.Services {
             AdminProductsRepository.SetSections(result.Id, sections);
             await AdminProductsRepository.SaveAsync();
 
+            await SearchRepository.IndexAsync(new FTSProduct {
+                Id = result.Id,
+                Name = result.Name,
+                Description = result.Description,
+                Price = result.Price, 
+                Image = "ASS_PLUG",
+                Categories = categories,
+                Sections = sections,
+            });
+
             return result;
         }
 
@@ -71,6 +84,16 @@ namespace Api.Domain.Services {
             AdminProductsRepository.SetCategories(result.Id, categories);
             AdminProductsRepository.SetSections(result.Id, sections);
             await AdminProductsRepository.SaveAsync();
+            
+            await SearchRepository.IndexAsync(new FTSProduct {
+                Id = result.Id,
+                Name = result.Name,
+                Description = result.Description,
+                Price = result.Price, 
+                Image = "ASS_PLUG",
+                Categories = categories,
+                Sections = sections,
+            });
 
             return result;
         }
@@ -84,6 +107,8 @@ namespace Api.Domain.Services {
 
             AdminProductsRepository.Delete(result);
             await AdminProductsRepository.SaveAsync();
+
+            await SearchRepository.DeleteAsync(result.Id);
 
             return result;
         }

@@ -14,6 +14,7 @@ using Microsoft.OpenApi.Models;
 using Nest;
 using System;
 using Api.Domain.Services;
+using Api.FullTextSearch;
 
 namespace Api {
     public class Startup {
@@ -46,10 +47,8 @@ namespace Api {
             })
             .AddScheme<AuthenticationSchemeOptions, JwtAuthenticationHandler>("JwtAuthenticationScheme", options => {});
 
-            services.AddSingleton<IElasticClient>(new ElasticClient(
-                new ConnectionSettings(new Uri(
-                    $"http://{Configuration.GetValue<string>("ElasticSearchConnection")}"
-                ))
+            services.AddSingleton<IElasticsearchContext>(new ElasticsearchContext(
+                Configuration.GetValue<string>("ElasticSearchConnection")
             ));
 
             services.AddSingleton<TokenManager>(
@@ -73,6 +72,7 @@ namespace Api {
             services.AddScoped<AdminProductsRepository>();
             services.AddScoped<AdminCategoriesRepository>();
             services.AddScoped<AdminSectionsRepository>();
+            services.AddScoped<SearchRepository>();
 
             services.AddScoped<RecordsService>();
             services.AddScoped<ProfileService>();
@@ -83,6 +83,7 @@ namespace Api {
             services.AddScoped<AdminProductsService>();
             services.AddScoped<AdminCategoriesService>();
             services.AddScoped<AdminSectionsService>();
+            services.AddScoped<SearchService>();
             
             services.AddControllers();
             services.AddSwaggerGen(c => {

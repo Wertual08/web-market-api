@@ -11,9 +11,7 @@ using Api.Authorization;
 using Api.Domain.Services;
 
 namespace Api.Controllers {
-    [ApiController]
-    [Route("admin/sections")]
-    [Authorize(UserRoleId.Admin)]
+    [ApiController, Route("admin/sections"), Authorize(UserRoleId.Admin)]
     public class AdminSectionsController : ControllerBase {
         private readonly AdminSectionsService Service;
 

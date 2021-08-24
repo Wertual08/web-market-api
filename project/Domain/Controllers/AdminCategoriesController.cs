@@ -3,7 +3,6 @@ using System.Linq;
 using System.Collections.Generic;
 using Api.Database.Models;
 using Microsoft.AspNetCore.Mvc;
-using Api.Domain.Repositories;
 using Api.Domain.Responses;
 using System.Threading.Tasks;
 using Api.Domain.Requests;
@@ -11,9 +10,7 @@ using Api.Authorization;
 using Api.Domain.Services;
 
 namespace Api.Controllers {
-    [ApiController]
-    [Route("admin/categories")]
-    [Authorize(UserRoleId.Admin)]
+    [ApiController, Route("admin/categories"), Authorize(UserRoleId.Admin)]
     public class AdminCategoriesController : ControllerBase {
         private readonly AdminCategoriesService Service;
 

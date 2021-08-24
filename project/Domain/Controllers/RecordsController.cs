@@ -8,8 +8,7 @@ using Api.Domain.Requests;
 using Api.Domain.Services;
 
 namespace Api.Controllers {
-    [ApiController]
-    [Route("records")]
+    [ApiController, Route("records")]
     public class RecordsController : ControllerBase {
         private readonly RecordsService Service;
 

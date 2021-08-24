@@ -9,9 +9,7 @@ using Api.Domain.Services;
 using System;
 
 namespace Api.Controllers {
-    [ApiController]
-    [Route("orders")]
-    [Authorize]
+    [ApiController, Route("orders"), Authorize]
     public class OrdersController : ServiceController {
         private readonly OrdersService Service;
 

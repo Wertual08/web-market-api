@@ -8,8 +8,7 @@ using Api.Managers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers {
-    [ApiController]
-    [Route("auth")]
+    [ApiController, Route("auth")]
     public class AuthController : ControllerBase {
         private readonly TokenManager TokenService;
         private readonly HashManager HashService;
