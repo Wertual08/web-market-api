@@ -1,4 +1,4 @@
-using Api.Contexts;
+using Api.Database;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;

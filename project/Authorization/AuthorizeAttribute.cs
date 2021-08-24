@@ -1,6 +1,6 @@
 using System;
 using System.Linq;
-using Api.Models;
+using Api.Database.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 

@@ -1,6 +1,6 @@
 using Api.Authorization;
-using Api.Contexts;
-using Api.Repositories;
+using Api.Database;
+using Api.Domain.Repositories;
 using Api.Managers;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -13,7 +13,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Nest;
 using System;
-using Api.Services;
+using Api.Domain.Services;
 
 namespace Api {
     public class Startup {

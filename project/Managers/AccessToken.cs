@@ -1,5 +1,5 @@
 using Api.Authorization;
-using Api.Models;
+using Api.Database.Models;
 
 namespace Api.Managers {
     public class AccessToken {
