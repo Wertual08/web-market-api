@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Api.FullTextSearch;
 using Api.FullTextSearch.Models;
+using Nest;
 
 namespace Api.Domain.Repositories {
     public class SearchRepository {
@@ -28,8 +29,20 @@ namespace Api.Domain.Repositories {
         ) {
             var result = await Context.Client.SearchAsync<FTSProduct>(
                 s => s.Query(
-                    q => q.MatchAll()
+                    q => q.MatchPhrasePrefix(m => m
+                        .Field(f => f.Name)
+                        .Query(query)
+                        
+                    ) ||
+                    q.Match(m => m
+                        .Field(f => f.Name)
+                        .Fuzziness(Fuzziness.Auto)
+                        .Query(query)
+                    )
                 )
+                .Index(Index)
+                .Skip(skip)
+                .Take(take)
             );
             return result.Documents;
         }
