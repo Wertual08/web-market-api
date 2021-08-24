@@ -15,7 +15,7 @@ namespace Api.Domain.Repositories {
                 from section in DbContext.Sections
                 where section.Id == id
                 select section
-            ).Include(x => x.Sections).FirstOrDefaultAsync();
+            ).Include(x => x.Sections).Include(x => x.Record).FirstOrDefaultAsync();
         }
 
         public Task<List<Section>> ListAsync() {
@@ -23,7 +23,7 @@ namespace Api.Domain.Repositories {
                 from section in DbContext.Sections 
                 orderby section.Id
                 select section
-            ).ToListAsync();
+            ).Include(x => x.Record).ToListAsync();
         }
 
         public void Create(Section section) {

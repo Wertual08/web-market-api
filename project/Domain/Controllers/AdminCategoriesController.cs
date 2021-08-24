@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using System.Collections.Generic;
 using Api.Database.Models;
@@ -40,6 +39,7 @@ namespace Api.Controllers {
         [HttpPost]
         public async Task<ActionResult<AdminCategoryResponse>> PostAsync(AdminCategoryCreateRequest request) {
             var result = await Service.PostAsync(
+                request.RecordId,
                 request.Name
             );
 
@@ -50,6 +50,7 @@ namespace Api.Controllers {
         public async Task<ActionResult<AdminCategoryResponse>> PutAsync(long id, AdminCategoryUpdateRequest request) {
             var result = await Service.PutAsync(
                 id, 
+                request.RecordId,
                 request.Name
             );
 

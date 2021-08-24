@@ -9,6 +9,8 @@ namespace Api.Database.Models {
 
         public long? SectionId { get; set; } = null;
 
+        public long? RecordId { get; set; } = null;
+
         [Required, MaxLength(255)]
         public string Name { get; set; }
         
@@ -18,7 +20,7 @@ namespace Api.Database.Models {
         [Required]
         public DateTime UpdatedAt { get; set; } = DateTime.Now;
 
-
+        public Record Record { get; set; }
         public IEnumerable<Section> Sections { get; set; }
         public IEnumerable<Product> Products { get; set; }
     }

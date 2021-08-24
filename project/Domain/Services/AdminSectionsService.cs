@@ -24,9 +24,10 @@ namespace Api.Domain.Services {
             return await AdminSectionsRepository.FindAsync(id);
         }
 
-        public async Task<Section> PostAsync(long? sectionId, string name) {
+        public async Task<Section> PostAsync(long? sectionId, long? recordId, string name) {
             var result = new Section {
                 SectionId = sectionId,
+                RecordId = recordId,
                 Name = name,
             };
             AdminSectionsRepository.Create(result);
@@ -35,7 +36,7 @@ namespace Api.Domain.Services {
             return result;
         }
 
-        public async Task<Section> PutAsync(long id, long? sectionId, string name) {
+        public async Task<Section> PutAsync(long id, long? sectionId, long? recordId, string name) {
             var result = await AdminSectionsRepository.FindAsync(id);
 
             if (result is null) {
@@ -43,6 +44,7 @@ namespace Api.Domain.Services {
             } 
 
             result.SectionId = sectionId;
+            result.RecordId = recordId;
             result.Name = name;
             result.UpdatedAt = DateTime.Now;
 

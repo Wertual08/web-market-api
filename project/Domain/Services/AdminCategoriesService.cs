@@ -21,8 +21,9 @@ namespace Api.Domain.Services {
             return await AdminCategoriesRepository.FindAsync(id);
         }
 
-        public async Task<Category> PostAsync(string name) {
+        public async Task<Category> PostAsync(long? recordId, string name) {
             var result = new Category {
+                RecordId = recordId,
                 Name = name,
             };
             AdminCategoriesRepository.Create(result);
@@ -32,13 +33,14 @@ namespace Api.Domain.Services {
             return result;
         }
 
-        public async Task<Category> PutAsync(long id, string name) {
+        public async Task<Category> PutAsync(long id, long? recordId, string name) {
             var result = await AdminCategoriesRepository.FindAsync(id);
 
             if (result is null) {
                 return null;
             } 
 
+            result.RecordId = recordId;
             result.Name = name;
             result.UpdatedAt = DateTime.Now;
 

@@ -7,6 +7,8 @@ namespace Api.Database.Models {
         [Key]
         public long Id { get; init; }
         
+        public long? RecordId { get; set; }
+        
         [Required]
         public DateTime CreatedAt { get; init; } = DateTime.Now;
 
@@ -17,6 +19,7 @@ namespace Api.Database.Models {
         public string Name { get; set; }
 
 
+        public Record Record { get; set; }
         public IEnumerable<Product> Products { get; set; }
     }
 }

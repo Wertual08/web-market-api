@@ -10,6 +10,7 @@ namespace Api.Domain.Responses {
         public DateTime CreatedAt { get; init; }
         public DateTime UpdatedAt { get; init; }
 
+        public string Record { get; init; }
         public List<AdminSectionResponse> Sections { get; init; }
 
         public AdminSectionResponse(Section model) {
@@ -18,7 +19,7 @@ namespace Api.Domain.Responses {
             Name = model.Name;
             CreatedAt = model.CreatedAt;
             UpdatedAt = model.UpdatedAt;
-
+            Record = model.Record?.Identifier.ToString("N");
             Sections = new List<AdminSectionResponse>();
             if (model.Sections is not null) {
                 foreach (var section in model.Sections) {

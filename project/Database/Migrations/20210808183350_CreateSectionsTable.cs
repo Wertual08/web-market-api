@@ -21,6 +21,10 @@ namespace Api.Database.Migrations {
                         type: "bigint references sections(id)", 
                         nullable: true
                     ),
+                    record_id = table.Column<long>(
+                        type: "bigint references records(id)", 
+                        nullable: true
+                    ),
                     created_at = table.Column<DateTime>(
                         type: "timestamptz", 
                         nullable: false

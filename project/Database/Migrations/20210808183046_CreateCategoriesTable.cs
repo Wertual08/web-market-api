@@ -17,6 +17,10 @@ namespace Api.Database.Migrations {
                         type: "bigint primary key generated always as identity", 
                         nullable: false
                     ),
+                    record_id = table.Column<long>(
+                        type: "bigint references records(id)", 
+                        nullable: true
+                    ),
                     created_at = table.Column<DateTime>(
                         type: "timestamptz", 
                         nullable: false

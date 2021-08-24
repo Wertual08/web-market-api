@@ -15,7 +15,7 @@ namespace Api.Domain.Repositories {
                 from category in DbContext.Categories
                 where category.Id == id
                 select category
-            ).FirstOrDefaultAsync();
+            ).Include(x => x.Record).FirstOrDefaultAsync();
         }
 
         public Task<List<Category>> ListAsync() {
@@ -23,7 +23,7 @@ namespace Api.Domain.Repositories {
                 from category in DbContext.Categories 
                 orderby category.Id
                 select category
-            ).ToListAsync();
+            ).Include(x => x.Record).ToListAsync();
         }
 
         public void Create(Category category) {

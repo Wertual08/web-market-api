@@ -1,9 +1,10 @@
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Api.Domain.Requests {
     public class AdminSectionCreateRequest {
         public long? SectionId { get; init; }
+        
+        public long? RecordId { get; init; }
 
         [Required]
         [MaxLength(256)]

@@ -1,9 +1,7 @@
-using System;
 using System.Linq;
 using System.Collections.Generic;
 using Api.Database.Models;
 using Microsoft.AspNetCore.Mvc;
-using Api.Domain.Repositories;
 using Api.Domain.Responses;
 using System.Threading.Tasks;
 using Api.Domain.Requests;
@@ -42,6 +40,7 @@ namespace Api.Controllers {
         public async Task<ActionResult<AdminSectionResponse>> PostAsync(AdminSectionCreateRequest request) {
             var result = await Service.PostAsync(
                 request.SectionId,
+                request.RecordId,
                 request.Name
             );
 
@@ -53,6 +52,7 @@ namespace Api.Controllers {
             var result = await Service.PutAsync(
                 id, 
                 request.SectionId,
+                request.RecordId,
                 request.Name
             );
 
