@@ -1,3 +1,6 @@
+variables:
+  CI_CD_UTILS_PATH: "/home/ci-cd-utils"
+  
 stages:
   - start
   - deploy
@@ -8,12 +11,7 @@ notify_start:
   tags:
     - dev-shell-runner
   script:
-    - |
-      telegram-send "⚙️ Service deployment started...
-      Project: $CI_PROJECT_NAME
-      Branch: $CI_COMMIT_BRANCH
-      User: $CI_COMMIT_AUTHOR
-      Message: $CI_COMMIT_MESSAGE"
+    - $CI_CD_UTILS_PATH/notifications/deployment-start.sh
 
 deploy:
   stage: deploy
@@ -27,12 +25,12 @@ notify_success:
   tags:
     - dev-shell-runner
   script:
-    - telegram-send "✅ Service successfully deployed."
+    - $CI_CD_UTILS_PATH/notifications/deployment-success.sh
 
 notify_error:
   stage: finish
   tags:
     - dev-shell-runner
   script:
-    - telegram-send "❌ Service fucked up."
+    - $CI_CD_UTILS_PATH/notifications/deployment-fail.sh
   when: on_failure
