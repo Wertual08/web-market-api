@@ -40,16 +40,22 @@ namespace Api.Controllers {
         }
 
         [HttpPost]
-        public async Task<ActionResult<RecordResponse>> PostAsync([FromForm] RecordUploadRequest request) {
-            using (var stream = request.File.OpenReadStream()) {
-                var result = await Service.PostAsync(
-                    stream,
-                    request.File.ContentType,
-                    request.File.FileName
-                );
+        public async Task<ActionResult<IEnumerable<RecordResponse>>> PostAsync([FromForm] RecordUploadRequest request) {
+            var records = new List<RecordResponse>(request.Files.Count);
 
-                return Ok(new RecordResponse(result));
+            foreach (var file in request.Files) {
+                using (var stream = file.OpenReadStream()) {
+                    var result = await Service.PostAsync(
+                        stream,
+                        file.ContentType,
+                        file.FileName
+                    );
+
+                    records.Add(new RecordResponse(result));
+                }
             }
+
+            return Ok(records);
         }
 
         [HttpDelete("{id}")]
