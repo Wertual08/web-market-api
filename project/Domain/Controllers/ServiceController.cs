@@ -11,6 +11,7 @@ namespace Api.Controllers {
                 ServiceResultStatus.Conflict => Conflict(result.Message),
                 ServiceResultStatus.Unauthorized => Unauthorized(result.Message),
                 ServiceResultStatus.Forbid => Forbid(result.Message),
+                ServiceResultStatus.BadRequest => BadRequest(result.Message),
                 _ => BadRequest(result.Message),
             };
         }

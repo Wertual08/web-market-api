@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Api.Database.Models;
 using Api.Domain.Repositories;
+using Api.Domain.Services.Result;
 
 namespace Api.Domain.Services {
     public class AdminSectionsService {
@@ -36,12 +37,16 @@ namespace Api.Domain.Services {
             return result;
         }
 
-        public async Task<Section> PutAsync(long id, long? sectionId, long? recordId, string name) {
+        public async Task<ServiceResult<Section>> PutAsync(long id, long? sectionId, long? recordId, string name) {
             var result = await AdminSectionsRepository.FindAsync(id);
 
             if (result is null) {
-                return null;
+                return ServiceResultStatus.NotFound;
             } 
+
+            if (!await AdminSectionsRepository.CheckParentValidAsync(id, sectionId)) {
+                return new ServiceResult<Section>(ServiceResultStatus.BadRequest, "Invalid SectionId");
+            }
 
             result.SectionId = sectionId;
             result.RecordId = recordId;

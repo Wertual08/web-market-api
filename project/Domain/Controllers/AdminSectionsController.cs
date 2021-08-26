@@ -10,7 +10,7 @@ using Api.Domain.Services;
 
 namespace Api.Controllers {
     [ApiController, Route("admin/sections"), Authorize(UserRoleId.Admin)]
-    public class AdminSectionsController : ControllerBase {
+    public class AdminSectionsController : ServiceController {
         private readonly AdminSectionsService Service;
 
         public AdminSectionsController(AdminSectionsService service)
@@ -56,11 +56,7 @@ namespace Api.Controllers {
                 request.Name
             );
 
-            if (result is null) {
-                return NotFound();
-            } else {
-                return Ok(new AdminSectionResponse(result));
-            }
+            return MakeResponse(result, model => new AdminSectionResponse(model));
         }
 
         [HttpDelete("{id}")]

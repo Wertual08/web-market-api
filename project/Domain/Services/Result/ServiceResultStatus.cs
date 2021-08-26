@@ -5,5 +5,6 @@ namespace Api.Domain.Services.Result {
         Conflict,
         Forbid,
         Unauthorized,
+        BadRequest,
     }
 }
