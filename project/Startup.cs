@@ -129,7 +129,7 @@ namespace Api {
                 db.SeedConstants();
 
                 // --- Index products ---
-                Thread.Sleep(1000 * 60);
+                Thread.Sleep(1000 * 80);
                 var adminProductsRepository = scope.ServiceProvider.GetRequiredService<AdminProductsRepository>();
                 var searchRepository = scope.ServiceProvider.GetRequiredService<SearchRepository>();
                 int page = 0;
