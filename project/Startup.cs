@@ -142,7 +142,7 @@ namespace Api {
                         foreach (var category in product.Categories) {
                             categories.Add(category.Id);
                         }
-
+                
                         var sections = new List<long>();
                         foreach (var section in product.Sections) {
                             sections.Add(section.Id);
