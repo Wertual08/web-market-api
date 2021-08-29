@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Api.FullTextSearch;
@@ -44,6 +45,11 @@ namespace Api.Domain.Repositories {
                 .Skip(skip)
                 .Take(take)
             );
+            
+            if (result.ServerError is not null) {
+                throw new Exception(result.ServerError.ToString());
+            }
+
             return result.Documents;
         }
     }

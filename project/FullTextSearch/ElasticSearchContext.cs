@@ -13,24 +13,39 @@ namespace Api.FullTextSearch {
             );
         }
 
-        public Task CreateIndexAsync<T>(string name) where T : class {
-            return Client.Indices.CreateAsync(name, x => x.Map<T>(x => x.AutoMap()));
+        public async Task CreateIndexAsync<T>(string name) where T : class {
+            var response = await Client.Indices.CreateAsync(name, x => x.Map<T>(x => x.AutoMap()));
+            if (response.ServerError is not null) {
+                throw new Exception(response.ServerError.ToString());
+            }
         }
 
-        public Task DeleteIndexAsync(string name) {
-            return Client.Indices.DeleteAsync(name);
+        public async Task DeleteIndexAsync(string name) {
+            var response = await Client.Indices.DeleteAsync(name);
+            if (response.ServerError is not null) {
+                throw new Exception(response.ServerError.ToString());
+            }
         }
 
-        public Task IndexAsync<T>(string index, T item) where T : class {
-            return Client.IndexAsync(item, i => i.Index(index));
+        public async Task IndexAsync<T>(string index, T item) where T : class {
+            var response = await Client.IndexAsync(item, i => i.Index(index));
+            if (response.ServerError is not null) {
+                throw new Exception(response.ServerError.ToString());
+            }
         }
 
-        public Task DeleteAsync(string index, string id) {
-            return Client.DeleteAsync(new DeleteRequest(index, id));
+        public async Task DeleteAsync(string index, string id) {
+            var response = await Client.DeleteAsync(new DeleteRequest(index, id));
+            if (response.ServerError is not null) {
+                throw new Exception(response.ServerError.ToString());
+            }
         }
 
-        public Task DeleteAsync(string index, long id) {
-            return Client.DeleteAsync(new DeleteRequest(index, id));
+        public async Task DeleteAsync(string index, long id) {
+            var response = await Client.DeleteAsync(new DeleteRequest(index, id));
+            if (response.ServerError is not null) {
+                throw new Exception(response.ServerError.ToString());
+            }
         }
     }
 }

@@ -129,37 +129,37 @@ namespace Api {
                 db.SeedConstants();
 
                 // --- Index products ---
-                Thread.Sleep(1000 * 80);
-                var adminProductsRepository = scope.ServiceProvider.GetRequiredService<AdminProductsRepository>();
-                var searchRepository = scope.ServiceProvider.GetRequiredService<SearchRepository>();
-                int page = 0;
-                bool running;
-                do {
-                    running = false;
-                    var products = await adminProductsRepository.ListAsync(page++ * 100, 100);
-                    foreach (var product in products) {
-                        var categories = new List<long>();
-                        foreach (var category in product.Categories) {
-                            categories.Add(category.Id);
-                        }
-                
-                        var sections = new List<long>();
-                        foreach (var section in product.Sections) {
-                            sections.Add(section.Id);
-                        }
-                        
-                        await searchRepository.IndexAsync(new FTSProduct {
-                            Id = product.Id,
-                            Name = product.Name,
-                            Description = product.Description,
-                            Price = product.Price, 
-                            Image = product.Records.FirstOrDefault()?.Identifier.ToString("N"),
-                            Categories = categories,
-                            Sections = sections,
-                        });
-                        running = true;
-                    }
-                } while (running);
+                //Thread.Sleep(1000 * 80);
+                //var adminProductsRepository = scope.ServiceProvider.GetRequiredService<AdminProductsRepository>();
+                //var searchRepository = scope.ServiceProvider.GetRequiredService<SearchRepository>();
+                //int page = 0;
+                //bool running;
+                //do {
+                //    running = false;
+                //    var products = await adminProductsRepository.ListAsync(page++ * 100, 100);
+                //    foreach (var product in products) {
+                //        var categories = new List<long>();
+                //        foreach (var category in product.Categories) {
+                //            categories.Add(category.Id);
+                //        }
+                //
+                //        var sections = new List<long>();
+                //        foreach (var section in product.Sections) {
+                //            sections.Add(section.Id);
+                //        }
+                //        
+                //        await searchRepository.IndexAsync(new FTSProduct {
+                //            Id = product.Id,
+                //            Name = product.Name,
+                //            Description = product.Description,
+                //            Price = product.Price, 
+                //            Image = product.Records.FirstOrDefault()?.Identifier.ToString("N"),
+                //            Categories = categories,
+                //            Sections = sections,
+                //        });
+                //        running = true;
+                //    }
+                //} while (running);
                 // --- -------------- ---
             }
         }
