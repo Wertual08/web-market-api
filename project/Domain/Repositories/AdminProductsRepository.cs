@@ -23,7 +23,7 @@ namespace Api.Domain.Repositories {
             .FirstOrDefaultAsync();
         }
 
-        public Task<List<Product>> ListAsync(int skip, int take, List<long> categories, List<long> sections) {
+        public Task<List<Product>> ListAsync(int skip, int take, List<long> categories = null, List<long> sections = null) {
             var query = (
                 from product in DbContext.Products 
                 orderby product.Id

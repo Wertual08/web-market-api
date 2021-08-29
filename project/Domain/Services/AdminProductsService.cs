@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Api.Database.Models;
 using Api.Domain.Repositories;
@@ -46,12 +47,13 @@ namespace Api.Domain.Services {
             AdminProductsRepository.SetSections(result.Id, sections);
             await AdminProductsRepository.SaveAsync();
 
+            result = await AdminProductsRepository.FindAsync(result.Id);
             await SearchRepository.IndexAsync(new FTSProduct {
                 Id = result.Id,
                 Name = result.Name,
                 Description = result.Description,
                 Price = result.Price, 
-                Image = "ASS_PLUG",
+                Image = result.Records.FirstOrDefault()?.Identifier.ToString("N"),
                 Categories = categories,
                 Sections = sections,
             });
@@ -85,12 +87,13 @@ namespace Api.Domain.Services {
             AdminProductsRepository.SetSections(result.Id, sections);
             await AdminProductsRepository.SaveAsync();
             
+            result = await AdminProductsRepository.FindAsync(id);
             await SearchRepository.IndexAsync(new FTSProduct {
                 Id = result.Id,
                 Name = result.Name,
                 Description = result.Description,
                 Price = result.Price, 
-                Image = "ASS_PLUG",
+                Image = result.Records.FirstOrDefault()?.Identifier.ToString("N"),
                 Categories = categories,
                 Sections = sections,
             });
