@@ -63,7 +63,7 @@ namespace Api.Controllers {
             RefreshTokensRepository.Create(refreshToken);
             await RefreshTokensRepository.SaveAsync();
 
-            var accessToken = TokenService.Encode(new AccessToken {
+            (string accessToken, long expiresAt) = TokenService.Encode(new AccessToken {
                 UserId = user.Id,
                 Login = user.Login,
                 UserRole = user.Role,
@@ -72,6 +72,7 @@ namespace Api.Controllers {
             return Ok(new AuthorizationResponse {
                 RefreshToken = refreshToken.Name,
                 AccessToken = accessToken,
+                ExpiresAt = expiresAt,
             });
         } 
 
@@ -96,7 +97,7 @@ namespace Api.Controllers {
                 await RefreshTokensRepository.SaveAsync();
             }
 
-            var accessToken = TokenService.Encode(new AccessToken {
+            (string accessToken, long expiresAt) = TokenService.Encode(new AccessToken {
                 UserId = user.Id,
                 Login = user.Login,
                 UserRole = user.Role,
@@ -105,6 +106,7 @@ namespace Api.Controllers {
             return Ok(new AuthorizationResponse {
                 RefreshToken = user.RefreshToken.Name,
                 AccessToken = accessToken,
+                ExpiresAt = expiresAt,
             });
         } 
 
@@ -116,7 +118,7 @@ namespace Api.Controllers {
                 return NotFound();
             }
             
-            var token = TokenService.Encode(new AccessToken {
+            (string accessToken, long expiresAt) = TokenService.Encode(new AccessToken {
                 UserId = user.Id,
                 Login = user.Login,
                 UserRole = user.Role,
@@ -124,7 +126,8 @@ namespace Api.Controllers {
 
             return Ok(new AuthorizationResponse {
                 RefreshToken = request.Token,
-                AccessToken = token,
+                AccessToken = accessToken,
+                ExpiresAt = expiresAt,
             });
         } 
     }

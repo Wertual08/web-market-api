@@ -14,8 +14,8 @@ namespace Api.Managers {
         private JwtSecurityTokenHandler Handler = new();
         private int AccessLifetime;
 
-        private static string CurrentTimestamp(int offset = 0) {
-            return new DateTimeOffset(DateTime.Now.AddSeconds(offset)).ToUnixTimeSeconds().ToString();
+        private static long CurrentTimestamp(int offset = 0) {
+            return new DateTimeOffset(DateTime.Now.AddSeconds(offset)).ToUnixTimeSeconds();
         }
 
         public TokenManager(TokenManagerConfig config) {
@@ -34,11 +34,12 @@ namespace Api.Managers {
             return Convert.ToBase64String(tokenData);
         }
 
-        public string Encode(AccessToken accessToken) {
+        public (string, long) Encode(AccessToken accessToken) {
+            long expiresAt = CurrentTimestamp(AccessLifetime);
             var claims = new List<Claim> {
                 new Claim(JwtRegisteredClaimNames.Sub, accessToken.UserId.ToString()),
-                new Claim(JwtRegisteredClaimNames.Nbf, CurrentTimestamp()),
-                new Claim(JwtRegisteredClaimNames.Exp, CurrentTimestamp(AccessLifetime)),
+                new Claim(JwtRegisteredClaimNames.Nbf, CurrentTimestamp().ToString()),
+                new Claim(JwtRegisteredClaimNames.Exp, expiresAt.ToString()),
                 new Claim("login", accessToken.Login),
                 new Claim("role", accessToken.UserRole.ToString()),
             };
@@ -53,7 +54,7 @@ namespace Api.Managers {
                 new JwtPayload(claims)
             );
 
-            return Handler.WriteToken(token);
+            return (Handler.WriteToken(token), expiresAt);
         }
 
         public AccessToken Decode(string accessToken) {
