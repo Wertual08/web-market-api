@@ -95,7 +95,7 @@ namespace Api {
             });
         }
 
-        public async void Configure(IApplicationBuilder app, IWebHostEnvironment env) {
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env) {
             if (!env.IsProduction()) {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
