@@ -33,13 +33,13 @@ namespace Api.Controllers {
             
             if (user != null) {
                 if (request.Login == user.Login) {
-                    return Conflict(new ErrorResponse { Error = ErrorType.LoginExists });
+                    return Conflict(new ConflictResponse("Login"));
                 }
                 if (request.Email == user.Email) {
-                    return Conflict(new ErrorResponse { Error = ErrorType.EmailExists });
+                    return Conflict(new ConflictResponse("Email"));
                 }
                 if (request.Phone == user.Phone) {
-                    return Conflict(new ErrorResponse { Error = ErrorType.PhoneExists });
+                    return Conflict(new ConflictResponse("Phone"));
                 }
             }
 
