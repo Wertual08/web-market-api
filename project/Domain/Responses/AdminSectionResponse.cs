@@ -5,7 +5,7 @@ using Api.Database.Models;
 namespace Api.Domain.Responses {
     public record AdminSectionResponse {
         public long Id { get; init; }
-        public long? ParentId { get; init; }
+        public long? SectionId { get; init; }
         public string Name { get; init; }
         public DateTime CreatedAt { get; init; }
         public DateTime UpdatedAt { get; init; }
@@ -15,7 +15,7 @@ namespace Api.Domain.Responses {
 
         public AdminSectionResponse(Section model) {
             Id = model.Id;
-            ParentId = model.SectionId;
+            SectionId = model.SectionId;
             Name = model.Name;
             CreatedAt = model.CreatedAt;
             UpdatedAt = model.UpdatedAt;
