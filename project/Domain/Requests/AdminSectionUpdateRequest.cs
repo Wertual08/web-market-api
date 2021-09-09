@@ -5,7 +5,7 @@ namespace Api.Domain.Requests {
     public class AdminSectionUpdateRequest {
         public long? SectionId { get; init; }
         
-        public long? RecordId;
+        public long? RecordId { get; init; }
 
         [Required]
         [MaxLength(256)]
