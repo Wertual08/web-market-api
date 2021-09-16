@@ -9,11 +9,10 @@ namespace Api.Domain.Repositories {
         public UsersRepository(ApplicationDbContext dbContext) : base(dbContext) {
         }
 
-        public Task<User> FindAsync(string login, string email, string phone) {
+        public Task<User> FindAsync(string email, string phone) {
             return (
                 from user in DbContext.Users
                 where 
-                    user.Login == login || 
                     user.Email == email ||
                     (user.Phone != null && user.Phone == phone)
                 select user
@@ -26,11 +25,7 @@ namespace Api.Domain.Repositories {
                 join token in DbContext.RefreshTokens
                 on user.Id equals token.UserId
                 where token.Name == refreshToken
-                select new User {
-                    Id = user.Id,
-                    Role = user.Role,
-                    Login = user.Login,
-                }
+                select user
             ).FirstOrDefaultAsync();
         }
 

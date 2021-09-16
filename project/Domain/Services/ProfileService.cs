@@ -27,14 +27,10 @@ namespace Api.Domain.Services {
         ) {
             var conflict = await ProfileRepository.FindAsync(
                 id,
-                login,
                 email,
                 phone
             );
             if (conflict is not null) {
-                if (conflict.Login == login) {
-                    return (null, nameof(conflict.Login));
-                }
                 if (conflict.Email == email) {
                     return (null, nameof(conflict.Email));
                 }
@@ -49,7 +45,6 @@ namespace Api.Domain.Services {
                 return (null, null);
             } 
 
-            result.Login = login;
             result.Email = email;
             result.Phone = phone;
             result.Name = name;

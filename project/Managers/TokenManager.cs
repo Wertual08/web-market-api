@@ -40,7 +40,7 @@ namespace Api.Managers {
                 new Claim(JwtRegisteredClaimNames.Sub, accessToken.UserId.ToString()),
                 new Claim(JwtRegisteredClaimNames.Nbf, CurrentTimestamp().ToString()),
                 new Claim(JwtRegisteredClaimNames.Exp, expiresAt.ToString()),
-                new Claim("login", accessToken.Login),
+                new Claim("email", accessToken.Email),
                 new Claim("role", accessToken.UserRole.ToString()),
             };
 
@@ -72,7 +72,7 @@ namespace Api.Managers {
 
             return new AccessToken {
                 UserId = long.Parse(claims.FindFirstValue(JwtRegisteredClaimNames.Sub)),
-                Login = claims.FindFirstValue("login"),
+                Email = claims.FindFirstValue("email"),
                 UserRole = Enum.Parse<UserRoleId>(claims.FindFirstValue("role")),
             };
         }

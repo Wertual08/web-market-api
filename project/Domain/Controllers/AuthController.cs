@@ -29,12 +29,9 @@ namespace Api.Controllers {
 
         [HttpPost("register")]
         public async Task<ActionResult<AuthorizationResponse>> Register(RegisterRequest request) {
-            var user = await UsersRepository.FindAsync(request.Login, request.Email, request.Phone);
+            var user = await UsersRepository.FindAsync(request.Email, request.Phone);
             
             if (user != null) {
-                if (request.Login == user.Login) {
-                    return Conflict(new ConflictResponse("Login"));
-                }
                 if (request.Email == user.Email) {
                     return Conflict(new ConflictResponse("Email"));
                 }
@@ -45,7 +42,6 @@ namespace Api.Controllers {
 
             user = new User {
                 Role = UserRoleId.Basic,
-                Login = request.Login,
                 Password = HashService.Make(request.Password),
                 Email = request.Email,
                 Phone = request.Phone,
@@ -65,7 +61,7 @@ namespace Api.Controllers {
 
             (string accessToken, long expiresAt) = TokenService.Encode(new AccessToken {
                 UserId = user.Id,
-                Login = user.Login,
+                Email = user.Email,
                 UserRole = user.Role,
             });
 
@@ -78,7 +74,7 @@ namespace Api.Controllers {
 
         [HttpPost("login")]
         public async Task<ActionResult<AuthorizationResponse>> Login(LoginRequest request) {
-            var user = await UsersRepository.FindAsync(request.Login, request.Login, request.Login);
+            var user = await UsersRepository.FindAsync(request.Login, request.Login);
 
             if (user == null) {
                 return NotFound();
@@ -99,7 +95,7 @@ namespace Api.Controllers {
 
             (string accessToken, long expiresAt) = TokenService.Encode(new AccessToken {
                 UserId = user.Id,
-                Login = user.Login,
+                Email = user.Email,
                 UserRole = user.Role,
             });
 
@@ -120,7 +116,7 @@ namespace Api.Controllers {
             
             (string accessToken, long expiresAt) = TokenService.Encode(new AccessToken {
                 UserId = user.Id,
-                Login = user.Login,
+                Email = user.Email,
                 UserRole = user.Role,
             });
 

@@ -17,12 +17,11 @@ namespace Api.Domain.Repositories {
             ).FirstOrDefaultAsync();
         }
 
-        public Task<User> FindAsync(long id, string login, string email, string phone) {
+        public Task<User> FindAsync(long id, string email, string phone) {
             return (
                 from user in DbContext.Users
                 where 
                     user.Id != id && (
-                        user.Login == login || 
                         user.Email == email || 
                         user.Phone == phone
                     )

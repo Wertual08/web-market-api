@@ -21,16 +21,12 @@ namespace Api.Database.Migrations {
                         type: "integer references user_roles(id)",
                         nullable: false
                     ),
-                    login = table.Column<string>(
+                    email = table.Column<string>(
                         type: "text unique",
                         nullable: false
                     ),
                     password = table.Column<string>(
                         type: "text",
-                        nullable: false
-                    ),
-                    email = table.Column<string>(
-                        type: "text unique",
                         nullable: false
                     ),
                     phone = table.Column<string>(

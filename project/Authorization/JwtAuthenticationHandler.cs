@@ -34,7 +34,7 @@ namespace Api.Authorization {
                     
                     Context.Items["UserId"] = decoded.UserId;
                     Context.Items["AccessLevel"] = decoded.UserRole;
-                    Context.Items["Login"] = decoded.Login;
+                    Context.Items["Email"] = decoded.Email;
                 } catch (Exception ex) {
                     return Task.FromResult(AuthenticateResult.Fail(ex));
                 }
