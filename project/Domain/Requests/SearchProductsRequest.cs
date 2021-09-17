@@ -7,5 +7,7 @@ namespace Api.Domain.Requests {
         public int Page { get; init; }
         public List<long> Categories { get; init; } 
         public List<long> Sections { get; init; } 
+        public decimal? MinPrice { get; init; }
+        public decimal? MaxPrice { get; init; }
     }
 }

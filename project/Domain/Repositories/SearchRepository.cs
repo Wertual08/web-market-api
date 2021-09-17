@@ -7,7 +7,7 @@ using Nest;
 
 namespace Api.Domain.Repositories {
     public class SearchRepository {
-        private static readonly string Index = "products";
+        private const string Index = "products";
         private readonly IElasticsearchContext Context;
         public SearchRepository(IElasticsearchContext context) {
             Context = context;
@@ -26,25 +26,47 @@ namespace Api.Domain.Repositories {
             int skip,
             int take,
             List<long> categories,
-            List<long> sections
+            List<long> sections,
+            decimal? minPrice,
+            decimal? maxPrice
         ) {
+            var searchQuery = new QueryContainer();
+            searchQuery &= (
+                new MatchPhrasePrefixQuery {
+                    Field = "Name",
+                    Query = query,
+                } ||
+                new MatchQuery {
+                    Field = "Name",
+                    Fuzziness = Fuzziness.Auto,
+                    Query = query
+                }
+            );
+
             var result = await Context.Client.SearchAsync<FTSProduct>(
-                s => s.Query(
-                    q => q.MatchPhrasePrefix(m => m
-                        .Field(f => f.Name)
-                        .Query(query)
-                        
-                    ) ||
-                    q.Match(m => m
-                        .Field(f => f.Name)
-                        .Fuzziness(Fuzziness.Auto)
-                        .Query(query)
-                    )
-                )
+                s => s.Query(q => searchQuery)
                 .Index(Index)
                 .Skip(skip)
                 .Take(take)
             );
+            //var result = await Context.Client.SearchAsync<FTSProduct>(
+            //    s => s.Query(
+            //        q => (q.MatchPhrasePrefix(m => m
+            //            .Field(f => f.Name)
+            //            .Query(query)
+            //            
+            //        ) ||
+            //        q.Match(m => m
+            //            .Field(f => f.Name)
+            //            .Fuzziness(Fuzziness.Auto)
+            //            .Query(query)
+            //        ))
+            //         
+            //    )
+            //    .Index(Index)
+            //    .Skip(skip)
+            //    .Take(take)
+            //);
             
             if (result.ServerError is not null) {
                 throw new Exception(result.ServerError.ToString());

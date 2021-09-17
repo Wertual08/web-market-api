@@ -26,7 +26,9 @@ namespace Api.Controllers {
                 request.Query,
                 request.Page, 
                 request.Categories, 
-                request.Sections
+                request.Sections,
+                request.MinPrice,
+                request.MaxPrice
             );
             return Ok(from item in products select new SearchProductResponse(item));
         }

@@ -16,7 +16,9 @@ namespace Api.Domain.Services {
             string query, 
             int page, 
             List<long> categories, 
-            List<long> sections
+            List<long> sections,
+            decimal? minPrice,
+            decimal? maxPrice
         ) {
             int pageSize = 64;
             return SearchRepository.SearchProductsAsync(
@@ -24,7 +26,9 @@ namespace Api.Domain.Services {
                 page * pageSize,
                 pageSize,
                 categories,
-                sections
+                sections,
+                minPrice,
+                maxPrice
             );
         }
     }
