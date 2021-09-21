@@ -21,7 +21,7 @@ namespace Api.Controllers {
         }
 
         [HttpGet("products")]
-        public async Task<ActionResult<IEnumerable<SearchProductResponse>>> GetAsync([FromQuery] SearchProductsRequest request) {
+        public async Task<ActionResult<IEnumerable<LiteProductResponse>>> GetAsync([FromQuery] SearchProductsRequest request) {
             var products = await Service.SearchProductsAsync(
                 request.Query,
                 request.Page, 
@@ -30,7 +30,7 @@ namespace Api.Controllers {
                 request.MinPrice,
                 request.MaxPrice
             );
-            return Ok(from item in products select new SearchProductResponse(item));
+            return Ok(from item in products select new LiteProductResponse(item));
         }
     }
 }
