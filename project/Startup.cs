@@ -84,6 +84,7 @@ namespace Api {
             services.AddScoped<CategoriesService>();
             services.AddScoped<SectionsService>();
             services.AddScoped<CartService>();
+            services.AddScoped<LiteProductsService>();
             services.AddScoped<AdminProductsService>();
             services.AddScoped<AdminCategoriesService>();
             services.AddScoped<AdminSectionsService>();
