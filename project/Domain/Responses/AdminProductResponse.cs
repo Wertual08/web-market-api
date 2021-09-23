@@ -10,7 +10,7 @@ namespace Api.Domain.Responses {
         public string Description { get; init; }
         public DateTime CreatedAt { get; init; } 
         public DateTime UpdatedAt { get; init; }
-        public List<string> Records { get; init; }
+        public List<RecordResponse> Records { get; init; }
         public List<AdminCategoryResponse> Categories { get; init; }
         public List<AdminSectionResponse> Sections { get; init; }
 
@@ -27,7 +27,7 @@ namespace Api.Domain.Responses {
 
             if (model.Records is not null) {
                 foreach (var record in model.Records) {
-                    Records.Add(record.Identifier.ToString("N"));
+                    Records.Add(new RecordResponse(record));
                 }
             }
             if (model.Categories is not null) {
