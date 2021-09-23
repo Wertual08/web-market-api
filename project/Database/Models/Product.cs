@@ -21,7 +21,7 @@ namespace Api.Database.Models {
         [Required]
         public DateTime UpdatedAt { get; set; } = DateTime.Now;
 
-
+    
         public IEnumerable<Record> Records { get; set; }
         public IEnumerable<Category> Categories { get; set; }
         public IEnumerable<Section> Sections { get; set; }

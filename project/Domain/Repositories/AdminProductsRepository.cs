@@ -61,10 +61,12 @@ namespace Api.Domain.Repositories {
                 select productRecord
             );
             if (recordIds is not null) {
+                int i = 0;
                 foreach (var recordId in recordIds) {
                     DbContext.ProductRecords.Add(new ProductRecord {
                         ProductId = productId,
                         RecordId = recordId,
+                        Position = i++,
                     });
                 }
             }

@@ -25,6 +25,10 @@ namespace Api.Database.Migrations {
                         type: "timestamptz", 
                         nullable: false
                     ),
+                    position = table.Column<int>(
+                        type: "integer",
+                        nullable: false
+                    ),
                 },
                 constraints: table => {
                     table.PrimaryKey(

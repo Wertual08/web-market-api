@@ -9,6 +9,8 @@ namespace Api.Database.Models {
         
         [Required]
         public DateTime CreatedAt { get; init; } = DateTime.Now;
+        
+        public int Position { get; set; }
 
 
         public Product Product { get; set; }
