@@ -44,5 +44,13 @@ namespace Api.Domain.Repositories {
             
             return query.ToListAsync();
         }
+
+        public Task<decimal> GetMaxPriceAsync() {
+            return DbContext.Products.MaxAsync(x => x.Price);
+        }
+
+        public Task<decimal> GetMinPriceAsync() {
+            return DbContext.Products.MinAsync(x => x.Price);
+        }
     }
 }

@@ -6,6 +6,7 @@ using Api.FullTextSearch.Models;
 namespace Api.Domain.Responses {
     public record LiteProductResponse {
         public long Id { get; init; }
+        public decimal? OldPrice { get; init; }
         public decimal Price { get; init; }
         public string Name { get; init; }
         public string Description { get; init; }
@@ -15,6 +16,7 @@ namespace Api.Domain.Responses {
 
         public LiteProductResponse(FTSProduct model) {
             Id = model.Id;
+            OldPrice = model.OldPrice;
             Price = model.Price;
             Name = model.Name;
             Description = model.Description;
@@ -36,6 +38,7 @@ namespace Api.Domain.Responses {
 
         public LiteProductResponse(Product model) {
             Id = model.Id;
+            OldPrice = model.OldPrice;
             Price = model.Price;
             Name = model.Name;
             Description = model.Description;

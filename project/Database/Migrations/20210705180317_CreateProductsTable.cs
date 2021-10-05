@@ -17,6 +17,10 @@ namespace Api.Database.Migrations {
                         type: "bigint primary key generated always as identity", 
                         nullable: false
                     ),
+                    old_price = table.Column<decimal>(
+                        type: "numeric",
+                        nullable: true
+                    ),
                     price = table.Column<decimal>(
                         type: "numeric",
                         nullable: false

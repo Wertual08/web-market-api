@@ -7,6 +7,8 @@ namespace Api.Database.Models {
         [Key]
         public long Id { get; init; }
 
+        public decimal? OldPrice { get; set; }
+
         public decimal Price { get; set; }
 
         [Required, MaxLength(256)]

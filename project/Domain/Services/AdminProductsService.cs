@@ -27,6 +27,7 @@ namespace Api.Domain.Services {
         }
 
         public async Task<Product> PostAsync(
+            decimal? oldPrice,
             decimal price, 
             string name, 
             string description, 
@@ -35,6 +36,7 @@ namespace Api.Domain.Services {
             List<long> sections
         ) {
             var result = new Product{
+                OldPrice = oldPrice,
                 Price = price,
                 Name = name,
                 Description = description,
@@ -52,6 +54,7 @@ namespace Api.Domain.Services {
                 Id = result.Id,
                 Name = result.Name,
                 Description = result.Description,
+                OldPrice = result.OldPrice,
                 Price = result.Price, 
                 Image = result.Records.FirstOrDefault()?.Identifier.ToString("N"),
                 Categories = categories,
@@ -63,6 +66,7 @@ namespace Api.Domain.Services {
 
         public async Task<Product> PutAsync(
             long id, 
+            decimal? oldPrice,
             decimal price, 
             string name, 
             string description, 
@@ -76,6 +80,7 @@ namespace Api.Domain.Services {
                 return null;
             } 
 
+            result.OldPrice = oldPrice;
             result.Price = price;
             result.Name = name;
             result.Description = description;
@@ -92,6 +97,7 @@ namespace Api.Domain.Services {
                 Id = result.Id,
                 Name = result.Name,
                 Description = result.Description,
+                OldPrice = result.OldPrice,
                 Price = result.Price, 
                 Image = result.Records.FirstOrDefault()?.Identifier.ToString("N"),
                 Categories = categories,

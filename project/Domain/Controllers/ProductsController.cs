@@ -42,5 +42,13 @@ namespace Api.Controllers {
                 return NotFound();
             }
         }
+
+        [HttpGet("stats")]
+        public async Task<ActionResult<ProductsStatsResponse>> GetStatsAsync() {
+            return new ProductsStatsResponse {
+                MinPrice = await ProductsRepository.GetMinPriceAsync(),
+                MaxPrice = await ProductsRepository.GetMaxPriceAsync(),
+            };
+        }
     }
 }

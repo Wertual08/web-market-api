@@ -3,6 +3,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Api.Domain.Requests {
     public class AdminProductUpdateRequest {
+        public decimal? OldPrice { get; init; }
+
         public decimal Price { get; init; }
         
         [Required]

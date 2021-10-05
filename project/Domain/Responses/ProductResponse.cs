@@ -4,6 +4,7 @@ using Api.Database.Models;
 namespace Api.Domain.Responses {
     public record ProductResponse {
         public long Id { get; init; }
+        public decimal? OldPrice { get; init; }
         public decimal Price { get; init; }
         public string Name { get; init; }
         public string Description { get; init; }
@@ -13,6 +14,7 @@ namespace Api.Domain.Responses {
 
         public ProductResponse(Product model) {
             Id = model.Id;
+            OldPrice = model.OldPrice;
             Price = model.Price;
             Name = model.Name;
             Description = model.Description;

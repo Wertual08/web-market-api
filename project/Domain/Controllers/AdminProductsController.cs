@@ -41,6 +41,7 @@ namespace Api.Controllers {
         [HttpPost]
         public async Task<ActionResult<AdminProductResponse>> PostAsync(AdminProductCreateRequest request) {
             var result = await Service.PostAsync(
+                request.OldPrice,
                 request.Price, 
                 request.Name, 
                 request.Description,
@@ -56,6 +57,7 @@ namespace Api.Controllers {
         public async Task<ActionResult<AdminProductResponse>> PutAsync(long id, AdminProductUpdateRequest request) {
             var result = await Service.PutAsync(
                 id, 
+                request.OldPrice,
                 request.Price, 
                 request.Name, 
                 request.Description,
