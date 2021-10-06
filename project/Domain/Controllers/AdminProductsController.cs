@@ -83,5 +83,16 @@ namespace Api.Controllers {
                 return Ok(new AdminProductResponse(result));
             }
         }
+
+        [HttpPost("{id}/index")]
+        public async Task<ActionResult<AdminProductResponse>> PostIndexAsync(long id) {
+            var result = await Service.PostIndexAsync(id);
+
+            if (result is null) {
+                return NotFound();
+            } else {
+                return Ok(new AdminProductResponse(result));
+            }
+        }
     }
 }

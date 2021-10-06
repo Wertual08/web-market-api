@@ -121,5 +121,36 @@ namespace Api.Domain.Services {
 
             return result;
         }
+
+        public async Task<Product> PostIndexAsync(long id) {
+            var result = await AdminProductsRepository.FindAsync(id);
+
+            if (result is null) {
+                return null;
+            } 
+
+            var categories = new List<long>();
+            foreach (var category in result.Categories) {
+                categories.Add(category.Id);
+            }
+            var sections = new List<long>();
+            foreach (var section in result.Sections) {
+                sections.Add(section.Id);
+            }
+            
+            result = await AdminProductsRepository.FindAsync(id);
+            await SearchRepository.IndexAsync(new FTSProduct {
+                Id = result.Id,
+                Name = result.Name,
+                Description = result.Description,
+                OldPrice = result.OldPrice,
+                Price = result.Price, 
+                Image = result.Records.FirstOrDefault()?.Identifier.ToString("N"),
+                Categories = categories,
+                Sections = sections,
+            });
+
+            return result;
+        }
     }
 }
