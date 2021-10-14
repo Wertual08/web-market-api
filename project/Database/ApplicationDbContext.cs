@@ -68,6 +68,8 @@ namespace Api.Database {
         public DbSet<OrderProduct> OrderProducts { get; set; }
         public DbSet<CartProduct> CartProducts { get; set; }
 
+        public DbSet<MainSlide> MainSlides { get; set; }
+
         public override int SaveChanges() {
             // TODO: It would be much safer to fire events after changes were saved
             NotifyProducts();

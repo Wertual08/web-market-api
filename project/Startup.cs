@@ -77,6 +77,7 @@ namespace Api {
             services.AddScoped<AdminCategoriesRepository>();
             services.AddScoped<AdminSectionsRepository>();
             services.AddScoped<SearchRepository>();
+            services.AddScoped<PublicRepository>();
 
             services.AddScoped<RecordsService>();
             services.AddScoped<ProfileService>();
@@ -89,6 +90,8 @@ namespace Api {
             services.AddScoped<AdminCategoriesService>();
             services.AddScoped<AdminSectionsService>();
             services.AddScoped<SearchService>();
+            services.AddScoped<PublicService>();
+            services.AddScoped<AdminPublicService>();
             
             services.AddControllers();
             services.AddSwaggerGen(c => {
