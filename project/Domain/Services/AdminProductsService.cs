@@ -29,8 +29,10 @@ namespace Api.Domain.Services {
         public async Task<Product> PostAsync(
             decimal? oldPrice,
             decimal price, 
+            string code,
             string name, 
             string description, 
+            string privateInfo,
             List<long> records, 
             List<long> categories, 
             List<long> sections
@@ -38,8 +40,10 @@ namespace Api.Domain.Services {
             var result = new Product{
                 OldPrice = oldPrice,
                 Price = price,
+                Code = code,
                 Name = name,
                 Description = description,
+                PrivateInfo = privateInfo,
             };
             AdminProductsRepository.Create(result);
             await AdminProductsRepository.SaveAsync();
@@ -52,6 +56,7 @@ namespace Api.Domain.Services {
             result = await AdminProductsRepository.FindAsync(result.Id);
             await SearchRepository.IndexAsync(new FTSProduct {
                 Id = result.Id,
+                Code = result.Code,
                 Name = result.Name,
                 Description = result.Description,
                 OldPrice = result.OldPrice,
@@ -68,8 +73,10 @@ namespace Api.Domain.Services {
             long id, 
             decimal? oldPrice,
             decimal price, 
+            string code,
             string name, 
             string description, 
+            string privateInfo,
             List<long> records, 
             List<long> categories, 
             List<long> sections
@@ -83,7 +90,9 @@ namespace Api.Domain.Services {
             result.OldPrice = oldPrice;
             result.Price = price;
             result.Name = name;
+            result.Code = code;
             result.Description = description;
+            result.PrivateInfo = privateInfo;
             result.UpdatedAt = DateTime.Now;
 
             // FIXME: Update relations
@@ -95,6 +104,7 @@ namespace Api.Domain.Services {
             result = await AdminProductsRepository.FindAsync(id);
             await SearchRepository.IndexAsync(new FTSProduct {
                 Id = result.Id,
+                Code = result.Code,
                 Name = result.Name,
                 Description = result.Description,
                 OldPrice = result.OldPrice,
@@ -141,6 +151,7 @@ namespace Api.Domain.Services {
             result = await AdminProductsRepository.FindAsync(id);
             await SearchRepository.IndexAsync(new FTSProduct {
                 Id = result.Id,
+                Code = result.Code,
                 Name = result.Name,
                 Description = result.Description,
                 OldPrice = result.OldPrice,

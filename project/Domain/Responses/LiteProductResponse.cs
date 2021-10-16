@@ -8,6 +8,7 @@ namespace Api.Domain.Responses {
         public long Id { get; init; }
         public decimal? OldPrice { get; init; }
         public decimal Price { get; init; }
+        public string Code { get; init; }
         public string Name { get; init; }
         public string Description { get; init; }
         public string Image { get; init; }
@@ -18,6 +19,7 @@ namespace Api.Domain.Responses {
             Id = model.Id;
             OldPrice = model.OldPrice;
             Price = model.Price;
+            Code = model.Code;
             Name = model.Name;
             Description = model.Description;
             Image = model.Image;
@@ -40,6 +42,7 @@ namespace Api.Domain.Responses {
             Id = model.Id;
             OldPrice = model.OldPrice;
             Price = model.Price;
+            Code = model.Code;
             Name = model.Name;
             Description = model.Description;
             Image = model.Records.FirstOrDefault()?.Identifier.ToString("N");

@@ -43,8 +43,10 @@ namespace Api.Controllers {
             var result = await Service.PostAsync(
                 request.OldPrice,
                 request.Price, 
+                request.Code,
                 request.Name, 
                 request.Description,
+                request.PrivateInfo,
                 request.Records,
                 request.Categories,
                 request.Sections
@@ -59,8 +61,10 @@ namespace Api.Controllers {
                 id, 
                 request.OldPrice,
                 request.Price, 
+                request.Code,
                 request.Name, 
                 request.Description,
+                request.PrivateInfo,
                 request.Records,
                 request.Categories,
                 request.Sections

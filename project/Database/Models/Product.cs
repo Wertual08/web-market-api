@@ -7,6 +7,8 @@ namespace Api.Database.Models {
         [Key]
         public long Id { get; init; }
 
+        public string Code { get; set; }
+
         public decimal? OldPrice { get; set; }
 
         public decimal Price { get; set; }
@@ -16,6 +18,9 @@ namespace Api.Database.Models {
 
         [Required, MaxLength(4096)]
         public string Description { get; set; }
+
+        [Required]
+        public string PrivateInfo { get; set; }
         
         [Required]
         public DateTime CreatedAt { get; init; } = DateTime.Now;

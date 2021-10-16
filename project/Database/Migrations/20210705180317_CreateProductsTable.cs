@@ -25,12 +25,20 @@ namespace Api.Database.Migrations {
                         type: "numeric",
                         nullable: false
                     ),
+                    code = table.Column<string>(
+                        type: "text unique",
+                        nullable: false
+                    ),
                     name = table.Column<string>(
                         type: "text", 
                         nullable: false
                     ),
                     description = table.Column<string>(
                         type: "text", 
+                        nullable: false
+                    ),
+                    private_info = table.Column<string>(
+                        type: "text",
                         nullable: false
                     ),
                     created_at = table.Column<DateTime>(

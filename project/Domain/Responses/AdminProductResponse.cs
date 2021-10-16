@@ -6,8 +6,10 @@ namespace Api.Domain.Responses {
     public record AdminProductResponse {
         public long Id { get; init; }
         public decimal Price { get; init; }
+        public string Code { get; init; }
         public string Name { get; init; }
         public string Description { get; init; }
+        public string PrivateInfo { get; init; }
         public DateTime CreatedAt { get; init; } 
         public DateTime UpdatedAt { get; init; }
         public List<RecordResponse> Records { get; init; }
@@ -17,8 +19,10 @@ namespace Api.Domain.Responses {
         public AdminProductResponse(Product model) {
             Id = model.Id;
             Price = model.Price;
+            Code = model.Code;
             Name = model.Name;
             Description = model.Description;
+            PrivateInfo = model.PrivateInfo;
             CreatedAt = model.CreatedAt;
             UpdatedAt = model.UpdatedAt;
             Records = new ();

@@ -6,6 +6,9 @@ namespace Api.Domain.Requests {
         public decimal? OldPrice { get; init; }
 
         public decimal Price { get; init; }
+
+        [Required]
+        public string Code { get; init; }
         
         [Required]
         [MaxLength(256)]
@@ -14,6 +17,9 @@ namespace Api.Domain.Requests {
         [Required]
         [MaxLength(4096)]
         public string Description { get; init; }
+
+        [Required]
+        public string PrivateInfo { get; init; }
         
         [Required]
         public List<long> Records { get; init; }
