@@ -5,6 +5,7 @@ using Api.Database.Models;
 namespace Api.Domain.Responses {
     public record AdminProductResponse {
         public long Id { get; init; }
+        public decimal? OldPrice { get; init; }
         public decimal Price { get; init; }
         public string Code { get; init; }
         public string Name { get; init; }
@@ -18,6 +19,7 @@ namespace Api.Domain.Responses {
 
         public AdminProductResponse(Product model) {
             Id = model.Id;
+            OldPrice = model.OldPrice;
             Price = model.Price;
             Code = model.Code;
             Name = model.Name;
