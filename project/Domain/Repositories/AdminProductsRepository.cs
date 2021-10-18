@@ -23,6 +23,10 @@ namespace Api.Domain.Repositories {
             .FirstOrDefaultAsync();
         }
 
+        public Task<bool> CodeExistsAsync(string code) {
+            return DbContext.Products.AnyAsync(product => product.Code == code);
+        }
+
         public Task<List<Product>> ListAsync(int skip, int take, List<long> categories = null, List<long> sections = null) {
             var query = (
                 from product in DbContext.Products 

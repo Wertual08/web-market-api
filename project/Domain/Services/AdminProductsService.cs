@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Api.Database.Models;
 using Api.Domain.Repositories;
+using Api.Domain.Services.Result;
 using Api.FullTextSearch.Models;
 
 namespace Api.Domain.Services {
@@ -26,7 +27,7 @@ namespace Api.Domain.Services {
             return await AdminProductsRepository.FindAsync(id);
         }
 
-        public async Task<Product> PostAsync(
+        public async Task<ServiceResult<Product>> PostAsync(
             decimal? oldPrice,
             decimal price, 
             string code,
@@ -37,6 +38,10 @@ namespace Api.Domain.Services {
             List<long> categories, 
             List<long> sections
         ) {
+            if (await AdminProductsRepository.CodeExistsAsync(code)) {
+                return new ServiceResult<Product>(ServiceResultStatus.Conflict, "Code");
+            }
+            
             var result = new Product{
                 OldPrice = oldPrice,
                 Price = price,
@@ -69,7 +74,7 @@ namespace Api.Domain.Services {
             return result;
         }
 
-        public async Task<Product> PutAsync(
+        public async Task<ServiceResult<Product>> PutAsync(
             long id, 
             decimal? oldPrice,
             decimal price, 
@@ -81,10 +86,14 @@ namespace Api.Domain.Services {
             List<long> categories, 
             List<long> sections
         ) {
+            if (await AdminProductsRepository.CodeExistsAsync(code)) {
+                return new ServiceResult<Product>(ServiceResultStatus.Conflict, "Code");
+            }
+
             var result = await AdminProductsRepository.FindAsync(id);
 
             if (result is null) {
-                return null;
+                return ServiceResultStatus.NotFound;
             } 
 
             result.OldPrice = oldPrice;
@@ -117,11 +126,11 @@ namespace Api.Domain.Services {
             return result;
         }
 
-        public async Task<Product> DeleteAsync(long id) {
+        public async Task<ServiceResult<Product>> DeleteAsync(long id) {
             var result = await AdminProductsRepository.FindAsync(id);
 
             if (result is null) {
-                return null;
+                return ServiceResultStatus.NotFound;
             } 
 
             AdminProductsRepository.Delete(result);
@@ -132,11 +141,11 @@ namespace Api.Domain.Services {
             return result;
         }
 
-        public async Task<Product> PostIndexAsync(long id) {
+        public async Task<ServiceResult<Product>> PostIndexAsync(long id) {
             var result = await AdminProductsRepository.FindAsync(id);
 
             if (result is null) {
-                return null;
+                return ServiceResultStatus.NotFound;
             } 
 
             var categories = new List<long>();

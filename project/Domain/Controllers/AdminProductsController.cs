@@ -12,7 +12,7 @@ using Api.Domain.Services;
 
 namespace Api.Controllers {
     [ApiController, Route("admin/products"), Authorize(UserRoleId.Admin)]
-    public class AdminProductsController : ControllerBase {
+    public class AdminProductsController : ServiceController {
         private readonly AdminProductsService Service;
 
         public AdminProductsController(AdminProductsService service)
@@ -52,7 +52,7 @@ namespace Api.Controllers {
                 request.Sections
             );
 
-            return Ok(new AdminProductResponse(result));
+            return MakeResponse(result, model => new AdminProductResponse(model));
         }
 
         [HttpPut("{id}")]
@@ -70,33 +70,21 @@ namespace Api.Controllers {
                 request.Sections
             );
 
-            if (result is null) {
-                return NotFound();
-            } else {
-                return Ok(new AdminProductResponse(result));
-            }
+            return MakeResponse(result, model => new AdminProductResponse(model));
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult<AdminProductResponse>> DeleteAsync(long id) {
             var result = await Service.DeleteAsync(id);
 
-            if (result is null) {
-                return NotFound();
-            } else {
-                return Ok(new AdminProductResponse(result));
-            }
+            return MakeResponse(result, model => new AdminProductResponse(model));
         }
 
         [HttpPost("{id}/index")]
         public async Task<ActionResult<AdminProductResponse>> PostIndexAsync(long id) {
             var result = await Service.PostIndexAsync(id);
 
-            if (result is null) {
-                return NotFound();
-            } else {
-                return Ok(new AdminProductResponse(result));
-            }
+            return MakeResponse(result, model => new AdminProductResponse(model));
         }
     }
 }
