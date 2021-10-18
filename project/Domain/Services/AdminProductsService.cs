@@ -86,15 +86,15 @@ namespace Api.Domain.Services {
             List<long> categories, 
             List<long> sections
         ) {
-            if (await AdminProductsRepository.CodeExistsAsync(code)) {
-                return new ServiceResult<Product>(ServiceResultStatus.Conflict, "Code");
-            }
-
             var result = await AdminProductsRepository.FindAsync(id);
 
             if (result is null) {
                 return ServiceResultStatus.NotFound;
             } 
+
+            if (result.Code != code && await AdminProductsRepository.CodeExistsAsync(code)) {
+                return new ServiceResult<Product>(ServiceResultStatus.Conflict, "Code");
+            }
 
             result.OldPrice = oldPrice;
             result.Price = price;
