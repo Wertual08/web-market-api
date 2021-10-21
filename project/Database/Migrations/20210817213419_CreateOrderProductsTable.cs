@@ -25,6 +25,10 @@ namespace Api.Database.Migrations {
                         type: "integer", 
                         nullable: false
                     ),
+                    price = table.Column<decimal>(
+                        type: "numeric",
+                        nullable: false
+                    ),
                     created_at = table.Column<DateTime>(
                         type: "timestamptz", 
                         nullable: false

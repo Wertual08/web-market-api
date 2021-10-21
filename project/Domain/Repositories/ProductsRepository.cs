@@ -23,6 +23,15 @@ namespace Api.Domain.Repositories {
             .AsSplitQuery()
             .FirstOrDefaultAsync();
         }
+
+        public Task<List<Product>> FindAsync(IEnumerable<long> ids) {
+            return (
+                from product in DbContext.Products
+                where ids.Contains(product.Id)
+                select product
+            )
+            .ToListAsync();
+        }
         
         public Task<List<Product>> ListAsync(int skip, int take, List<long> categories, List<long> sections) {
             var query = (

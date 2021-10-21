@@ -10,11 +10,15 @@ namespace Api.Domain.Services {
     public class OrdersService {
         private readonly OrdersRepository OrdersRepository;
         private readonly OrderProductsRepository OrderProductsRepository;
+        private readonly ProductsRepository ProductsRepository;
 
-        public OrdersService(OrdersRepository ordersRepository, OrderProductsRepository orderProductsRepository)
-        {
+        public OrdersService(
+            OrdersRepository ordersRepository, 
+            OrderProductsRepository orderProductsRepository,
+            ProductsRepository productsRepository) {
             OrdersRepository = ordersRepository;
             OrderProductsRepository = orderProductsRepository;
+            ProductsRepository = productsRepository;
         }
         
         public async Task<ServiceResult<IEnumerable<Order>>> ListAsync(long userId, int page) {
@@ -65,11 +69,13 @@ namespace Api.Domain.Services {
             await OrdersRepository.SaveAsync();
 
             var orderProducts = new List<OrderProduct>(products.Count);
+            var productModels = await ProductsRepository.FindAsync(from product in products select product.Key);
             foreach (var product in products) {
                 orderProducts.Add(new OrderProduct {
                     OrderId = order.Id,
                     ProductId = product.Key,
                     Amount = product.Value,
+                    Price = productModels.Find(p => p.Id == product.Key).Price,
                 });
             }
 

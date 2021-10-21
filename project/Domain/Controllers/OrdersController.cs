@@ -13,8 +13,7 @@ namespace Api.Controllers {
     public class OrdersController : ServiceController {
         private readonly OrdersService Service;
 
-        public OrdersController(OrdersService service)
-        {
+        public OrdersController(OrdersService service) {
             Service = service;
         }
 
