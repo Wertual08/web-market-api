@@ -19,6 +19,14 @@ namespace Api.Domain.Repositories {
             ).FirstOrDefaultAsync();
         }
 
+        public Task<User> FindAsync(long id) {
+            return (
+                from user in DbContext.Users
+                where user.Id == id
+                select user
+            ).FirstOrDefaultAsync();
+        }
+
         public Task<User> FindByTokenAsync(string refreshToken) {
             return (
                 from user in DbContext.Users

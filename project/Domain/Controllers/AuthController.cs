@@ -126,5 +126,24 @@ namespace Api.Controllers {
                 ExpiresAt = expiresAt,
             });
         } 
+
+        [HttpPost("password"), Authorize]
+        public async Task<IActionResult> Password(PasswordRequest request) {
+            long userId = (long)HttpContext.Items["UserId"];
+            var user = await UsersRepository.FindAsync(userId);
+
+            if (user == null) {
+                return NotFound();
+            }
+            if (!HashManager.Check(user.Password, request.CurrentPassword)) {
+                return Unauthorized();
+            }
+            
+            user.Password = HashService.Make(request.NewPassword);
+            
+            await UsersRepository.SaveAsync();
+
+            return Ok();
+        }
     }
 }

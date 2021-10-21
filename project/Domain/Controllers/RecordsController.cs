@@ -6,6 +6,8 @@ using Api.Domain.Responses;
 using System.Threading.Tasks;
 using Api.Domain.Requests;
 using Api.Domain.Services;
+using Api.Authorization;
+using Api.Database.Models;
 
 namespace Api.Controllers {
     [ApiController, Route("records")]
@@ -58,7 +60,7 @@ namespace Api.Controllers {
             return Ok(records);
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{id}"), Authorize(UserRoleId.Admin)]
         public async Task<ActionResult<RecordResponse>> DeleteAsync(long id) {
             var result = await Service.DeleteAsync(id);
 
