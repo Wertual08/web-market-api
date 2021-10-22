@@ -15,10 +15,8 @@ namespace Api.Domain.Services {
             CartProductsRepository = cartProductsRepository;
         }
 
-        public async Task<ServiceResult<IEnumerable<CartProduct>>> GetAsync(long userId, int page) {
-            int pageSize = 32;
-
-            var result = await CartProductsRepository.ListAsync(userId, page * pageSize, pageSize);
+        public async Task<ServiceResult<IEnumerable<CartProduct>>> GetAsync(long userId) {
+            var result = await CartProductsRepository.ListAsync(userId);
 
             return result;
         }
@@ -28,17 +26,20 @@ namespace Api.Domain.Services {
             long productId,
             int amount
         ) {
-            var cartProduct = new CartProduct {
-                UserId = userId,
-                ProductId = productId,
-                Amount = amount,
-            };
+            var cartProduct = await CartProductsRepository.FindAsync(userId, productId);
 
-            CartProductsRepository.Create(cartProduct);
+            if (cartProduct is null) {
+                cartProduct = new CartProduct {
+                    UserId = userId,
+                    ProductId = productId,
+                };
+                CartProductsRepository.Create(cartProduct);
+            }
+            cartProduct.Amount = amount;
 
             await CartProductsRepository.SaveAsync();
 
-            return await CartProductsRepository.FindAsync(cartProduct.UserId, cartProduct.ProductId);
+            return cartProduct;
         }
 
         public async Task<ServiceResult<IEnumerable<CartProduct>>> UpdateProductsAsync(long userId, Dictionary<long, int> products) {
@@ -55,7 +56,7 @@ namespace Api.Domain.Services {
 
             await CartProductsRepository.SaveAsync();
 
-            return await CartProductsRepository.ListAsync(userId);
+            return models;
         }
 
         public async Task<ServiceResult<CartProduct>> RemoveProductAsync(long userId, long productId) {

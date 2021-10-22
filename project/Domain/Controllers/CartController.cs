@@ -19,10 +19,10 @@ namespace Api.Controllers {
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<CartProductResponse>>> GetAsync([FromQuery] int page = 0) {
+        public async Task<ActionResult<IEnumerable<CartProductResponse>>> GetAsync() {
             long userId = (long)HttpContext.Items["UserId"];
 
-            var result = await Service.GetAsync(userId, page);
+            var result = await Service.GetAsync(userId);
 
             return MakeResponse(result, models => from item in models select new CartProductResponse(item));
         }

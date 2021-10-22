@@ -30,6 +30,10 @@ namespace Api.Domain.Repositories {
                 where ids.Contains(product.Id)
                 select product
             )
+            .Include(x => x.Records)
+            .Include(x => x.Categories)
+            .Include(x => x.Sections)
+            .AsSplitQuery()
             .ToListAsync();
         }
         

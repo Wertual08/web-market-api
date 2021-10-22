@@ -11,22 +11,13 @@ namespace Api.Domain.Repositories {
         public CartProductsRepository(ApplicationDbContext dbContext) : base(dbContext) {
         }
 
-        public Task<List<CartProduct>> ListAsync(long userId, int skip, int take) {
-            return (
-                from cartProduct in DbContext.CartProducts 
-                where cartProduct.UserId == userId
-                orderby cartProduct.ProductId
-                select cartProduct
-            ).Include(x => x.Product).ThenInclude(x => x.Records).Skip(skip).Take(take).ToListAsync();
-        }
-
         public Task<List<CartProduct>> ListAsync(long userId) {
             return (
                 from cartProduct in DbContext.CartProducts 
                 where cartProduct.UserId == userId
                 orderby cartProduct.ProductId
                 select cartProduct
-            ).Include(x => x.Product).ThenInclude(x => x.Records).ToListAsync();
+            ).ToListAsync();
         }
 
         public Task<CartProduct> FindAsync(long userId, long productId) {
@@ -34,7 +25,7 @@ namespace Api.Domain.Repositories {
                 from cartProduct in DbContext.CartProducts 
                 where cartProduct.UserId == userId && cartProduct.ProductId == productId
                 select cartProduct
-            ).Include(x => x.Product).ThenInclude(x => x.Records).FirstOrDefaultAsync();
+            ).FirstOrDefaultAsync();
         }
 
         public async Task ClearAsync(long userId) {
