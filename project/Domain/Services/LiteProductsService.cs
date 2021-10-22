@@ -18,5 +18,9 @@ namespace Api.Domain.Services {
         public async Task<Product> GetAsync(long id) {
             return await ProductsRepository.FindAsync(id);
         }
+
+        public async Task<List<Product>> ListAsync(List<long> ids) {
+            return await ProductsRepository.FindAsync(ids);
+        }
     }
 }

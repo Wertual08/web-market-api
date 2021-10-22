@@ -30,5 +30,11 @@ namespace Api.Controllers {
                 return NotFound();
             }
         }
+
+        [HttpGet]
+        public async Task<ActionResult<LiteProductResponse>> GetListAsync(BulkRequest request) {
+            var result = await Service.ListAsync(request.Ids);
+            return Ok(from model in result select new LiteProductResponse(model));
+        }
     }
 }
