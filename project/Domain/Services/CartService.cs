@@ -41,6 +41,23 @@ namespace Api.Domain.Services {
             return await CartProductsRepository.FindAsync(cartProduct.UserId, cartProduct.ProductId);
         }
 
+        public async Task<ServiceResult<IEnumerable<CartProduct>>> UpdateProductsAsync(long userId, Dictionary<long, int> products) {
+            await CartProductsRepository.ClearAsync(userId);
+
+            var models = new List<CartProduct>(products.Count);
+            foreach (var product in products) {
+                models.Add(new CartProduct {
+                    UserId = product.Key,
+                    ProductId = product.Value,
+                });
+            }
+            CartProductsRepository.Create(models);
+
+            await CartProductsRepository.SaveAsync();
+
+            return await CartProductsRepository.ListAsync(userId);
+        }
+
         public async Task<ServiceResult<CartProduct>> RemoveProductAsync(long userId, long productId) {
             var result = await CartProductsRepository.FindAsync(userId, productId);
 

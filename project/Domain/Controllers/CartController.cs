@@ -40,6 +40,15 @@ namespace Api.Controllers {
             return MakeResponse(result, model => new CartProductResponse(model));
         }
 
+        [HttpPut]
+        public async Task<ActionResult<IEnumerable<CartProductResponse>>> PutAsync(CartUpdateRequest request) {
+            long userId = (long)HttpContext.Items["UserId"];
+            
+            var result = await Service.UpdateProductsAsync(userId, request.Products);
+
+            return MakeResponse(result, models => from item in models select new CartProductResponse(item));
+        }
+
         [HttpDelete("{productId}")]
         public async Task<ActionResult<CartProductResponse>> DeleteAsync(long productId) {
             long userId = (long)HttpContext.Items["UserId"];

@@ -12,7 +12,7 @@ namespace Api.Database.Models {
         public DateTime CreatedAt { get; init; } = DateTime.Now;
 
 
-        public User Order { get; set; }
+        public Order Order { get; set; }
         public Product Product { get; set; }
     }
 }
