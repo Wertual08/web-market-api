@@ -26,7 +26,7 @@ namespace Api.Domain.Services {
         public async Task<(Stream, Record)> GetAsync(Guid identifier) {
             var image = await RecordsRepository.FindAsync(identifier);
 
-            if (image is null) {
+            if (image is null || !File.Exists(GetPath(image.Identifier))) {
                 return (null, null);
             }
             var stream = File.OpenRead(GetPath(image.Identifier));
