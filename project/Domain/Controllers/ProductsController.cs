@@ -44,7 +44,7 @@ namespace Api.Controllers {
         }
 
         [HttpGet("bulk")]
-        public async Task<ActionResult<IEnumerable<ProductResponse>>> GetBulkAsync(BulkRequest request) {
+        public async Task<ActionResult<IEnumerable<ProductResponse>>> GetBulkAsync([FromQuery] BulkRequest request) {
             var products = await ProductsRepository.FindAsync(request.Ids);
             return Ok(from item in products select new ProductResponse(item));
         }
