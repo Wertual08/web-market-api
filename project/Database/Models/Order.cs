@@ -18,9 +18,9 @@ namespace Api.Database.Models {
         [Required]
         public DateTime UpdatedAt { get; set; } = DateTime.Now;    
 
-        public DateTime RequestedAt { get; set; }    
+        public DateTime? RequestedAt { get; set; } = null;
 
-        public DateTime FinishedAt { get; set; }   
+        public DateTime? FinishedAt { get; set; } = null;
 
         [Required]
         public string Email { get; set; } 

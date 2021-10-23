@@ -33,6 +33,10 @@ namespace Api.Controllers {
 
         [HttpGet]
         public async Task<ActionResult<LiteProductResponse>> GetListAsync([FromQuery] BulkRequest request) {
+            if (request.Ids is null) {
+                return Ok(Enumerable.Empty<LiteProductResponse>());
+            }
+
             var result = await Service.ListAsync(request.Ids);
             return Ok(from model in result select new LiteProductResponse(model));
         }

@@ -18,7 +18,7 @@ deploy:
   tags:
     - dev-shell-runner
   script:
-    - docker-compose up -d --build --force-recreate --remove-orphans
+    - docker-compose up -d --build --remove-orphans
 
 notify_success:
   stage: finish

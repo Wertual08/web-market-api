@@ -16,8 +16,8 @@ namespace Api.Domain.Responses {
         public string Description { get; init; }
         public DateTime CreatedAt { get; init; }
         public DateTime UpdatedAt { get; init; }
-        public DateTime RequestedAt { get; init; } 
-        public DateTime FinishedAt { get; init; }    
+        public DateTime? RequestedAt { get; init; } 
+        public DateTime? FinishedAt { get; init; }    
 
         public OrderResponse(Order model) {
             Id = model.Id;
