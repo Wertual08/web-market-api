@@ -62,5 +62,14 @@ namespace Api.Controllers {
 
             return MakeResponse(result, model => new OrderResponse(model));
         }
+
+        [HttpGet("{id}/products")]
+        public async Task<ActionResult<IEnumerable<OrderProductResponse>>> GetProduts(long id) {
+            long userId = (long)HttpContext.Items["UserId"];
+
+            var result = await Service.GetProductsAsync(userId, id);
+
+            return MakeResponse(result, models => from model in models select new OrderProductResponse(model));
+        }
     }
 }

@@ -11,6 +11,17 @@ namespace Api.Domain.Repositories {
         public OrderProductsRepository(ApplicationDbContext dbContext) : base(dbContext) {
         }
 
+        public Task<List<OrderProduct>> ListAsync(long orderId) {
+            return (
+                from orderProduct in DbContext.OrderProducts
+                where orderProduct.OrderId == orderId
+                select orderProduct
+            )
+            .Include(x => x.Product)
+            .ThenInclude(x => x.Records)
+            .ToListAsync();
+        }
+
         public void Create(OrderProduct orderProduct) {
             DbContext.OrderProducts.Add(orderProduct);
         }

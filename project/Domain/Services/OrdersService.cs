@@ -103,5 +103,21 @@ namespace Api.Domain.Services {
 
             return result;
         }
+
+        public async Task<ServiceResult<IEnumerable<OrderProduct>>> GetProductsAsync(long? userId, long id) {
+            var order = await OrdersRepository.FindAsync(id);
+
+            if (order is null) {
+                return ServiceResultStatus.NotFound;
+            }
+
+            if (order.UserId != userId) {
+                return ServiceResultStatus.Forbid;
+            }
+
+            var result = await OrderProductsRepository.ListAsync(id);
+
+            return result;
+        }
     }
 }
