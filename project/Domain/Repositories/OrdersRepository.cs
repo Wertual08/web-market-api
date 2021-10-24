@@ -22,7 +22,7 @@ namespace Api.Domain.Repositories {
             return (
                 from order in DbContext.Orders 
                 where order.UserId == userId
-                orderby order.Id
+                orderby order.CreatedAt descending
                 select order
             ).Skip(skip).Take(take).ToListAsync();
         }
