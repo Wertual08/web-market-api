@@ -19,6 +19,12 @@ namespace Api.Controllers {
             Service = service;
         }
 
+        [HttpGet("main/slides")]
+        public async Task<ActionResult<IEnumerable<RecordResponse>>> GetMainSlidesAsync() {
+            var result = await Service.GetMainSlidesAsync();
+            return MakeResponse(result, models => from model in models select new RecordResponse(model));
+        }
+
         [HttpPost("main/slides")]
         public async Task<ActionResult> PostMainSlidesAsync([FromQuery] List<long> records) {
             await Service.UpdateMainSlidesAsync(records);
