@@ -15,6 +15,7 @@ namespace Api.Domain.Repositories {
                 from mainSlide in DbContext.MainSlides
                 join record in DbContext.Records
                 on mainSlide.RecordId equals record.Id
+                orderby mainSlide.Position
                 select record
             ).ToListAsync();
         }

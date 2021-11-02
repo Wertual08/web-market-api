@@ -21,9 +21,11 @@ namespace Api.Domain.Services {
 
         public async Task<ServiceResult<IEnumerable<Record>>> UpdateMainSlidesAsync(List<long> recordIds) {
             PublicRepository.ClearMainSlides();
+            int position = 0;
             foreach (var recordId in recordIds) {
                 PublicRepository.Create(new MainSlide {
                     RecordId = recordId,
+                    Position = position++,
                     //Name = "",
                 });
             }

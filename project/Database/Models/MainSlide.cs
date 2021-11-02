@@ -9,6 +9,8 @@ namespace Api.Database.Models {
         public long Id { get; init; }
 
         public long RecordId { get; set; }
+
+        public int Position { get; set; }
         
         [Required]
         public DateTime CreatedAt { get; set; } = DateTime.Now; 
