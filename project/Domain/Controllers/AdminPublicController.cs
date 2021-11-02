@@ -25,11 +25,10 @@ namespace Api.Controllers {
             return MakeResponse(result, models => from model in models select new RecordResponse(model));
         }
 
-        [HttpPost("main/slides")]
-        public async Task<ActionResult> PostMainSlidesAsync([FromQuery] List<long> records) {
-            await Service.UpdateMainSlidesAsync(records);
-
-            return Ok();
+        [HttpPut("main/slides")]
+        public async Task<ActionResult<IEnumerable<RecordResponse>>> PostMainSlidesAsync([FromQuery] List<long> records) {
+            var result = await Service.UpdateMainSlidesAsync(records);
+            return MakeResponse(result, models => from model in models select new RecordResponse(model));
         }
     }
 }

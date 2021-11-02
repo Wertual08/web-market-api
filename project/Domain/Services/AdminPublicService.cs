@@ -19,7 +19,7 @@ namespace Api.Domain.Services {
             return await PublicRepository.ListMainSlidesAsync();
         }
 
-        public async Task UpdateMainSlidesAsync(List<long> recordIds) {
+        public async Task<ServiceResult<IEnumerable<Record>>> UpdateMainSlidesAsync(List<long> recordIds) {
             PublicRepository.ClearMainSlides();
             foreach (var recordId in recordIds) {
                 PublicRepository.Create(new MainSlide {
@@ -29,6 +29,8 @@ namespace Api.Domain.Services {
             }
 
             await PublicRepository.SaveAsync();
+
+            return await PublicRepository.ListMainSlidesAsync();
         }
     }
 }
