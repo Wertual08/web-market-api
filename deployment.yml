@@ -46,6 +46,6 @@ metadata:
   name: korea-bus-postgres
 subsets:
   - addresses:
-    - ip: localhost
+    - ip: 127.0.0.1
     ports:
       - port: 5432
