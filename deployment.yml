@@ -53,21 +53,19 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-   name: mongodb-service
+   name: korea-bus-postgres
 spec:
    clusterIP: None
    ports:
    - protocol: TCP
      port: 5432
      targetPort: 5432
-   #selector:  
-   #  name: example
    type: ClusterIP
 ---
 apiVersion: v1
 kind: Endpoints
 metadata:
-  name: mongodb-service
+  name: korea-bus-postgres
 subsets:
   - addresses:
     - ip: 192.168.99.1
