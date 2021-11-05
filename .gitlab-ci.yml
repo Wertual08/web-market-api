@@ -20,7 +20,7 @@ deploy:
   script:
     - mv $ENV_FILE .env
     - docker-compose up -d --build --remove-orphans
-    - docker build project -f Dockerfile -t korea-bus-api
+    - docker build project -t korea-bus-api
     - kubectl apply -f deployment.yml
     - kubectl rollout restart deployment korea-bus-api
 
