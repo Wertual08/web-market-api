@@ -37,3 +37,15 @@ spec:
     targetPort: 80
   selector:
     app: korea-bus-api
+
+---
+
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: korea-bus-postgres
+subsets:
+  - addresses:
+    - ip: localhost
+    ports:
+      - port: 5432
