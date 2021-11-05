@@ -58,8 +58,8 @@ spec:
    clusterIP: None
    ports:
    - protocol: TCP
-     port: <multipass-port-you-are-using>
-     targetPort: <multipass-port-you-are-using>
+     port: 5432
+     targetPort: 5432
    selector:  
      name:  example
    type: ClusterIP
@@ -70,6 +70,6 @@ metadata:
   name: mongodb-service
 subsets:
   - addresses:
-    - ip: 10.62.176.1
+    - ip: 192.168.99.1
     ports:
-      - port: <multipass-port-you-are-using>
+      - port: 5432
