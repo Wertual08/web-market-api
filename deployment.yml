@@ -68,6 +68,6 @@ metadata:
   name: korea-bus-postgres
 subsets:
   - addresses:
-    - ip: 192.168.99.1
+    - ip: 84.252.141.104
     ports:
       - port: 5432
