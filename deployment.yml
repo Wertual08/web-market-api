@@ -60,8 +60,8 @@ spec:
    - protocol: TCP
      port: 5432
      targetPort: 5432
-   selector:  
-     name:  example
+   #selector:  
+   #  name: example
    type: ClusterIP
 ---
 apiVersion: v1
