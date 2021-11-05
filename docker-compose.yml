@@ -1,26 +1,7 @@
 version: '3.5'
 
 services:
-    api:
-        container_name: kb-api
-        restart: unless-stopped
-        build:
-            context: ./project
-            dockerfile: Dockerfile
-        volumes:
-            - ${DATA_PATH}/storage:/app/storage
-        depends_on: 
-            - postgres
-            - elasticsearch
-        networks:
-            - services-network
-            - internal-network
-        environment: 
-            - JWT__SECRET=${JWT_SECRET}
-            - ASPNETCORE_ENVIRONMENT=${ASPNETCORE_ENVIRONMENT}
-
     postgres:
-        container_name: kb-postgres
         restart: unless-stopped
         build:
             context: ./postgres
@@ -38,7 +19,6 @@ services:
             - internal-network
 
     elasticsearch:
-        container_name: kb-elasticsearch
         restart: unless-stopped
         build:
             context: ./elasticsearch
@@ -58,12 +38,9 @@ services:
         deploy:
             resources:
                 limits:
-                    memory: 515M
+                    memory: 512M
 
             
 networks:
     internal-network:
         driver: bridge
-    services-network:
-        external: true
-        name: kb-services-network

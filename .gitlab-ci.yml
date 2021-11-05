@@ -1,6 +1,6 @@
 variables:
   CI_CD_UTILS_PATH: "/home/ci-cd-utils"
-  
+
 stages:
   - start
   - deploy
@@ -9,28 +9,32 @@ stages:
 notify_start:
   stage: start
   tags:
-    - dev-shell-runner
+    - primal-shell-runner
   script:
     - $CI_CD_UTILS_PATH/notifications/deployment-start.sh
 
 deploy:
   stage: deploy
   tags:
-    - dev-shell-runner
+    - primal-shell-runner
   script:
+    - mv $ENV_FILE .env
     - docker-compose up -d --build --remove-orphans
+    - docker build project -f Dockerfile -t korea-bus-api
+    - kubectl apply -f deployment.yml
+    - kubectl rollout restart deployment korea-bus-api
 
 notify_success:
   stage: finish
   tags:
-    - dev-shell-runner
+    - primal-shell-runner
   script:
     - $CI_CD_UTILS_PATH/notifications/deployment-success.sh
 
 notify_error:
   stage: finish
   tags:
-    - dev-shell-runner
+    - primal-shell-runner
   script:
     - $CI_CD_UTILS_PATH/notifications/deployment-fail.sh
   when: on_failure

@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: korea-bus-api
+  labels:
+    app: korea-bus-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: korea-bus-api
+  template:
+    metadata:
+      labels:
+        app: korea-bus-api
+    spec:
+      containers:
+      - name: korea-bus-api
+        image: korea-bus-api
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 80
+
+---
+ 
+apiVersion: v1
+kind: Service
+metadata:
+  name: korea-bus-api
+  labels:
+    app: korea-bus-api
+spec:
+  type: ClusterIP
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: korea-bus-api
