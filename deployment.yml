@@ -127,7 +127,7 @@ spec:
         ports:
         - containerPort: 9200
         volumeMounts:
-        - mountPath: /var/lib/postgresql/data
+        - mountPath: /usr/share/elasticsearch/data
           name: storage-volume
       volumes:
       - name: storage-volume
