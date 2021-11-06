@@ -1,23 +1,6 @@
 version: '3.5'
 
 services:
-    postgres:
-        restart: unless-stopped
-        build:
-            context: ./postgres
-            dockerfile: Dockerfile
-        volumes:
-            - ${DATA_PATH}/dbdata:/var/lib/postgresql/data
-        environment:
-            - LC_ALL=C.UTF-8
-            - POSTGRES_USER=${DB_USERNAME}
-            - POSTGRES_PASSWORD=${DB_PASSWORD}
-            - POSTGRES_DB=${DB_NAME}
-        ports:
-            - 5432:5432
-        networks:
-            - internal-network
-
     elasticsearch:
         restart: unless-stopped
         build:

@@ -20,6 +20,13 @@ spec:
         imagePullPolicy: Never
         ports:
         - containerPort: 80
+        volumeMounts:
+        - mountPath: /app/storage 
+          name: storage-volume
+      volumes:
+      - name: storage-volume
+        path: /home/services_data/storage
+        type: DirectoryOrCreate
 
 ---
  
@@ -38,36 +45,54 @@ spec:
   selector:
     app: korea-bus-api
 
+
+
 ---
 
+
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: korea-bus-api-postgres
+  labels:
+    app: korea-bus-api-postgres
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: korea-bus-api-postgres
+  template:
+    metadata:
+      labels:
+        app: korea-bus-api-postgres
+    spec:
+      containers:
+      - name: korea-bus-api-postgres
+        image: postgres:13.4-alpine3.14
+        ports:
+        - containerPort: 5432
+        volumeMounts:
+        - mountPath: /var/lib/postgresql/data
+          name: storage-volume
+      volumes:
+      - name: storage-volume
+        path: /home/services_data/dbdata
+        type: DirectoryOrCreate
+
+---
+ 
 apiVersion: v1
 kind: Service
 metadata:
-  name: korea-bus-host
+  name: korea-bus-api-postgres
+  labels:
+    app: korea-bus-api-postgres
 spec:
-    type: ExternalName
-    externalName: 192.168.99.1
-
-
----
-apiVersion: v1
-kind: Service
-metadata:
-   name: korea-bus-postgres
-spec:
-   clusterIP: None
-   ports:
-   - protocol: TCP
-     port: 5432
-     targetPort: 5432
-   type: ClusterIP
----
-apiVersion: v1
-kind: Endpoints
-metadata:
-  name: korea-bus-postgres
-subsets:
-  - addresses:
-    - ip: 84.252.141.104
-    ports:
-      - port: 5432
+  type: ClusterIP
+  ports:
+  - port: 5432
+    protocol: TCP
+    targetPort: 5432
+  selector:
+    app: korea-bus-api-postgres
