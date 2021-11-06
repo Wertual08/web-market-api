@@ -13,8 +13,6 @@ services:
             - POSTGRES_DB=${DB_NAME}
         ports:
             - 5432:5432
-        networks:
-            - internal-network
 
     elasticsearch:
         restart: unless-stopped
@@ -29,5 +27,3 @@ services:
             - ${DATA_PATH}/esdata:/usr/share/elasticsearch/data
         ports:
             - 9200:9200
-        networks:
-            - internal-network
