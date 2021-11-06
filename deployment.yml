@@ -25,8 +25,9 @@ spec:
           name: storage-volume
       volumes:
       - name: storage-volume
-        path: /home/services_data/storage
-        type: DirectoryOrCreate
+        hostPath:
+          path: /home/services_data/storage
+          type: DirectoryOrCreate
 
 ---
  
@@ -77,8 +78,9 @@ spec:
           name: storage-volume
       volumes:
       - name: storage-volume
-        path: /home/services_data/dbdata
-        type: DirectoryOrCreate
+        hostPath:
+          path: /home/services_data/dbdata
+          type: DirectoryOrCreate
 
 ---
  
