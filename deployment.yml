@@ -98,3 +98,56 @@ spec:
     targetPort: 5432
   selector:
     app: korea-bus-api-postgres
+
+
+
+---
+
+
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: korea-bus-api-elasticsearch
+  labels:
+    app: korea-bus-api-elasticsearch
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: korea-bus-api-elasticsearch
+  template:
+    metadata:
+      labels:
+        app: korea-bus-api-elasticsearch
+    spec:
+      containers:
+      - name: korea-bus-api-elasticsearch
+        image: docker.elastic.co/elasticsearch/elasticsearch:7.10.1
+        ports:
+        - containerPort: 9200
+        volumeMounts:
+        - mountPath: /var/lib/postgresql/data
+          name: storage-volume
+      volumes:
+      - name: storage-volume
+        hostPath:
+          path: /home/services_data/esdata
+          type: DirectoryOrCreate
+
+---
+ 
+apiVersion: v1
+kind: Service
+metadata:
+  name: korea-bus-api-elasticsearch
+  labels:
+    app: korea-bus-api-elasticsearch
+spec:
+  type: ClusterIP
+  ports:
+  - port: 9200
+    protocol: TCP
+    targetPort: 9200
+  selector:
+    app: korea-bus-api-elasticsearch
