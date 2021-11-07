@@ -102,7 +102,7 @@ namespace Api {
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env) {
-            if (!env.IsProduction()) {
+            if (!env.IsProduction() || true) {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => {
