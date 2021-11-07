@@ -11,7 +11,7 @@ using Api.Domain.Requests;
 using Api.Domain.Services;
 
 namespace Api.Controllers {
-    [ApiController, Route("search")]
+    [ApiController, Route("api/search")]
     public class SearchController : ControllerBase {
         private readonly SearchService Service;
 

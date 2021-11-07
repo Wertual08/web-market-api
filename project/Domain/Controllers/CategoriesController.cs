@@ -11,7 +11,7 @@ using Api.Authorization;
 using Api.Domain.Services;
 
 namespace Api.Controllers {
-    [ApiController, Route("categories")]
+    [ApiController, Route("api/categories")]
     public class CategoriesController : ControllerBase {
         private readonly CategoriesService Service;
 

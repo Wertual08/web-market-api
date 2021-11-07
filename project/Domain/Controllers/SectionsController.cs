@@ -11,7 +11,7 @@ using Api.Authorization;
 using Api.Domain.Services;
 
 namespace Api.Controllers {
-    [ApiController, Route("sections")]
+    [ApiController, Route("api/sections")]
     public class SectionsController : ControllerBase {
         private readonly SectionsService Service;
 

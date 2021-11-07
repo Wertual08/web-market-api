@@ -10,7 +10,7 @@ using System;
 using Api.Database.Models;
 
 namespace Api.Controllers {
-    [ApiController, Route("admin/public"), Authorize(UserRoleId.Admin)]
+    [ApiController, Route("api/admin/public"), Authorize(UserRoleId.Admin)]
     public class AdminPublicController : ServiceController {
         private readonly AdminPublicService Service;
 

@@ -11,7 +11,7 @@ using Api.Authorization;
 using Api.Domain.Services;
 
 namespace Api.Controllers {
-    [ApiController, Route("admin/orders"), Authorize(UserRoleId.Admin)]
+    [ApiController, Route("api/admin/orders"), Authorize(UserRoleId.Admin)]
     public class AdminOrdersController : ServiceController {
         private readonly AdminOrdersService Service;
 

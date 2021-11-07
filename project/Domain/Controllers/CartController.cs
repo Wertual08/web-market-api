@@ -9,7 +9,7 @@ using Api.Domain.Services;
 using System;
 
 namespace Api.Controllers {
-    [ApiController, Route("cart"), Authorize]
+    [ApiController, Route("api/cart"), Authorize]
     public class CartController : ServiceController {
         private readonly CartService Service;
 

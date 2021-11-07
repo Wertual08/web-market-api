@@ -11,7 +11,7 @@ using Api.Authorization;
 using Api.Domain.Services;
 
 namespace Api.Controllers {
-    [ApiController, Route("profile"), Authorize]
+    [ApiController, Route("api/profile"), Authorize]
     public class ProfileController : ControllerBase {
         private readonly ProfileService Service;
 

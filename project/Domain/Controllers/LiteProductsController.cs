@@ -11,7 +11,7 @@ using Api.Domain.Requests;
 using Api.Domain.Services;
 
 namespace Api.Controllers {
-    [ApiController, Route("lite/products")]
+    [ApiController, Route("api/lite/products")]
     public class LiteProductsController : ControllerBase {
         private readonly LiteProductsService Service;
 

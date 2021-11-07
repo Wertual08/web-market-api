@@ -9,7 +9,7 @@ using Api.Domain.Services;
 using System;
 
 namespace Api.Controllers {
-    [ApiController, Route("public")]
+    [ApiController, Route("api/public")]
     public class PublicController : ServiceController {
         private readonly PublicService Service;
 

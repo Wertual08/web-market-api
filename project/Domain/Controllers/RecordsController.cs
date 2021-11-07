@@ -10,7 +10,7 @@ using Api.Authorization;
 using Api.Database.Models;
 
 namespace Api.Controllers {
-    [ApiController, Route("records")]
+    [ApiController, Route("api/records")]
     public class RecordsController : ControllerBase {
         private readonly RecordsService Service;
 
