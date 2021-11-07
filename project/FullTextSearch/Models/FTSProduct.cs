@@ -1,8 +1,10 @@
 using System.Collections.Generic;
+using Nest;
 
 namespace Api.FullTextSearch.Models {
     public class FTSProduct {
         public long Id { get; set; }
+        [Keyword]
         public string Code { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }

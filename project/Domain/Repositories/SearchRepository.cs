@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Api.FullTextSearch;
 using Api.FullTextSearch.Models;
-using Elasticsearch.Net;
 using Nest;
 
 namespace Api.Domain.Repositories {
@@ -41,6 +40,10 @@ namespace Api.Domain.Repositories {
                     Field = Infer.Field<FTSProduct>(d => d.Name),
                     Fuzziness = Fuzziness.Auto,
                     Query = query
+                } || 
+                new TermQuery {
+                    Field = Infer.Field<FTSProduct>(d => d.Code),
+                    Value = query,
                 }
             );
             
