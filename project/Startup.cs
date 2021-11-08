@@ -79,6 +79,7 @@ namespace Api {
             services.AddScoped<SearchRepository>();
             services.AddScoped<PublicRepository>();
             services.AddScoped<AdminOrdersRepository>();
+            services.AddScoped<ReviewsRepository>();
 
             services.AddScoped<RecordsService>();
             services.AddScoped<ProfileService>();
@@ -92,6 +93,7 @@ namespace Api {
             services.AddScoped<AdminSectionsService>();
             services.AddScoped<SearchService>();
             services.AddScoped<PublicService>();
+            services.AddScoped<ReviewsService>();
             services.AddScoped<AdminPublicService>();
             services.AddScoped<AdminOrdersService>();
             

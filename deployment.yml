@@ -127,6 +127,10 @@ spec:
         env:
         - name: discovery.type
           value: single-node
+        - name: bootstrap.memory_lock
+          value: true
+        - name: ES_JAVA_OPTS
+          value: "-Xms512m -Xmx512m"
         ports:
         - containerPort: 9200
         volumeMounts:
