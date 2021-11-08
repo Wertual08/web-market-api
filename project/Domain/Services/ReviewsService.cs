@@ -35,6 +35,7 @@ namespace Api.Domain.Services {
             long? userId, 
             int? grade,
             string name,
+            string email,
             string address, 
             string description
         ) {
@@ -42,6 +43,7 @@ namespace Api.Domain.Services {
                 UserId = userId,
                 Grade = grade,
                 Name = name,
+                Email = email,
                 Address = address,
                 Description = description,
             };

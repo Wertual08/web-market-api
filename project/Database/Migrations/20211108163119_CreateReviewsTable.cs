@@ -29,6 +29,10 @@ namespace Api.Database.Migrations {
                         type: "text",
                         nullable: false
                     ),
+                    email = table.Column<string>(
+                        type: "text",
+                        nullable: true
+                    ),
                     address = table.Column<string>(
                         type: "text", 
                         nullable: false

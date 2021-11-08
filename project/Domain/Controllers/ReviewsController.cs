@@ -41,6 +41,7 @@ namespace Api.Controllers {
                 userId,
                 request.Grade,
                 request.Name,
+                request.Email,
                 request.Address,
                 request.Description
             );

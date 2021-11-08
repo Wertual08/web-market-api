@@ -24,6 +24,9 @@ namespace Api.Database.Models {
         [Required]
         public string Address { get; set; }
 
+        [EmailAddress]
+        public string Email { get; set; }
+
         [Required]
         public string Description { get; set; }
     }
