@@ -18,7 +18,9 @@ namespace Api.Authorization {
         public void OnAuthorization(AuthorizationFilterContext context)
         {
             if (context.HttpContext.Items["AccessLevel"] is null) {
-                context.Result = new ForbidResult();
+                if (UserRoles.Length > 0) {
+                    context.Result = new ForbidResult();
+                }
             } else {
                 var level = (UserRoleId)context.HttpContext.Items["AccessLevel"];
                 if (UserRoles.Length > 0 && !UserRoles.Contains(level)) {
