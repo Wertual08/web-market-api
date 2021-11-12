@@ -9,5 +9,6 @@ namespace Api.Domain.Requests {
         public List<long> Sections { get; init; } 
         public decimal? MinPrice { get; init; }
         public decimal? MaxPrice { get; init; }
+        public bool? Discounted { get; init; }
     }
 }

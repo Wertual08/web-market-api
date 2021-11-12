@@ -28,7 +28,8 @@ namespace Api.Controllers {
                 request.Categories, 
                 request.Sections,
                 request.MinPrice,
-                request.MaxPrice
+                request.MaxPrice,
+                request.Discounted.GetValueOrDefault(false)
             );
             return Ok(from item in products select new LiteProductResponse(item));
         }

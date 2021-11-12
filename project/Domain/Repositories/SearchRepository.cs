@@ -29,7 +29,8 @@ namespace Api.Domain.Repositories {
             List<long> categories,
             List<long> sections,
             decimal? minPrice,
-            decimal? maxPrice
+            decimal? maxPrice,
+            bool discounted
         ) {
             var searchQuery = new QueryContainer(
                 new MatchPhrasePrefixQuery {
@@ -68,6 +69,12 @@ namespace Api.Domain.Repositories {
                    Field = Infer.Field<FTSProduct>(d => d.Price),
                    GreaterThanOrEqualTo = (double?)minPrice,
                    LessThanOrEqualTo = (double?)maxPrice,
+                };
+            }
+
+            if (discounted) {
+                searchQuery &= new ExistsQuery {
+                    Field = Infer.Field<FTSProduct>(d => d.OldPrice),
                 };
             }
 
