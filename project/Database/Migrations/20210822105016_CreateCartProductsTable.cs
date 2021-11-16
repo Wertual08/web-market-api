@@ -32,7 +32,7 @@ namespace Api.Database.Migrations {
                 },
                 constraints: table => {
                     table.PrimaryKey(
-                        name: "pk_user_products",
+                        name: "pk_cart_products",
                         columns: item => new { 
                             item.user_id,
                             item.product_id, 
@@ -44,7 +44,7 @@ namespace Api.Database.Migrations {
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(name: "user_products");
+            migrationBuilder.DropTable(name: "cart_products");
         }
     }
 }

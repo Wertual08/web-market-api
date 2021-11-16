@@ -72,6 +72,8 @@ namespace Api.Database {
 
         public DbSet<Review> Reviews { get; set; }
 
+        public DbSet<Article> Articles { get; set; }
+
         public override int SaveChanges() {
             // TODO: It would be much safer to fire events after changes were saved
             NotifyProducts();
