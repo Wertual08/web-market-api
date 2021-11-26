@@ -40,11 +40,12 @@ namespace Api.Domain.Repositories {
                 new MatchQuery {
                     Field = Infer.Field<FTSProduct>(d => d.Name),
                     Fuzziness = Fuzziness.Auto,
-                    Query = query
+                    Query = query,
                 } || 
                 new TermQuery {
                     Field = Infer.Field<FTSProduct>(d => d.Code),
                     Value = query,
+                    Boost = 5,
                 }
             );
             
