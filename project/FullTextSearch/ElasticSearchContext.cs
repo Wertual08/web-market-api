@@ -13,14 +13,22 @@ namespace Api.FullTextSearch {
             );
         }
 
-        public async Task CreateIndexAsync<T>(string name) where T : class {
+        public async Task IndexCreateAsync<T>(string name) where T : class {
             var response = await Client.Indices.CreateAsync(name, x => x.Map<T>(x => x.AutoMap()));
             if (response.ServerError is not null) {
                 throw new Exception(response.ServerError.ToString());
             }
         }
 
-        public async Task DeleteIndexAsync(string name) {
+        public async Task<bool> IndexExistsAsync(string name) {
+            var response = await Client.Indices.ExistsAsync(name);
+            if (response.ServerError is not null) {
+                throw new Exception(response.ServerError.ToString());
+            }
+            return response.Exists;
+        }
+
+        public async Task IndexDeleteAsync(string name) {
             var response = await Client.Indices.DeleteAsync(name);
             if (response.ServerError is not null) {
                 throw new Exception(response.ServerError.ToString());

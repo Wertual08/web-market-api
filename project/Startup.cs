@@ -123,51 +123,56 @@ namespace Api {
             using (var scope = app.ApplicationServices.CreateScope()) {
                 var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
                 // --- Wipe database ---
-                // db.Database.ExecuteSqlRaw(
-                //     @"DO $$ DECLARE
-                //     r RECORD;
-                //     BEGIN
-                //     FOR r IN (SELECT tablename FROM pg_tables WHERE schemaname = current_schema()) LOOP
-                //         EXECUTE 'DROP TABLE ' || quote_ident(r.tablename) || ' CASCADE';
-                //     END LOOP;
-                //     END $$;"
-                // );
+                db.Database.ExecuteSqlRaw(
+                    @"DO $$ DECLARE
+                    r RECORD;
+                    BEGIN
+                    FOR r IN (SELECT tablename FROM pg_tables WHERE schemaname = current_schema()) LOOP
+                        EXECUTE 'DROP TABLE ' || quote_ident(r.tablename) || ' CASCADE';
+                    END LOOP;
+                    END $$;"
+                );
                 // --- ------------- ---
                 db.Database.Migrate();
                 db.SeedConstants();
 
                 // --- Index products ---
-                Thread.Sleep(1000 * 80);
-                var adminProductsRepository = scope.ServiceProvider.GetRequiredService<AdminProductsRepository>();
-                var searchRepository = scope.ServiceProvider.GetRequiredService<SearchRepository>();
-                int page = 0;
-                bool running;
-                do {
-                   running = false;
-                   var products = await adminProductsRepository.ListAsync(page++ * 100, 100);
-                   foreach (var product in products) {
-                       var categories = new List<long>();
-                       foreach (var category in product.Categories) {
-                           categories.Add(category.Id);
-                       }
+                // Thread.Sleep(1000 * 80);
+                // var elasticsearchContext = scope.ServiceProvider.GetRequiredService<IElasticsearchContext>();
+                // if (await elasticsearchContext.IndexExistsAsync("products")) {
+                //     await elasticsearchContext.IndexDeleteAsync("products");
+                // }
+                // await elasticsearchContext.IndexCreateAsync<FTSProduct>("products");
+                // var adminProductsRepository = scope.ServiceProvider.GetRequiredService<AdminProductsRepository>();
+                // var searchRepository = scope.ServiceProvider.GetRequiredService<SearchRepository>();
+                // int page = 0;
+                // bool running;
+                // do {
+                //    running = false;
+                //    var products = await adminProductsRepository.ListAsync(page++ * 100, 100);
+                //    foreach (var product in products) {
+                //        var categories = new List<long>();
+                //        foreach (var category in product.Categories) {
+                //            categories.Add(category.Id);
+                //        }
                 
-                       var sections = new List<long>();
-                       foreach (var section in product.Sections) {
-                           sections.Add(section.Id);
-                       }
+                //        var sections = new List<long>();
+                //        foreach (var section in product.Sections) {
+                //            sections.Add(section.Id);
+                //        }
                        
-                       await searchRepository.IndexAsync(new FTSProduct {
-                           Id = product.Id,
-                           Name = product.Name,
-                           Description = product.Description,
-                           Price = product.Price, 
-                           Image = product.Records.FirstOrDefault()?.Identifier.ToString("N"),
-                           Categories = categories,
-                           Sections = sections,
-                       });
-                       running = true;
-                   }
-                } while (running);
+                //        await searchRepository.IndexAsync(new FTSProduct {
+                //            Id = product.Id,
+                //            Name = product.Name,
+                //            Description = product.Description,
+                //            Price = product.Price, 
+                //            Image = product.Records.FirstOrDefault()?.Identifier.ToString("N"),
+                //            Categories = categories,
+                //            Sections = sections,
+                //        });
+                //        running = true;
+                //    }
+                // } while (running);
                 // --- -------------- ---
             }
         }
