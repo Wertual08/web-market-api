@@ -33,18 +33,6 @@ namespace Api.Database.Migrations {
                         type: "text",
                         nullable: true
                     ),
-                    meta_title = table.Column<string>(
-                        type: "text",
-                        nullable: true
-                    ),
-                    meta_keywords = table.Column<string>(
-                        type: "text",
-                        nullable: true
-                    ),
-                    meta_description = table.Column<string>(
-                        type: "text",
-                        nullable: true
-                    ),
                     visible = table.Column<bool>(
                         type: "boolean",
                         nullable: false

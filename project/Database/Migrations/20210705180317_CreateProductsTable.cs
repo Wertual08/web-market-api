@@ -27,7 +27,7 @@ namespace Api.Database.Migrations {
                     ),
                     code = table.Column<string>(
                         type: "text unique",
-                        nullable: false
+                        nullable: true
                     ),
                     name = table.Column<string>(
                         type: "text", 

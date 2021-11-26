@@ -33,9 +33,13 @@ namespace Api.Database.Migrations {
                         type: "text",
                         nullable: true
                     ),
-                    address = table.Column<string>(
-                        type: "text", 
-                        nullable: false
+                    phone = table.Column<string>(
+                        type: "text",
+                        nullable: true
+                    ),  
+                    ip = table.Column<string>(
+                        type: "text",
+                        nullable: true
                     ),
                     description = table.Column<string>(
                         type: "text", 

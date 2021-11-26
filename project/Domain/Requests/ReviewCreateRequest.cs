@@ -8,8 +8,6 @@ namespace Api.Domain.Requests {
         public string Name { get; set; }
         [Required, EmailAddress]
         public string Email { get; set; }
-        [Required, MaxLength(40)]
-        public string Address { get; set; }
         [Required, MaxLength(256)]
         public string Description { get; set; }
     }

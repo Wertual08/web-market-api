@@ -16,12 +16,6 @@ namespace Api.Database.Models {
 
         public string Description { get; set; }
 
-        public string MetaTitle { get; set; }
-
-        public string MetaKeywords { get; set; }
-
-        public string MetaDescription { get; set; }
-
         public bool Visible { get; set; }
         
         [Required]

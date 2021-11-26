@@ -21,11 +21,13 @@ namespace Api.Database.Models {
         [Required]
         public string Name { get; set; }
 
-        [Required]
-        public string Address { get; set; }
-
         [EmailAddress]
         public string Email { get; set; }
+
+        [Phone]
+        public string Phone { get; set; }
+
+        public string Ip { get; set; }
 
         [Required]
         public string Description { get; set; }

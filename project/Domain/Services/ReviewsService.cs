@@ -36,7 +36,6 @@ namespace Api.Domain.Services {
             int? grade,
             string name,
             string email,
-            string address, 
             string description
         ) {
             var review = new Review {
@@ -44,7 +43,6 @@ namespace Api.Domain.Services {
                 Grade = grade,
                 Name = name,
                 Email = email,
-                Address = address,
                 Description = description,
             };
 

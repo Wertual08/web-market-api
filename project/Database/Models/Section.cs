@@ -11,6 +11,8 @@ namespace Api.Database.Models {
 
         public long? RecordId { get; set; } = null;
 
+        public int Position { get; set; }
+
         [Required, MaxLength(255)]
         public string Name { get; set; }
         

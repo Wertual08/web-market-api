@@ -42,7 +42,6 @@ namespace Api.Controllers {
                 request.Grade,
                 request.Name,
                 request.Email,
-                request.Address,
                 request.Description
             );
 
