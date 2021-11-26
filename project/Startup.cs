@@ -163,9 +163,11 @@ namespace Api {
                        
                        await searchRepository.IndexAsync(new FTSProduct {
                            Id = product.Id,
+                           Code = product.Code,
                            Name = product.Name,
                            Description = product.Description,
                            Price = product.Price, 
+                           OldPrice = product.OldPrice,
                            Image = product.Records.FirstOrDefault()?.Identifier.ToString("N"),
                            Categories = categories,
                            Sections = sections,
